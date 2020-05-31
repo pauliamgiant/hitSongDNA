@@ -3,21 +3,30 @@ package classifier;
 public class Classifier {
 
     /**
-     *
      * @return A Naive bayes classifier object
-     *
      */
 
-    public String testing(){
+    public String testing() {
 
         return "This class is integrating fine";
     }
 
-    public double calculateClassPriorProbability(){
-        return 0.01;
+    public double calculateProbabilityOfHit() {
+        return 0;
     }
 
-    public boolean songIsLikelyToBeAHit(){
+    public double calculateProbabilityOfNot() {
+        return 0;
+
+    }
+
+    public double calculateLikelihood() {
+        return 0;
+    }
+
+
+
+    public boolean songIsLikelyToBeAHit() {
         return true;
     }
 }
