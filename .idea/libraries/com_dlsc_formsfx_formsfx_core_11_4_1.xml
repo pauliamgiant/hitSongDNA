@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.dlsc.formsfx:formsfx-core:11.4.1" type="repository">
+    <properties maven-id="com.dlsc.formsfx:formsfx-core:11.4.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/formsfx-core-11.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

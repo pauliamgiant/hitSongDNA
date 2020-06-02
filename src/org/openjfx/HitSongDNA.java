@@ -1,5 +1,9 @@
 package org.openjfx;
 
+import com.dlsc.formsfx.model.structure.Field;
+import com.dlsc.formsfx.model.structure.Form;
+import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.view.renderer.FormRenderer;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import javafx.application.Application;
@@ -8,22 +12,27 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 
 public class HitSongDNA extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("UI.fxml"));
+        MenuBar menuBar = new MenuBar();
+        Menu fileMenu = new Menu("File");
+        fileMenu.getItems().add(new MenuItem("Save"));
+        menuBar.getMenus().add(fileMenu);
+
+
+
         Button okButton = new Button("Ok");
         okButton.setDefaultButton(true);
 
@@ -31,14 +40,15 @@ public class HitSongDNA extends Application {
 
         Button icon = new Button("ICON HERE");
 
-        HBox hBox = new HBox();
-        hBox.setPadding(new Insets(15, 12, 15, 12));
-        hBox.setSpacing(10);
-        hBox.setStyle("-fx-background-color: deeppink");
-        hBox.getChildren().addAll(okButton, cancelButton, icon);
+        VBox vBox1 = new VBox();
+        vBox1.setPadding(new Insets(15, 12, 15, 12));
+        vBox1.setSpacing(10);
+        vBox1.setStyle("-fx-background-color: deeppink");
+        vBox1.getChildren().addAll(okButton, cancelButton, icon);
 
         BorderPane root = new BorderPane();
-        root.setTop(hBox);
+        root.setTop(menuBar);
+        root.setRight(vBox1);
 
         Image image = new Image(getClass().getResource("Resources/1.jpg").toURI().toString());
         ImageView imageView = new ImageView(image);
@@ -57,6 +67,17 @@ public class HitSongDNA extends Application {
 
         chart.setTitle("Imported Fruits");
         //root.setCenter(chart);
+        Form loginForm = Form.of(
+                Group.of(
+                        Field.ofStringType("")
+                                .label("Username"),
+                        Field.ofStringType("")
+                                .label("Password")
+                                .required("This field can’t be empty")
+                ),
+                Group.of()
+        ).title("Login");
+
 
         Gauge gauge2 = GaugeBuilder.create()
                 .skinType(Gauge.SkinType.AMP)
@@ -82,6 +103,7 @@ public class HitSongDNA extends Application {
 
 
         root.setCenter(gauge2);
+        root.setBottom(new FormRenderer(loginForm));
 
 
         VBox vBox = new VBox();
@@ -90,7 +112,7 @@ public class HitSongDNA extends Application {
         vBox.getChildren().addAll(new Label("Select Color:"), new ColorPicker());
         root.setLeft(vBox);
 
-        root.setStyle("-fx-background-color: #6680e6");
+
 
         Scene scene = new Scene(root, 740, 800);
         primaryStage.setTitle("Now we're talking");
