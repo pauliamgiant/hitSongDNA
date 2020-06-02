@@ -12,8 +12,11 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+
+
+<?import eu.hansolo.medusa.Gauge?>
 <BorderPane fx:controller="org.openjfx.Controller"
-          xmlns:fx="http://javafx.com/fxml">
+            xmlns:fx="http://javafx.com/fxml">
     <top>
         <HBox spacing="10.0" style="-fx-background-color: #886699;">
             <padding>
@@ -37,4 +40,9 @@
 
         </ImageView>
     </center>
+    <bottom>
+        <Gauge fx:id="gauge1">
+
+        </Gauge>
+    </bottom>
 </BorderPane>
