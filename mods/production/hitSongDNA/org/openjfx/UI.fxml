@@ -1,48 +1,109 @@
 <?xml version="1.0" encoding = "UTF-8" ?>
 
-<?import javafx.geometry.Insets?>
-
-<?import java.lang.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-
 
 <?import eu.hansolo.medusa.Gauge?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.Node?>
+<?import javafx.scene.chart.PieChart?>
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
-        <HBox spacing="10.0" style="-fx-background-color: #886699;">
-            <padding>
-                <Insets top="15" bottom="15" left="12" right="12"/>
-            </padding>
-            <Button id="okButton" text="OK" defaultButton="true"/>
-            <Button text="Cancel" />
-            <Button fx:id="catchMe"/>
-        </HBox>
+
+        <VBox>
+            <MenuBar fx:id="menuBar">
+                <Menu fx:id="mMain" text="Main">
+                    <MenuItem text="About"></MenuItem>
+                    <MenuItem text="Exit"></MenuItem>
+                </Menu>
+                <Menu fx:id="mPredict" text="Predict">
+                </Menu>
+                <Menu fx:id="mMetrics" text="Dataset Metrics">
+                </Menu>
+                <Menu fx:id="mDataSet" text="Song Metrics">
+                </Menu>
+
+            </MenuBar>
+
+            <HBox spacing="10.0" style="-fx-background-color: #886699;">
+                <padding>
+                    <Insets top="15" bottom="15" left="12" right="12"/>
+                </padding>
+                <Button id="okButton" text="OK" defaultButton="true"/>
+                <Button text="Cancel"/>
+                <Button fx:id="catchMe"/>
+            </HBox>
+        </VBox>
+
     </top>
     <left>
         <VBox style="-fx-background-color:#ddeeff;-fx-padding: 10px">
             <Label text="Select Colour:"/>
 
-            <ColorPicker />
+            <ColorPicker/>
 
         </VBox>
     </left>
     <center>
-        <ImageView fx:id="imView">
 
-        </ImageView>
+        <TabPane>
+            <Tab fx:id="tab1" text="Predict Your Song">
+
+
+                <GridPane>
+                    <Gauge fx:id="gauge1"
+                           alert="true"
+                           alertMessage="Almost full"
+                           animated="true"
+                           animationDuration="500"
+                           areaTextVisible="true"
+                           layoutX="123.0"
+                           layoutY="113.0"
+                           lcdVisible="true"
+                           lcdFont="ELEKTRA"
+                           skinType="AMP"
+                           decimals="0"
+                           maxValue="11"
+                           unit="ATTITUDE"
+                           unitColor="black"
+                           value="45"
+                           ledVisible="true"
+                           ledOn="true"
+                           ledBlinking="true"
+                           ledColor="chartreuse"
+                           ledType="STANDARD"
+                           title="HIT SONG METER"
+                           shadowsEnabled="true"
+                           backgroundPaint="white"
+                           foregroundPaint="black"
+                           titleColor="WHITE"
+                           prefWidth="500"
+                           prefHeight="500"
+                           GridPane.columnIndex="2"
+                           GridPane.rowIndex="1"
+
+                    />
+
+                    <ScrollPane GridPane.columnIndex="1"
+                                GridPane.rowIndex="1"
+                                minWidth="600">
+                        <content>
+                            <VBox fx:id="forForm" minWidth="600" alignment="CENTER">
+                            </VBox>
+                        </content>
+                    </ScrollPane>
+                </GridPane>
+            </Tab>
+            <Tab fx:id="tab2" text="Dataset Metrics">
+                <VBox fx:id="myPie">
+                </VBox>
+            </Tab>
+        </TabPane>
+
     </center>
     <bottom>
-        <Gauge fx:id="gauge1">
 
-        </Gauge>
+
     </bottom>
 </BorderPane>
