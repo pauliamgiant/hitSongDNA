@@ -63,7 +63,7 @@
                            skinType="AMP"
                            decimals="0"
                            maxValue="11"
-                           unit="ATTITUDE"
+                           unit="HIT OR MISS"
                            unitColor="black"
                            value="45"
                            ledVisible="true"
@@ -71,7 +71,7 @@
                            ledBlinking="true"
                            ledColor="chartreuse"
                            ledType="STANDARD"
-                           title="HIT SONG METER"
+                           title="SONG POTENTIAL"
                            shadowsEnabled="true"
                            backgroundPaint="white"
                            foregroundPaint="black"
@@ -81,11 +81,19 @@
                            GridPane.columnIndex="2"
                            GridPane.rowIndex="1"
 
-                    />
+
+                    >
+                        <GridPane.margin>
+                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0" />
+                        </GridPane.margin>
+                    </Gauge>
 
                     <ScrollPane GridPane.columnIndex="1"
                                 GridPane.rowIndex="1"
                                 minWidth="600">
+                        <GridPane.margin>
+                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0" />
+                        </GridPane.margin>
                         <content>
                             <VBox fx:id="forForm" minWidth="600" alignment="CENTER">
                             </VBox>
@@ -97,6 +105,15 @@
                 <VBox fx:id="myPie">
                 </VBox>
             </Tab>
+            <Tab fx:id="tab3" text="Song Metrics">
+                <VBox fx:id="songMetrics">
+                </VBox>
+            </Tab>
+            <Tab fx:id="tab4" text="This Weeks Charts">
+                <VBox fx:id="charts">
+                </VBox>
+            </Tab>
+
         </TabPane>
 
     </center>
