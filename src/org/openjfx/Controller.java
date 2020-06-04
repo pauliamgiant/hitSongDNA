@@ -54,9 +54,17 @@ public class Controller {
                         Field.ofStringType("")
                                 .label("Song Title")
                                 .required("This field can’t be empty"),
-                        Field.ofStringType("")
-                                .label("Duration")
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Tempo Range")
                                 .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Chord Progression")
+                                .required("This field can’t be empty"),
+
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Topline Harmony")
+                                .required("This field can’t be empty"),
+
                         Field.ofSingleSelectionType(tempos)
                                 .label("Tempo Range")
                                 .required("This field can’t be empty"),
@@ -67,16 +75,24 @@ public class Controller {
                                 .label("Mode")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Attr1")
+                                .label("Lyrical Repetition")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Attr2")
-                                .required("This field can’t be empty")
+                                .label("Hook in Song Title")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Time Signature")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Female Artist"),
+                        Field.ofBooleanType(false)
+                                .label("Male Artist")
+                )
 
-                ),
-                Group.of()
 
-        ).title("Login");
+        ).title("Song Attributes");
+
+
         forForm.getChildren().add(new FormRenderer(loginForm));
 
 
