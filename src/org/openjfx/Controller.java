@@ -57,7 +57,7 @@ public class Controller {
                         Field.ofStringType("")
                                 .label("Duration")
                                 .required("This field can’t be empty"),
-                        Field.ofMultiSelectionType(tempos)
+                        Field.ofSingleSelectionType(tempos)
                                 .label("Tempo Range")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
@@ -65,6 +65,12 @@ public class Controller {
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
                                 .label("Mode")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Attr1")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Attr2")
                                 .required("This field can’t be empty")
 
                 ),

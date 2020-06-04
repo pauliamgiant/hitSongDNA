@@ -50,49 +50,108 @@
 
 
                 <GridPane>
-                    <Gauge fx:id="gauge1"
-                           alert="true"
-                           alertMessage="Almost full"
-                           animated="true"
-                           animationDuration="500"
-                           areaTextVisible="true"
-                           layoutX="123.0"
-                           layoutY="113.0"
-                           lcdVisible="true"
-                           lcdFont="ELEKTRA"
-                           skinType="AMP"
-                           decimals="0"
-                           maxValue="11"
-                           unit="HIT OR MISS"
-                           unitColor="black"
-                           value="45"
-                           ledVisible="true"
-                           ledOn="true"
-                           ledBlinking="true"
-                           ledColor="chartreuse"
-                           ledType="STANDARD"
-                           title="SONG POTENTIAL"
-                           shadowsEnabled="true"
-                           backgroundPaint="white"
-                           foregroundPaint="black"
-                           titleColor="WHITE"
-                           prefWidth="500"
-                           prefHeight="500"
-                           GridPane.columnIndex="2"
-                           GridPane.rowIndex="1"
+                    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Gauge fx:id="gauge1"
+                               alert="true"
+                               alertMessage="Almost full"
+                               animated="true"
+                               animationDuration="500"
+                               areaTextVisible="true"
+                               layoutX="123.0"
+                               layoutY="113.0"
+                               lcdVisible="true"
+                               lcdFont="ELEKTRA"
+                               skinType="SIMPLE_SECTION"
+                               decimals="0"
+                               maxValue="100"
+                               unit="HIT POTENTIAL"
+                               unitColor="black"
+                               value="75"
+                               ledVisible="true"
+                               ledOn="true"
+                               ledBlinking="true"
+                               ledColor="chartreuse"
+                               ledType="STANDARD"
+                               title="PREDICTION"
+                               shadowsEnabled="true"
+                               backgroundPaint="#f4f4f4"
+                               foregroundPaint="black"
+                               titleColor="BLACK"
+                               prefWidth="500"
+                               prefHeight="500"/>
 
 
-                    >
-                        <GridPane.margin>
-                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0" />
-                        </GridPane.margin>
-                    </Gauge>
+                        <HBox GridPane.columnIndex="2"
+                              GridPane.rowIndex="2" spacing="20">
+
+                            <Gauge fx:id="gauge2"
+                                   alert="true"
+                                   alertMessage="Almost full"
+                                   animated="true"
+                                   animationDuration="500"
+                                   areaTextVisible="true"
+                                   layoutX="123.0"
+                                   layoutY="113.0"
+                                   lcdVisible="false"
+                                   lcdFont="ELEKTRA"
+                                   skinType="AMP"
+                                   decimals="0"
+                                   maxValue="1"
+                                   unit="HIT OR MISS"
+                                   unitColor="black"
+                                   value="1"
+                                   valueVisible="false"
+                                   ledVisible="true"
+                                   ledOn="true"
+                                   ledBlinking="true"
+                                   ledColor="chartreuse"
+                                   ledType="STANDARD"
+                                   title="CLASSIFICATION"
+                                   shadowsEnabled="true"
+                                   backgroundPaint="white"
+                                   foregroundPaint="black"
+                                   titleColor="WHITE"
+
+
+                            />
+
+                            <Gauge fx:id="gauge3"
+                                   alert="true"
+                                   alertMessage="Almost full"
+                                   animated="true"
+                                   animationDuration="500"
+                                   areaTextVisible="true"
+                                   layoutX="123.0"
+                                   layoutY="113.0"
+                                   lcdVisible="true"
+                                   lcdFont="ELEKTRA"
+                                   skinType="AMP"
+                                   decimals="0"
+                                   maxValue="100"
+                                   unit="RATE"
+                                   unitColor="black"
+                                   value="58"
+                                   ledVisible="true"
+                                   ledOn="true"
+                                   ledBlinking="true"
+                                   ledColor="chartreuse"
+                                   ledType="STANDARD"
+                                   title="CLASSIFICATION RATE"
+                                   shadowsEnabled="true"
+                                   backgroundPaint="white"
+                                   foregroundPaint="black"
+                                   titleColor="WHITE"
+                                  />
+
+                        </HBox>
+                    </VBox>
 
                     <ScrollPane GridPane.columnIndex="1"
                                 GridPane.rowIndex="1"
                                 minWidth="600">
                         <GridPane.margin>
-                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0" />
+                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
                         </GridPane.margin>
                         <content>
                             <VBox fx:id="forForm" minWidth="600" alignment="CENTER">
