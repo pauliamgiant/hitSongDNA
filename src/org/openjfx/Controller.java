@@ -6,6 +6,7 @@ import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import eu.hansolo.medusa.Gauge;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+
 public class Controller {
 
 
@@ -27,6 +31,10 @@ public class Controller {
 
     @FXML
     private Gauge gauge1;
+
+
+
+
 
     @FXML
     private VBox forForm;

@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
@@ -40,6 +41,7 @@
             <Label text="Select Colour:"/>
 
             <ColorPicker/>
+
 
         </VBox>
     </left>
