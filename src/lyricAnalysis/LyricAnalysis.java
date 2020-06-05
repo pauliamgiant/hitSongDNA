@@ -7,10 +7,10 @@ public class LyricAnalysis {
 
     List<String> lyricsByLine;
     int numberOfLineRepeats;
-    Archetypes archetype;
     int numberOfKeyTerms;
     int numberOfRhymes;
     int numberOfTimesWordsRepeated;
+    Archetypes archetype;
 
     public LyricAnalysis() {
         try {
@@ -20,6 +20,9 @@ public class LyricAnalysis {
         }
         LineRepetitionAnalysis lra = new LineRepetitionAnalysis();
         numberOfLineRepeats = lra.analyseRepetition(lyricsByLine);
+
+        //numberOfKeyTerms =
+
     }
 
 

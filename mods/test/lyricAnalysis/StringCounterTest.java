@@ -10,7 +10,7 @@ import static org.testng.Assert.assertEquals;
 
 public class StringCounterTest {
 
-    @Test(groups = { "AllTests"})
+    @Test(groups = { "AllTests","LyricAnalysis"})
     public void testCountStrings() {
         HashMap<String,Integer> results = new HashMap<>();
         ArrayList<String> testList = new ArrayList<>();

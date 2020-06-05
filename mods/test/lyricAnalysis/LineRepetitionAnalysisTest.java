@@ -9,7 +9,7 @@ import static org.testng.Assert.assertEquals;
 
 public class LineRepetitionAnalysisTest {
 
-    @Test(groups = { "AllTests"})
+    @Test(groups = { "AllTests","LyricAnalysis"})
     public void testAnalyseRepetition() {
         List<String> dummyData = new ArrayList<>();
 

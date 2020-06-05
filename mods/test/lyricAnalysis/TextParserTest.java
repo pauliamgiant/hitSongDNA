@@ -19,7 +19,7 @@ public class TextParserTest {
     public void tearDown() {
     }
 
-    @Test(groups = { "AllTests"})
+    @Test(groups = { "AllTests","LyricAnalysis"})
     public void testGetLines() throws FileNotFoundException {
         TextParser parser = new TextParser();
         List<String> lines = parser.getLines();
