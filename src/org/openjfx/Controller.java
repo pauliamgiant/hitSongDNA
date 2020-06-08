@@ -6,14 +6,15 @@ import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import eu.hansolo.medusa.Gauge;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -29,12 +30,8 @@ public class Controller {
     @FXML
     private ImageView imView;
 
-    @FXML
-    private Gauge gauge1;
-
-
-
-
+@FXML
+private Gauge gauge1;
 
     @FXML
     private VBox forForm;
@@ -44,6 +41,9 @@ public class Controller {
 
     @FXML
     private VBox myPie;
+
+    @FXML
+    private VBox songMetrics;
 
     @FXML
     public void initialize() throws URISyntaxException {
@@ -109,17 +109,44 @@ public class Controller {
         System.out.println(paulsCl.testing());
         //imView.setImage(image);
         ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
-                new PieChart.Data("Grapefruit", 13),
-                new PieChart.Data("Oranges", 25),
-                new PieChart.Data("Plums", 10),
-                new PieChart.Data("Pears", 22),
-                new PieChart.Data("Apples", 30));
+                new PieChart.Data("I-IV-V", 13),
+                new PieChart.Data("i-VII-VI-VII", 25),
+                new PieChart.Data("VI-VII-i-i", 10),
+                new PieChart.Data("I-V-vi-IV", 22),
+                new PieChart.Data("i-i-iv-iv", 30));
         final PieChart chart = new PieChart(myPieG);
-        chart.setMaxSize(800, 800);
+
+        chart.setPrefSize(400, 400);
+
+
+
+
+
+
+
+
         myPie.getChildren().add(chart);
 
-        chart.setTitle("Imported Fruits");
+        chart.setTitle("Chord Progressions");
+        chart.setLabelLineLength(10);
+        chart.setLegendSide(Side.LEFT);
+
+        //chart.setAnimated(true);
+
+gauge1.setValue(89);
+gauge1.setForegroundBaseColor(Color.AQUA);
+gauge1.setTitleColor(Color.WHITE);
+gauge1.setBarColor(Color.AQUA);
+
+
+
+
+
     }
+
+
+
+
 
 
 }

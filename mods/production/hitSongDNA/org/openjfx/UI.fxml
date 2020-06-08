@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
@@ -25,7 +26,7 @@
 
             </MenuBar>
 
-            <HBox spacing="10.0" style="-fx-background-color: #886699;">
+            <HBox spacing="10.0">
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
@@ -37,7 +38,7 @@
 
     </top>
     <left>
-        <VBox style="-fx-background-color:#ddeeff;-fx-padding: 10px">
+        <VBox fx:id="sideBarLeft">
             <Label text="Select Colour:"/>
 
             <ColorPicker/>
@@ -47,47 +48,50 @@
     </left>
     <center>
 
-        <TabPane>
+        <TabPane fx:id="tabPane">
             <Tab fx:id="tab1" text="Predict Your Song">
 
 
                 <GridPane>
-                    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
                     <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Label fx:id="hitLabel">HIT!</Label>
                         <Gauge fx:id="gauge1"
-                               alert="true"
-                               alertMessage="Almost full"
-                               animated="true"
-                               animationDuration="500"
-                               areaTextVisible="true"
-                               layoutX="123.0"
-                               layoutY="113.0"
-                               lcdVisible="true"
-                               lcdFont="ELEKTRA"
-                               skinType="SIMPLE_SECTION"
-                               decimals="0"
-                               maxValue="100"
-                               unit="HIT POTENTIAL"
-                               unitColor="black"
-                               value="75"
-                               ledVisible="true"
-                               ledOn="true"
-                               ledBlinking="true"
-                               ledColor="chartreuse"
-                               ledType="STANDARD"
-                               title="PREDICTION"
-                               shadowsEnabled="true"
-                               backgroundPaint="#f4f4f4"
-                               foregroundPaint="black"
-                               titleColor="BLACK"
-                               prefWidth="500"
-                               prefHeight="500"/>
+
+                                                skinType="SIMPLE_DIGITAL"
+                                                decimals="0"
+                                                valueColor="white"
+                                                titleColor="WHITE"
+                                                subTitleColor="white"
+                                                unitColor="white"
+                                                needleColor="white"
+                                                tickLabelsVisible=""
+                                                tickMarkColor="black"
+                                                tickLabelOrientation="ORTHOGONAL"
+                                                animated="true"
+                                                animationDuration="500"
+                                                areaTextVisible="true"
+                                                title="PREDICTION"
+                                                shadowsEnabled="true"
+                                                prefWidth="400"
+                                                prefHeight="400"
+
+
+
+
+
+                        />
+
+
 
 
                         <HBox GridPane.columnIndex="2"
                               GridPane.rowIndex="2" spacing="20">
 
                             <Gauge fx:id="gauge2"
+
                                    alert="true"
                                    alertMessage="Almost full"
                                    animated="true"
@@ -95,26 +99,23 @@
                                    areaTextVisible="true"
                                    layoutX="123.0"
                                    layoutY="113.0"
-                                   lcdVisible="false"
+                                   lcdVisible="true"
                                    lcdFont="ELEKTRA"
-                                   skinType="AMP"
+                                   tickLabelsVisible="false"
+                                   tickMarkColor="#292929"
+                                   skinType="MODERN"
                                    decimals="0"
                                    maxValue="1"
-                                   unit="HIT OR MISS"
-                                   unitColor="black"
+                                   unit="HIT"
+                                   unitColor="aqua"
+                                   valueColor="aqua"
                                    value="1"
-                                   valueVisible="false"
-                                   ledVisible="true"
-                                   ledOn="true"
-                                   ledBlinking="true"
-                                   ledColor="chartreuse"
-                                   ledType="STANDARD"
+
                                    title="CLASSIFICATION"
                                    shadowsEnabled="true"
                                    backgroundPaint="white"
                                    foregroundPaint="black"
                                    titleColor="WHITE"
-
 
                             />
 
@@ -128,11 +129,11 @@
                                    layoutY="113.0"
                                    lcdVisible="true"
                                    lcdFont="ELEKTRA"
-                                   skinType="AMP"
+                                   skinType="MODERN"
                                    decimals="0"
                                    maxValue="100"
                                    unit="RATE"
-                                   unitColor="black"
+                                   unitColor="aqua"
                                    value="58"
                                    ledVisible="true"
                                    ledOn="true"
@@ -144,8 +145,7 @@
                                    backgroundPaint="white"
                                    foregroundPaint="black"
                                    titleColor="WHITE"
-                                  />
-
+                            />
                         </HBox>
                     </VBox>
 

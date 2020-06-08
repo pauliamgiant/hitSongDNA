@@ -11,11 +11,14 @@ public class HitSongDNA extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("UI.fxml"));
 
         Scene scene = new Scene(root, 1280, 768);
+        scene.getStylesheets().add("style.css");
         primaryStage.setTitle("HitSongDNA");
         primaryStage.setScene(scene);
+
         primaryStage.show();
 
 

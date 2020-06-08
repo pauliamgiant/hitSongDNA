@@ -5,7 +5,8 @@ module hitSongDNA {
     requires eu.hansolo.medusa;
     requires com.dlsc.formsfx;
 
-    
+
+
     opens org.openjfx to javafx.fxml;
     exports org.openjfx;
 }
