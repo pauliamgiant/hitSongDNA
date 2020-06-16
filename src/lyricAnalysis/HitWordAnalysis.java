@@ -3,18 +3,18 @@ package lyricAnalysis;
 import java.util.HashSet;
 import java.util.List;
 
-public class KeyTermAnalysis {
+public class HitWordAnalysis {
 
     HashSet<String> keyTerms;
 
-    public KeyTermAnalysis() {
+    public HitWordAnalysis() {
         keyTerms = new HashSet<>();
         for (HitWords word: HitWords.values()){
              keyTerms.add(word.toString());
         }
     }
 
-    public int numberOfKeyTerms(List<String> lyrics){
+    public int numberOfHitWords(List<String> lyrics){
         int count = 0;
 
         for (int i = 0; i < lyrics.size(); i++) {

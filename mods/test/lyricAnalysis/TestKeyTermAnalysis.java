@@ -18,8 +18,8 @@ public class TestKeyTermAnalysis {
         testList.add("Hallo you troublesome toad!!");
         testList.add("Love you Love toad!!");
         testList.add("Hallo Girl troublesome Baby!!");
-        KeyTermAnalysis kta = new KeyTermAnalysis();
-       int result =  kta.numberOfKeyTerms(testList);
+        HitWordAnalysis kta = new HitWordAnalysis();
+       int result =  kta.numberOfHitWords(testList);
 
         assertEquals(4,result);
     }

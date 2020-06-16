@@ -6,11 +6,14 @@ import java.util.List;
 public class LyricAnalysis {
 
     List<String> lyricsByLine;
-    int numberOfLineRepeats;
-    int numberOfKeyTerms;
-    int numberOfRhymes;
-    int numberOfTimesWordsRepeated;
-    Archetypes archetype;
+    private int numberOfLineRepeats;
+    private int numberOfNounRepeats;
+    private int numberOfHitWords;
+    private int numberOfRhymes;
+    private int gradeLevelOfLyrics;
+    private int repetitionOfTitle;
+    private Archetypes archetype;
+    //    int numberOfTimesWordsRepeated;
 
     public LyricAnalysis() {
         try {
@@ -26,4 +29,31 @@ public class LyricAnalysis {
     }
 
 
+    public int getNumberOfLineRepeats() {
+        return numberOfLineRepeats;
+    }
+
+    public int getNumberOfNounRepeats() {
+        return numberOfNounRepeats;
+    }
+
+    public int getNumberOfHitWords() {
+        return numberOfHitWords;
+    }
+
+    public int getNumberOfRhymes() {
+        return numberOfRhymes;
+    }
+
+    public int getGradeLevelOfLyrics() {
+        return gradeLevelOfLyrics;
+    }
+
+    public int getRepetitionOfTitle() {
+        return repetitionOfTitle;
+    }
+
+    public Archetypes getArchetype() {
+        return archetype;
+    }
 }

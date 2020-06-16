@@ -8,20 +8,25 @@ import com.dlsc.formsfx.view.renderer.FormRenderer;
 import eu.hansolo.medusa.Gauge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 
 
 public class Controller {
@@ -30,8 +35,19 @@ public class Controller {
     @FXML
     private ImageView imView;
 
-@FXML
-private Gauge gauge1;
+    @FXML
+    public void showPopup(ActionEvent event) {
+        showStage();
+    }
+
+    @FXML
+    private Button okButton;
+
+    @FXML
+    private Button popMe;
+
+    @FXML
+    private Gauge gauge1;
 
     @FXML
     private VBox forForm;
@@ -46,8 +62,22 @@ private Gauge gauge1;
     private VBox songMetrics;
 
     @FXML
+    public Button getPopMe(){
+        return popMe;
+    }
+
+    @FXML
     public void initialize() throws URISyntaxException {
         // Image image = new Image(getClass().getResource("Resources/1.jpg").toURI().toString());
+
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                showStage();
+            }
+        });
+
 
         List<String> tempos = new ArrayList<>();
         tempos.add("below 80");
@@ -119,12 +149,6 @@ private Gauge gauge1;
         chart.setPrefSize(400, 400);
 
 
-
-
-
-
-
-
         myPie.getChildren().add(chart);
 
         chart.setTitle("Chord Progressions");
@@ -133,19 +157,34 @@ private Gauge gauge1;
 
         //chart.setAnimated(true);
 
-gauge1.setValue(89);
-gauge1.setForegroundBaseColor(Color.AQUA);
-gauge1.setTitleColor(Color.WHITE);
-gauge1.setBarColor(Color.AQUA);
-
-
-
+        gauge1.setValue(89);
+        gauge1.setForegroundBaseColor(Color.AQUA);
+        gauge1.setTitleColor(Color.WHITE);
+        gauge1.setBarColor(Color.AQUA);
 
 
     }
 
+    @FXML
+    public static void showStage() {
+        Stage newStage = new Stage();
+        VBox comp = new VBox();
+        TextField nameField = new TextField("Name");
+        TextField phoneNumber = new TextField("Phone Number");
+        comp.getChildren().add(nameField);
+        comp.getChildren().add(phoneNumber);
 
+        Scene stageScene = new Scene(comp, 300, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+    }
 
+    public static void showPopup2(Window win) {
+        Popup popup = new Popup();
+        popup.setX(300); popup.setY(200);
+        popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
+        popup.show(win);
+}
 
 
 

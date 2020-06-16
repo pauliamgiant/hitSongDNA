@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RhymeAnalysis {
 
-    private int analyseRhymes(List<String> songLyrics ){
+    private int rhymeCount(List<String> songLyrics ){
     return 0;
     }
 }

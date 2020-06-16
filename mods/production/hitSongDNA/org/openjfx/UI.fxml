@@ -23,6 +23,9 @@
                 </Menu>
                 <Menu fx:id="mDataSet" text="Song Metrics">
                 </Menu>
+                <Menu fx:id="mHelp" text="Help">
+                    <MenuItem text="How do I get the required data for my song?"></MenuItem>
+                </Menu>
 
             </MenuBar>
 
@@ -30,9 +33,10 @@
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
-                <Button id="okButton" text="OK" defaultButton="true"/>
-                <Button text="Cancel"/>
+                <Button fx:id="okButton" text="OK" defaultButton="true"/>
+                <Button text="Cancel" onAction="#showPopup"/>
                 <Button fx:id="catchMe"/>
+                <Button fx:id="popMe" text="Popup"/>
             </HBox>
         </VBox>
 
@@ -170,7 +174,7 @@
                 <VBox fx:id="songMetrics">
                 </VBox>
             </Tab>
-            <Tab fx:id="tab4" text="This Weeks Charts">
+            <Tab fx:id="tab4" text="My Songs">
                 <VBox fx:id="charts">
                 </VBox>
             </Tab>
