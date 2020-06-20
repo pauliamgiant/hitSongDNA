@@ -1,14 +1,11 @@
 package classifier;
 
-import java.util.List;
-
 public class DataAttribute {
 
-    String name;
-    List<String> values;
+    Enum value;
 
-    public DataAttribute(String name, List<String> values) {
-        this.name = name;
-        this.values = values;
+    public DataAttribute(Enum value) {
+        this.value = value;
+        }
     }
-}
+

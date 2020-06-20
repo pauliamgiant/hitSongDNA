@@ -33,7 +33,7 @@ public class HitSongDNA extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-        showPopup(primaryStage);
+        //showPopup(primaryStage);
 
 
 

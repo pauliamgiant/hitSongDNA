@@ -1,6 +1,6 @@
 package org.openjfx;
 
-import classifier.Classifier;
+import classifier.NaiveBayes;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
@@ -87,7 +87,7 @@ public class Controller {
         tempos.add("120-130");
         tempos.add("above 130");
 
-        Form loginForm = Form.of(
+        Form songAttributes = Form.of(
                 Group.of(
                         Field.ofStringType("")
                                 .label("Song Title")
@@ -131,10 +131,10 @@ public class Controller {
         ).title("Song Attributes");
 
 
-        forForm.getChildren().add(new FormRenderer(loginForm));
+        forForm.getChildren().add(new FormRenderer(songAttributes));
 
 
-        Classifier paulsCl = new Classifier();
+        NaiveBayes paulsCl = new NaiveBayes();
         catchMe.setText(paulsCl.testing());
         System.out.println(paulsCl.testing());
         //imView.setImage(image);
