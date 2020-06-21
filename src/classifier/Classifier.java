@@ -2,5 +2,5 @@ package classifier;
 
 public interface Classifier {
 
-    public boolean songIsLikelyToBeAHit();
+    public boolean songIsLikelyToBeAHit(DataTuple toClassify);
 }

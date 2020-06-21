@@ -1,6 +1,5 @@
 package org.openjfx;
 
-import classifier.NaiveBayes;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
@@ -134,9 +133,9 @@ public class Controller {
         forForm.getChildren().add(new FormRenderer(songAttributes));
 
 
-        NaiveBayes paulsCl = new NaiveBayes();
-        catchMe.setText(paulsCl.testing());
-        System.out.println(paulsCl.testing());
+        //NaiveBayes paulsCl = new NaiveBayes();
+        catchMe.setText("Classifier go here");
+       // System.out.println(paulsCl.testing());
         //imView.setImage(image);
         ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
                 new PieChart.Data("I-IV-V", 13),

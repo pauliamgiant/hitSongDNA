@@ -1,6 +1,6 @@
 package classifier.Attributes;
 
-public enum Play_targetClass {
+public enum Hit_targetClass {
     yes,
     no
 }

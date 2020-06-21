@@ -1,28 +1,81 @@
 package classifier;
 
-import classifier.Attributes.*;
-
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataTuple {
 
-    private Map<String, Enum> attributes;
+    private Map<String, SongAttribute> attributes;
     private String name;
 
 
-    public DataTuple(String name,Enum attr1, Enum attr2, Enum attr3, Enum attr4, Enum attr5) {
-        attributes = new HashMap<String, Enum> ();
+    public DataTuple(String name,
+                     Enum outlook,
+                     Enum temp,
+                     Enum humidity,
+                     Enum windy,
+                     Enum Hit_targetClass) {
+
+        attributes = new LinkedHashMap<>();
         this.name = name;
-        attributes.put("Outlook",Outlook.sunny);
-        attributes.put("Temp", Temp.hot);
-        attributes.put("Humidity", Humidity.high);
-        attributes.put("Windy", Windy.no);
-        attributes.put("Play", Play_targetClass.no);
+        attributes.put("Outlook", new SongAttribute("Outlook", outlook));
+        attributes.put("Temp", new SongAttribute("Temp", temp));
+        attributes.put("Humidity", new SongAttribute("Humidity", humidity));
+        attributes.put("Windy", new SongAttribute("Windy", windy));
+        attributes.put("Hit_targetClass", new SongAttribute("Hit_targetClass", Hit_targetClass));
     }
 
-    public void setAttributes() {
+    public DataTuple(String name,
+                     Enum outlook,
+                     Enum temp,
+                     Enum humidity,
+                     Enum windy) {
 
-        this.attributes = attributes;
+        attributes = new LinkedHashMap<>();
+        this.name = name;
+        attributes.put("Outlook", new SongAttribute("Outlook", outlook));
+        attributes.put("Temp", new SongAttribute("Temp", temp));
+        attributes.put("Humidity", new SongAttribute("Humidity", humidity));
+        attributes.put("Windy", new SongAttribute("Windy", windy));
     }
+
+
+    public String printTuple() {
+
+        String attributeValues = "";
+        for (SongAttribute a : attributes.values()
+        ) {
+            attributeValues += a.getName() + "=" + a.getValue() + ", ";
+        }
+        return attributeValues;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SongAttribute getTargetClass() {
+        return attributes.get("Hit_targetClass");
+    }
+
+    public SongAttribute getAttribute(String typeOfAttribute) {
+        return attributes.get(typeOfAttribute);
+    }
+
+    public List getAllAttributes() {
+        ArrayList<SongAttribute> listOfAllAttr= new ArrayList<>();
+        for (SongAttribute sa : attributes.values()){
+            listOfAllAttr.add(sa);
+        }
+        return listOfAllAttr;
+    }
+
+    public int numberOfAttributes(){
+        return attributes.size();
+    }
+
+
 }
