@@ -8,7 +8,7 @@ import java.util.List;
 public class DataSet {
 
     /**
-     *  Tuples stored in List - index can serve as ID. DataTuple object consists of a 'name' String value and a Map of Enum values.
+     * Tuples stored in List - index can serve as ID. DataTuple object consists of a 'name' String value and a Map of Enum values.
      */
 
     private List<DataTuple> tuples;
@@ -26,13 +26,13 @@ public class DataSet {
         tuples.add(tuple);
     }
 
-    public double dataSetSize(){
+    public double dataSetSize() {
         return tuples.size();
     }
 
-    public String printOutDataSet(){
+    public String printOutDataSet() {
         String dataSet = "DATASET:\n";
-        for (int i = 0; i <tuples.size() ; i++) {
+        for (int i = 0; i < tuples.size(); i++) {
             DataTuple dt = tuples.get(i);
             dataSet += dt.getName() + ": " + dt.printTuple() + " \n";
         }
@@ -43,22 +43,103 @@ public class DataSet {
      * YES 9
      * NO 5
      */
-    public void createDummyDataSet(){
-        addTuple(new DataTuple("Song1", Outlook.sunny, Temp.hot, Humidity.high, Windy.no, Hit_targetClass.no));
-        addTuple(new DataTuple("Song2", Outlook.sunny, Temp.hot, Humidity.high, Windy.yes, Hit_targetClass.no));
-        addTuple(new DataTuple("Song3", Outlook.overcast, Temp.hot, Humidity.high, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song4", Outlook.rainy, Temp.mild, Humidity.high, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song5", Outlook.rainy, Temp.cool, Humidity.normal, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song6", Outlook.rainy, Temp.cool, Humidity.normal, Windy.yes, Hit_targetClass.no));
-        addTuple(new DataTuple("Song7", Outlook.overcast, Temp.cool, Humidity.normal, Windy.yes, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song8", Outlook.sunny, Temp.mild, Humidity.high, Windy.no, Hit_targetClass.no));
-        addTuple(new DataTuple("Song9", Outlook.sunny, Temp.cool, Humidity.normal, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song10", Outlook.rainy, Temp.mild, Humidity.normal, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song11", Outlook.sunny, Temp.mild, Humidity.normal, Windy.yes, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song12", Outlook.overcast, Temp.mild, Humidity.high, Windy.yes, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song13", Outlook.overcast, Temp.hot, Humidity.normal, Windy.no, Hit_targetClass.yes));
-        addTuple(new DataTuple("Song14", Outlook.rainy, Temp.mild, Humidity.high, Windy.yes, Hit_targetClass.no));
+    public void createDummyDataSet() {
+        addTuple(new DataTuple("Blurred Lines",
+                Intro.Between10and21Secs,
+                No_Songwriters.three,
+                ColabWithStar.yes,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("For The Rest Of My Life",
+                Intro.Over21Secs,
+                No_Songwriters.two,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("Nothing Compares 2 U",
+                Intro.Under11Secs,
+                No_Songwriters.one,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("The Emperors New Clothes",
+                Intro.Between10and21Secs,
+                No_Songwriters.one,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("Ice Ice Baby",
+                Intro.Between10and21Secs,
+                No_Songwriters.fourOrMore,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("I Love You",
+                Intro.Over21Secs,
+                No_Songwriters.two,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("Bitter Sweet Symphony",
+                Intro.Between10and21Secs,
+                No_Songwriters.three,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("The Drugs Don't Work",
+                Intro.Over21Secs,
+                No_Songwriters.one,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("Tainted Love",
+                Intro.Under11Secs,
+                No_Songwriters.one,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("Bedsitter",
+                Intro.Between10and21Secs,
+                No_Songwriters.two,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("I Touch Myself",
+                Intro.Under11Secs,
+                No_Songwriters.fourOrMore,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("Love School",
+                Intro.Between10and21Secs,
+                No_Songwriters.two,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
+
+        addTuple(new DataTuple("Mickey",
+                Intro.Under11Secs,
+                No_Songwriters.two,
+                ColabWithStar.no,
+                HitSongwriter.yes,
+                Hit_targetClass.yes));
+
+        addTuple(new DataTuple("Nobody",
+                Intro.Between10and21Secs,
+                No_Songwriters.one,
+                ColabWithStar.no,
+                HitSongwriter.no,
+                Hit_targetClass.no));
     }
-
-
 }

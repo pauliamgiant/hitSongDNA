@@ -1,6 +1,6 @@
 package classifier.Attributes;
 
-public enum Windy {
+public enum ColabWithStar {
     yes,
     no
 }

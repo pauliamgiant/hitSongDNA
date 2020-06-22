@@ -9,7 +9,7 @@ public class DataTupleTest {
 
     @Test
     public void testPrintTuples() {
-        DataTuple test1 = new DataTuple("TupleTest", Outlook.sunny, Temp.hot, Humidity.high, Windy.no, Hit_targetClass.no);
+        DataTuple test1 = new DataTuple("TupleTest", Intro.Under11Secs, No_Songwriters.one, ColabWithStar.yes, HitSongwriter.no, Hit_targetClass.no);
         String printMe = test1.printTuple();
         System.out.println(printMe);
         assertEquals(true,true);

@@ -12,33 +12,33 @@ public class DataTuple {
 
 
     public DataTuple(String name,
-                     Enum outlook,
-                     Enum temp,
-                     Enum humidity,
-                     Enum windy,
+                     Enum intro,
+                     Enum songwriters,
+                     Enum starColab,
+                     Enum hitSongwriter,
                      Enum Hit_targetClass) {
 
         attributes = new LinkedHashMap<>();
         this.name = name;
-        attributes.put("Outlook", new SongAttribute("Outlook", outlook));
-        attributes.put("Temp", new SongAttribute("Temp", temp));
-        attributes.put("Humidity", new SongAttribute("Humidity", humidity));
-        attributes.put("Windy", new SongAttribute("Windy", windy));
+        attributes.put("Intro", new SongAttribute("Intro", intro));
+        attributes.put("No_Songwriters", new SongAttribute("No_Songwriters", songwriters));
+        attributes.put("ColabWithStar", new SongAttribute("ColabWithStar", starColab));
+        attributes.put("HitSongwriter", new SongAttribute("HitSongwriter", hitSongwriter));
         attributes.put("Hit_targetClass", new SongAttribute("Hit_targetClass", Hit_targetClass));
     }
 
     public DataTuple(String name,
-                     Enum outlook,
-                     Enum temp,
-                     Enum humidity,
-                     Enum windy) {
+                     Enum intro,
+                     Enum songwriters,
+                     Enum starColab,
+                     Enum hitSongwriter) {
 
         attributes = new LinkedHashMap<>();
         this.name = name;
-        attributes.put("Outlook", new SongAttribute("Outlook", outlook));
-        attributes.put("Temp", new SongAttribute("Temp", temp));
-        attributes.put("Humidity", new SongAttribute("Humidity", humidity));
-        attributes.put("Windy", new SongAttribute("Windy", windy));
+        attributes.put("Intro", new SongAttribute("Intro", intro));
+        attributes.put("No_Songwriters", new SongAttribute("No_Songwriters", songwriters));
+        attributes.put("ColabWithStar", new SongAttribute("ColabWithStar", starColab));
+        attributes.put("HitSongwriter", new SongAttribute("HitSongwriter", hitSongwriter));
     }
 
 
