@@ -13,8 +13,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,6 +39,15 @@ public class Controller {
     @FXML
     public void showPopup(ActionEvent event) {
         showStage();
+    }
+
+    @FXML
+    public void popup2(ActionEvent event) {
+        Alert pu2 = new Alert(Alert.AlertType.ERROR);
+        pu2.setContentText("Stop fool!");
+        pu2.setHeaderText("Arrrrrggghhhhhh");
+        pu2.setTitle("IMBECILE!!!");
+        pu2.show();
     }
 
     @FXML
@@ -67,7 +78,17 @@ public class Controller {
 
     @FXML
     public void initialize() throws URISyntaxException {
-        // Image image = new Image(getClass().getResource("Resources/1.jpg").toURI().toString());
+       Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+        imView.setImage(image);
+
+        Alert a = new Alert(Alert.AlertType.NONE);
+
+        // action event
+        EventHandler<ActionEvent> event = e -> {
+            a.setAlertType(Alert.AlertType.CONFIRMATION);
+            a.show();
+        };
+        popMe.setOnAction(event);
 
         okButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -136,7 +157,7 @@ public class Controller {
         //NaiveBayes paulsCl = new NaiveBayes();
         catchMe.setText("Classifier go here");
        // System.out.println(paulsCl.testing());
-        //imView.setImage(image);
+
         ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
                 new PieChart.Data("I-IV-V", 13),
                 new PieChart.Data("i-VII-VI-VII", 25),

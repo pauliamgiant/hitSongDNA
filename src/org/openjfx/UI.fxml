@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
+<?import javafx.scene.image.ImageView?>
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
@@ -33,17 +34,23 @@
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
+
                 <Button fx:id="okButton" text="OK" defaultButton="true"/>
                 <Button text="Cancel" onAction="#showPopup"/>
                 <Button fx:id="catchMe"/>
                 <Button fx:id="popMe" text="Popup"/>
+                <Button text="Error Popup" onAction="#popup2"/>
             </HBox>
         </VBox>
 
     </top>
     <left>
         <VBox fx:id="sideBarLeft">
-            <Label text="Select Colour:"/>
+<!--            <Label text="Select Colour:"/>-->
+            <ImageView fx:id="imView">
+
+            </ImageView>
+
 
             <ColorPicker/>
 
