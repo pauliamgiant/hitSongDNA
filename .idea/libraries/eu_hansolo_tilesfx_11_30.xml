@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="eu.hansolo:tilesfx:11.30" type="repository">
+    <properties include-transitive-deps="false" maven-id="eu.hansolo:tilesfx:11.30" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/tilesfx-11.30.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

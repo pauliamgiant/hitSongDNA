@@ -21,9 +21,9 @@ public class LineRepetitionAnalysisTest {
         dummyData.add("Like a bird without a song");
         dummyData.add("Like a bird without a song");
         int tally = LineRepetitionAnalysis.analyseRepetition(dummyData);
-        System.out.println(tally);
+        //System.out.println(tally);
 
 
-        assertEquals(true,true);
+        assertEquals(5,tally);
     }
 }

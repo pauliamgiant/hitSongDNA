@@ -4,15 +4,16 @@ import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -35,6 +36,10 @@ public class Controller {
 
     @FXML
     private ImageView imView;
+
+    @FXML
+    private FontAwesomeIconView iconView;
+
 
     @FXML
     public void showPopup(ActionEvent event) {
@@ -72,13 +77,22 @@ public class Controller {
     private VBox songMetrics;
 
     @FXML
-    public Button getPopMe(){
+    public Button getPopMe() {
         return popMe;
     }
 
+
     @FXML
     public void initialize() throws URISyntaxException {
-       Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+
+
+        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
+        iconView.setSize("2em");
+        iconView.setFill(Color.CYAN);
+        popMe.setGraphic(iconView);
+
+
+        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
         imView.setImage(image);
 
         Alert a = new Alert(Alert.AlertType.NONE);
@@ -156,24 +170,41 @@ public class Controller {
 
         //NaiveBayes paulsCl = new NaiveBayes();
         catchMe.setText("Classifier go here");
-       // System.out.println(paulsCl.testing());
+        // System.out.println(paulsCl.testing());
 
-        ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
-                new PieChart.Data("I-IV-V", 13),
-                new PieChart.Data("i-VII-VI-VII", 25),
-                new PieChart.Data("VI-VII-i-i", 10),
-                new PieChart.Data("I-V-vi-IV", 22),
-                new PieChart.Data("i-i-iv-iv", 30));
-        final PieChart chart = new PieChart(myPieG);
+//        ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
+//                new PieChart.Data("I-IV-V", 13),
+//                new PieChart.Data("i-VII-VI-VII", 25),
+//                new PieChart.Data("VI-VII-i-i", 10),
+//                new PieChart.Data("I-V-vi-IV", 22),
+//                new PieChart.Data("i-i-iv-iv", 30));
+//        final PieChart chart = new PieChart(myPieG);
+//
+//        chart.setPrefSize(400, 400);
 
-        chart.setPrefSize(400, 400);
+        ChartData chartData1 = new ChartData("I-IV-V", 24.0, Tile.DARK_BLUE);
+        ChartData chartData2 = new ChartData("i-VII-VI-VII", 10.0, Tile.BLUE);
+        ChartData chartData3 = new ChartData("VI-VII-i-i", 12.0, Tile.GRAY);
+        ChartData chartData4 = new ChartData("I-V-vi-IV", 13.0, Tile.GREEN);
+        ChartData chartData5 = new ChartData("Item 5", 13.0, Tile.BLUE);
+        ChartData chartData6 = new ChartData("Item 6", 13.0, Tile.BLUE);
+        ChartData chartData7 = new ChartData("Item 7", 13.0, Tile.BLUE);
+        ChartData chartData8 = new ChartData("Item 8", 13.0, Tile.BLUE);
 
+        Tile donutChartTile = TileBuilder.create()
+                .skinType(Tile.SkinType.DONUT_CHART)
+                .prefSize(800, 800)
+                .title("Most Common Chords")
+                .text("")
+                .textVisible(false)
+                .chartData(chartData1, chartData2, chartData3, chartData4)
+                .build();
 
-        myPie.getChildren().add(chart);
+        myPie.getChildren().add(donutChartTile);
 
-        chart.setTitle("Chord Progressions");
-        chart.setLabelLineLength(10);
-        chart.setLegendSide(Side.LEFT);
+//        chart.setTitle("Chord Progressions");
+//        chart.setLabelLineLength(10);
+//        chart.setLegendSide(Side.LEFT);
 
         //chart.setAnimated(true);
 
@@ -201,11 +232,11 @@ public class Controller {
 
     public static void showPopup2(Window win) {
         Popup popup = new Popup();
-        popup.setX(300); popup.setY(200);
+        popup.setX(300);
+        popup.setY(200);
         popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
         popup.show(win);
-}
-
+    }
 
 
 }

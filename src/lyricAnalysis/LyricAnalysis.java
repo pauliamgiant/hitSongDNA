@@ -12,7 +12,7 @@ public class LyricAnalysis {
     private int numberOfRhymes;
     private int gradeLevelOfLyrics;
     private int repetitionOfTitle;
-    private Archetypes archetype;
+
     //    int numberOfTimesWordsRepeated;
 
     public LyricAnalysis() {
@@ -53,7 +53,5 @@ public class LyricAnalysis {
         return repetitionOfTitle;
     }
 
-    public Archetypes getArchetype() {
-        return archetype;
-    }
+
 }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding = "UTF-8" ?>
 
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import eu.hansolo.medusa.Gauge?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-
-<?import javafx.scene.image.ImageView?>
+<?import eu.hansolo.tilesfx.Tile?>
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
@@ -30,22 +32,38 @@
 
             </MenuBar>
 
-            <HBox spacing="10.0">
+            <HBox spacing="10.0" fx:id="buttonStrip">
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
 
                 <Button fx:id="okButton" text="OK" defaultButton="true"/>
                 <Button text="Cancel" onAction="#showPopup"/>
-                <Button fx:id="catchMe"/>
-                <Button fx:id="popMe" text="Popup"/>
+                <Button fx:id="catchMe">
+                <FontAwesomeIconView fx:id="iconView">
+                </FontAwesomeIconView></Button>
+                <Button fx:id="popMe"/>
                 <Button text="Error Popup" onAction="#popup2"/>
+
+
+
+
+
+
+
+
+
+<ProgressIndicator></ProgressIndicator>
+
+
             </HBox>
         </VBox>
 
     </top>
     <left>
         <VBox fx:id="sideBarLeft">
+
+
 <!--            <Label text="Select Colour:"/>-->
             <ImageView fx:id="imView">
 
@@ -84,7 +102,7 @@
                                                 animated="true"
                                                 animationDuration="500"
                                                 areaTextVisible="true"
-                                                title="PREDICTION"
+                                                title=""
                                                 shadowsEnabled="true"
                                                 prefWidth="400"
                                                 prefHeight="400"
@@ -100,35 +118,45 @@
 
                         <HBox GridPane.columnIndex="2"
                               GridPane.rowIndex="2" spacing="20">
+                            <Tile skinType="LED"
+                                  prefWidth="300"
+                                  prefHeight="300"
+                                  description="PREDICTION"
+                                  active="true"
+                                  activeColor="aqua">
 
-                            <Gauge fx:id="gauge2"
 
-                                   alert="true"
-                                   alertMessage="Almost full"
-                                   animated="true"
-                                   animationDuration="500"
-                                   areaTextVisible="true"
-                                   layoutX="123.0"
-                                   layoutY="113.0"
-                                   lcdVisible="true"
-                                   lcdFont="ELEKTRA"
-                                   tickLabelsVisible="false"
-                                   tickMarkColor="#292929"
-                                   skinType="MODERN"
-                                   decimals="0"
-                                   maxValue="1"
-                                   unit="HIT"
-                                   unitColor="aqua"
-                                   valueColor="aqua"
-                                   value="1"
 
-                                   title="CLASSIFICATION"
-                                   shadowsEnabled="true"
-                                   backgroundPaint="white"
-                                   foregroundPaint="black"
-                                   titleColor="WHITE"
+                            </Tile>
 
-                            />
+<!--                            <Gauge fx:id="gauge2"-->
+
+<!--                                   alert="true"-->
+<!--                                   alertMessage="Almost full"-->
+<!--                                   animated="true"-->
+<!--                                   animationDuration="500"-->
+<!--                                   areaTextVisible="true"-->
+<!--                                   layoutX="123.0"-->
+<!--                                   layoutY="113.0"-->
+<!--                                   lcdVisible="true"-->
+<!--                                   lcdFont="ELEKTRA"-->
+<!--                                   tickLabelsVisible="false"-->
+<!--                                   tickMarkColor="#292929"-->
+<!--                                   skinType="MODERN"-->
+<!--                                   decimals="0"-->
+<!--                                   maxValue="1"-->
+<!--                                   unit="HIT"-->
+<!--                                   unitColor="aqua"-->
+<!--                                   valueColor="aqua"-->
+<!--                                   value="1"-->
+
+<!--                                   title="CLASSIFICATION"-->
+<!--                                   shadowsEnabled="true"-->
+<!--                                   backgroundPaint="white"-->
+<!--                                   foregroundPaint="black"-->
+<!--                                   titleColor="WHITE"-->
+
+<!--                            />-->
 
                             <Gauge fx:id="gauge3"
                                    alert="true"
@@ -157,6 +185,7 @@
                                    foregroundPaint="black"
                                    titleColor="WHITE"
                             />
+
                         </HBox>
                     </VBox>
 
@@ -175,6 +204,7 @@
             </Tab>
             <Tab fx:id="tab2" text="Dataset Metrics">
                 <VBox fx:id="myPie">
+
                 </VBox>
             </Tab>
             <Tab fx:id="tab3" text="Song Metrics">
