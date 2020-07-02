@@ -23,9 +23,9 @@ public class StringCounterTest {
         results = StringCounter.countStrings(testList);
         System.out.println(results);
         HashMap<String, Integer> finalResults = results;
-        Optional<Integer> count = Optional.ofNullable(results.get("Sentence1")).map(m -> finalResults.get("Sentence1"));
-        Optional<Integer> count2 = Optional.ofNullable(results.get("Sentence2")).map(m -> finalResults.get("Sentence2"));
-        Optional<Integer> count3 = Optional.ofNullable(results.get("Sentence3")).map(m -> finalResults.get("Sentence3"));
+        Optional<Integer> count = Optional.ofNullable(results.get("sentence1")).map(m -> finalResults.get("sentence1"));
+        Optional<Integer> count2 = Optional.ofNullable(results.get("sentence2")).map(m -> finalResults.get("sentence2"));
+        Optional<Integer> count3 = Optional.ofNullable(results.get("sentence3")).map(m -> finalResults.get("sentence3"));
         assertEquals(count,Optional.of(3));
         assertEquals(count,Optional.of(3));
         assertEquals(count,Optional.of(3));

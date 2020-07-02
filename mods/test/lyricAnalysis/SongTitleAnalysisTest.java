@@ -9,19 +9,26 @@ import static org.testng.Assert.assertEquals;
 
 public class SongTitleAnalysisTest {
 
+    List<String> song;
 
 
-    @Test
+    @Test(groups = { "AllTests","LyricAnalysis"})
     public void testTitleInLyrics() throws FileNotFoundException {
-        TextParser tp = new TextParser();
-        List<String> song = tp.getLines();
+        song = MockDataSongNothingCompares.getTestSong();
         SongTitleAnalysis sta = new SongTitleAnalysis("nothing compares to you");
         System.out.println(sta.titleInLyrics(song));
-        assertEquals(sta.titleInLyrics(song),true);
+        assertEquals(sta.titleInLyrics(song), true);
     }
 
-    @Test
-    public void testSongTitleRepeats() {
-        assertEquals(true,true);
+    @Test(groups = { "AllTests","LyricAnalysis"})
+    public void testSongTitleRepeats() throws FileNotFoundException {
+        song = MockDataSongNothingCompares.getTestSong();
+        SongTitleAnalysis sta = new SongTitleAnalysis("nothing compares to you");
+        System.out.println(sta.songTitleRepeats(song));
+        assertEquals(true, true);
     }
+
+
+
+
 }
