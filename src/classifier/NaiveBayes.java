@@ -1,7 +1,5 @@
 package classifier;
 
-import classifier.Attributes.Hit_targetClass;
-
 import java.util.List;
 
 public class NaiveBayes implements Classifier {
@@ -19,7 +17,7 @@ public class NaiveBayes implements Classifier {
 
         for (DataTuple dt : dataSet.getTuples()
         ) {
-            if (dt.getTargetClass().getValue().equals(Hit_targetClass.yes)) {
+            if (dt.getTargetClass().getValue().equals("HIT")) {
                 hitCount++;
             } else {
                 missCount++;
@@ -48,7 +46,7 @@ public class NaiveBayes implements Classifier {
     }
 
 
-    public double calculateConditionalProbOfAttribute(SongAttribute attribute, Hit_targetClass hitValue) {
+    public double calculateConditionalProbOfAttribute(SongAttribute attribute, String hitValue) {
         int count = 0;
         double probability = 0;
         for (DataTuple dt : dataSet.getTuples()
@@ -58,7 +56,7 @@ public class NaiveBayes implements Classifier {
                 count++;
             }
         }
-        if (hitValue.equals(Hit_targetClass.yes)) {
+        if (hitValue.equals("HIT")) {
             probability = count / hitCount;
         } else {
             probability = count / missCount;
@@ -92,11 +90,14 @@ public class NaiveBayes implements Classifier {
         List<SongAttribute> allAttributes = toClassify.getAllAttributes();
         System.out.println("condProb_HIT");
         for (int i = 0; i < allAttributes.size(); i++) {
-            condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), Hit_targetClass.yes);
+            condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "HIT");
+
         }
         System.out.println("condProb_MISS");
         for (int i = 0; i < allAttributes.size(); i++) {
-            condProbMiss[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), Hit_targetClass.no);
+            condProbMiss[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "miss");
+
+
         }
         double postProbHit = calculatePosteriorProbability(condProbHit);
         double postProbMiss = calculatePosteriorProbability(condProbMiss);

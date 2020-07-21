@@ -1,7 +1,6 @@
 package classifier;
 
-import classifier.Attributes.*;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,9 @@ public class DataSet {
 
     private List<DataTuple> tuples;
 
-    public DataSet() {
+    public DataSet() throws FileNotFoundException {
         tuples = new ArrayList<DataTuple>();
-        createDummyDataSet();
+        buildDataSet();
     }
 
     public List<DataTuple> getTuples() {
@@ -34,7 +33,7 @@ public class DataSet {
         String dataSet = "DATASET:\n";
         for (int i = 0; i < tuples.size(); i++) {
             DataTuple dt = tuples.get(i);
-            dataSet += dt.getName() + ": " + dt.printTuple() + " \n";
+            dataSet +=  dt.printTuple() + " \n";
         }
         return dataSet;
     }
@@ -43,103 +42,113 @@ public class DataSet {
      * YES 9
      * NO 5
      */
-    public void createDummyDataSet() {
-        addTuple(new DataTuple("Blurred Lines",
-                Intro.Between10and21Secs,
-                No_Songwriters.three,
-                ColabWithStar.yes,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
 
-        addTuple(new DataTuple("For The Rest Of My Life",
-                Intro.Over21Secs,
-                No_Songwriters.two,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
+    public void buildDataSet() throws FileNotFoundException {
 
-        addTuple(new DataTuple("Nothing Compares 2 U",
-                Intro.Under11Secs,
-                No_Songwriters.one,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("The Emperors New Clothes",
-                Intro.Between10and21Secs,
-                No_Songwriters.one,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
-
-        addTuple(new DataTuple("Ice Ice Baby",
-                Intro.Between10and21Secs,
-                No_Songwriters.fourOrMore,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("I Love You",
-                Intro.Over21Secs,
-                No_Songwriters.two,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
-
-        addTuple(new DataTuple("Bitter Sweet Symphony",
-                Intro.Between10and21Secs,
-                No_Songwriters.three,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("The Drugs Don't Work",
-                Intro.Over21Secs,
-                No_Songwriters.one,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
-
-        addTuple(new DataTuple("Tainted Love",
-                Intro.Under11Secs,
-                No_Songwriters.one,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("Bedsitter",
-                Intro.Between10and21Secs,
-                No_Songwriters.two,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
-
-        addTuple(new DataTuple("I Touch Myself",
-                Intro.Under11Secs,
-                No_Songwriters.fourOrMore,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("Love School",
-                Intro.Between10and21Secs,
-                No_Songwriters.two,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
-
-        addTuple(new DataTuple("Mickey",
-                Intro.Under11Secs,
-                No_Songwriters.two,
-                ColabWithStar.no,
-                HitSongwriter.yes,
-                Hit_targetClass.yes));
-
-        addTuple(new DataTuple("Nobody",
-                Intro.Between10and21Secs,
-                No_Songwriters.one,
-                ColabWithStar.no,
-                HitSongwriter.no,
-                Hit_targetClass.no));
+        ImportARFFDataset iad = new ImportARFFDataset();
+        List<String[]> allTuples = iad.getTuples();
+        for (int i = 0; i < allTuples.size(); i++) {
+            addTuple(new DataTuple(true,allTuples.get(i)));
+        }
     }
+
+//    public void createDummyDataSet() {
+//        addTuple(new DataTuple("Blurred Lines",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.three,
+//                ColabWithStar.yes,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("For The Rest Of My Life",
+//                INTRO_LEN.Over21Secs,
+//                No_Songwriters.two,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("Nothing Compares 2 U",
+//                INTRO_LEN.Under11Secs,
+//                No_Songwriters.one,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("The Emperors New Clothes",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.one,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("Ice Ice Baby",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.fourOrMore,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("I Love You",
+//                INTRO_LEN.Over21Secs,
+//                No_Songwriters.two,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("Bitter Sweet Symphony",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.three,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("The Drugs Don't Work",
+//                INTRO_LEN.Over21Secs,
+//                No_Songwriters.one,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("Tainted Love",
+//                INTRO_LEN.Under11Secs,
+//                No_Songwriters.one,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("Bedsitter",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.two,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("I Touch Myself",
+//                INTRO_LEN.Under11Secs,
+//                No_Songwriters.fourOrMore,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("Love School",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.two,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//
+//        addTuple(new DataTuple("Mickey",
+//                INTRO_LEN.Under11Secs,
+//                No_Songwriters.two,
+//                ColabWithStar.no,
+//                HitSongwriter.yes,
+//                Hit_targetClass.yes));
+//
+//        addTuple(new DataTuple("Nobody",
+//                INTRO_LEN.Between10and21Secs,
+//                No_Songwriters.one,
+//                ColabWithStar.no,
+//                HitSongwriter.no,
+//                Hit_targetClass.no));
+//    }
 }
