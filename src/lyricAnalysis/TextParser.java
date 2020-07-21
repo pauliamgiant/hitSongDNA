@@ -19,7 +19,9 @@ public class TextParser {
         Scanner fileScanner = new Scanner(new File("src/org/openjfx/Resources/lyrics.txt"));
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
-            songLines.add(line);
+            if(!line.equals("")) {
+                songLines.add(line);
+            }
         }
         return songLines;
     }

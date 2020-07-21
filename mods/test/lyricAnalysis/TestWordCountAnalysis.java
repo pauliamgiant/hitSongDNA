@@ -1,6 +1,5 @@
 package lyricAnalysis;
 
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -15,7 +14,7 @@ public class TestWordCountAnalysis {
     List<String> nothingCompares;
     WordCountAnalysis wca;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "LyricAnalysis"})
     public void setUp() {
         testList = new ArrayList<>();
         testList.add("This is a sentence");
@@ -23,15 +22,12 @@ public class TestWordCountAnalysis {
         testList.add("Hallo you troublesome toad!!");
         testList.add("Love you Love toad!!");
         testList.add("Hallo Girl troublesome Baby!! 99");
-
         nothingCompares = MockDataSongNothingCompares.getTestSong();
     }
 
-    @AfterMethod
-    public void tearDown() {
-    }
 
-    @Test
+
+    @Test(groups = {"AllTests", "LyricAnalysis"})
     public void testTotalNumberOfWords() {
         wca = new WordCountAnalysis(testList);
         assertEquals(wca.totalNumberOfWords(), 21);
@@ -40,7 +36,7 @@ public class TestWordCountAnalysis {
         assertEquals(wca.totalNumberOfWords(), 210);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "LyricAnalysis"})
     public void testNumberOfDistinctWords() {
         WordCountAnalysis wca = new WordCountAnalysis(testList);
         // System.out.println(wca.numberOfDistinctWords());
@@ -50,7 +46,7 @@ public class TestWordCountAnalysis {
         assertEquals(wca.numberOfDistinctWords(), 107);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "LyricAnalysis"})
     public void testTotalNumberOfHitWords() {
         WordCountAnalysis wca = new WordCountAnalysis(testList);
         // System.out.println(wca.totalNumberOfHitWords());
@@ -60,10 +56,9 @@ public class TestWordCountAnalysis {
         assertEquals(wca.totalNumberOfHitWords(), 7);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "LyricAnalysis"})
     public void testNumberOfDistinctHitWordsUsed() {
         WordCountAnalysis wca = new WordCountAnalysis(testList);
-        //System.out.println(wca.numberOfDistinctHitWordsUsed());
         assertEquals(wca.numberOfDistinctHitWordsUsed(), 3);
         wca = new WordCountAnalysis(nothingCompares);
         assertEquals(wca.numberOfDistinctHitWordsUsed(), 5);

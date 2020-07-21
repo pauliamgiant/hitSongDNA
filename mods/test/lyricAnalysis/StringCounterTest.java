@@ -29,8 +29,6 @@ public class StringCounterTest {
         assertEquals(count,Optional.of(3));
         assertEquals(count,Optional.of(3));
         assertEquals(count,Optional.of(3));
-
-
-
     }
+
 }

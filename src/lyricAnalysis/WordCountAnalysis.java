@@ -15,47 +15,25 @@ public class WordCountAnalysis {
         this.lyrics = lyrics;
     }
 
-
-    private List<String> listOfAllWords() {
-        List<String> allWords = new ArrayList<>();
-        for (int i = 0; i < lyrics.size(); i++) {
-            String line = lyrics.get(i).toUpperCase();
-            //String[] arr = line.split("[^a-zA-Z]+");
-            String[] arr = line.replaceAll("[^a-zA-Z0-9 ]", "").split("\\s+");
-            allWords.addAll(Arrays.asList(arr));
-        }
-        int i = 0;
-        int size = allWords.size();
-        for (; i < size; i++) {
-            String word = allWords.get(i);
-            if (word.matches("^\\s*$")) {
-                allWords.remove(i);
-                i--;
-                size--;
-            }
-        }
-        return allWords;
-    }
-
     private Set<String> setOfDistinctWords() {
         Set<String> distinctWords = new HashSet<>();
-        distinctWords.addAll(listOfAllWords());
+        distinctWords.addAll(WordExtractor.listOfAllWords(lyrics));
         return distinctWords;
     }
 
     public int totalNumberOfWords() {
-       // System.out.println(listOfAllWords());
-        return listOfAllWords().size();
+        // System.out.println(listOfAllWords());
+        return WordExtractor.listOfAllWords(lyrics).size();
     }
 
     public int numberOfDistinctWords() {
-        System.out.println(setOfDistinctWords());
+       // System.out.println(setOfDistinctWords());
         return setOfDistinctWords().size();
     }
 
     public int totalNumberOfHitWords() {
         int count = 0;
-        List<String> loaw = listOfAllWords();
+        List<String> loaw = WordExtractor.listOfAllWords(lyrics);
         for (String word : loaw) {
             if (hitWords.contains(word.toUpperCase())) {
                 count++;
@@ -74,7 +52,7 @@ public class WordCountAnalysis {
                 distinctHitWords.add(word);
             }
         }
-        System.out.println(distinctHitWords);
+        //System.out.println(distinctHitWords);
         return distinctHitWords.size();
     }
 

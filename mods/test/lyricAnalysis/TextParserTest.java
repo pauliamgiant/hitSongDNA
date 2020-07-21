@@ -23,7 +23,7 @@ public class TextParserTest {
     public void testGetLines() throws FileNotFoundException {
         TextParser parser = new TextParser();
         List<String> lines = parser.getLines();
-        assertEquals(lines.size(),40 );
+        assertEquals(lines.size(),33 );
         String check = lines.get(0);
         assertEquals(true,check.endsWith("days"));
     }

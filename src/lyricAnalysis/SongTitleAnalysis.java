@@ -14,12 +14,10 @@ public class SongTitleAnalysis {
     }
 
     public boolean titleInLyrics(List<String> lyrics) {
-        for (int i = 0; i < lyrics.size(); i++) {
-            if (lyrics.get(i).toLowerCase().equalsIgnoreCase(songTitle.toLowerCase())) {
+            if(songTitleRepeats(lyrics)>0){
                 return true;
             }
-        }
-        return false;
+            else return false;
     }
 
     public int songTitleRepeats(List<String> lyrics) {
@@ -28,15 +26,19 @@ public class SongTitleAnalysis {
             int fromIndex = 0;
             int indexFound = 0;
             String checkMeForTitle = lyrics.get(i).toLowerCase();
+            System.out.println(checkMeForTitle);
             indexFound = checkMeForTitle.indexOf(songTitle.toLowerCase(), fromIndex);
+            System.out.println(indexFound);
             while (indexFound != -1) {
                 count++;
-                fromIndex++;
+                fromIndex = indexFound+1;
                 indexFound = checkMeForTitle.indexOf(songTitle.toLowerCase(), fromIndex);
             }
         }
         return count;
     }
+
+
 
 
 }
