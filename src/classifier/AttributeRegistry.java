@@ -1,6 +1,6 @@
 package classifier;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,7 +46,7 @@ public class AttributeRegistry {
     private Map<String,Set> attributesAndValues;
 
     private AttributeRegistry() {
-        attributesAndValues = new HashMap<>();
+        attributesAndValues = new LinkedHashMap<>();
     }
 
     public static AttributeRegistry getInstance() {
@@ -74,5 +74,10 @@ public class AttributeRegistry {
     }
     public String printAttributesAndVals() {
         return attributesAndValues.toString();
+    }
+
+    public void flushRegistry(){
+        attributesAndValues = new LinkedHashMap<>();
+
     }
 }

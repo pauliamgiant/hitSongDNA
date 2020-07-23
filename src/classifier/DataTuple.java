@@ -10,23 +10,6 @@ public class DataTuple {
     private Map<String, SongAttribute> attributes;
 
 
-
-//    public DataTuple(String name,
-//                     Enum intro,
-//                     Enum songwriters,
-//                     Enum starColab,
-//                     Enum hitSongwriter,
-//                     Enum Hit_targetClass) {
-//
-//        attributes = new LinkedHashMap<>();
-//        this.name = name;
-//        attributes.put("INTRO_LEN", new SongAttribute("INTRO_LEN", intro));
-//        attributes.put("No_Songwriters", new SongAttribute("No_Songwriters", songwriters));
-//        attributes.put("ColabWithStar", new SongAttribute("ColabWithStar", starColab));
-//        attributes.put("HitSongwriter", new SongAttribute("HitSongwriter", hitSongwriter));
-//        attributes.put("Hit_targetClass", new SongAttribute("Hit_targetClass", Hit_targetClass));
-//    }
-
     public DataTuple(Boolean knownTarget,String[] values ){
         this(values);
         attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[29]));
@@ -67,32 +50,6 @@ public class DataTuple {
 
     }
 
-    public DataTuple(String INTRO_LEN,
-                     String TEMPO,
-                     String GENRE,
-                     String LEAD_SING,
-                     String CHART_POS) {
-
-        attributes = new LinkedHashMap<>();
-        attributes.put("INTRO_LEN", new SongAttribute("INTRO_LEN", INTRO_LEN));
-        attributes.put("TEMPO", new SongAttribute("TEMPO", TEMPO));
-        attributes.put("GENRE", new SongAttribute("GENRE", GENRE));
-        attributes.put("LEAD_SING", new SongAttribute("LEAD_SING", LEAD_SING));
-        attributes.put("CHART_POS", new SongAttribute("CHART_POS", CHART_POS));
-    }
-
-    public DataTuple(String INTRO_LEN,
-                     String TEMPO,
-                     String GENRE,
-                     String LEAD_SING) {
-
-        attributes = new LinkedHashMap<>();
-        attributes.put("INTRO_LEN", new SongAttribute("INTRO_LEN", INTRO_LEN));
-        attributes.put("TEMPO", new SongAttribute("TEMPO", TEMPO));
-        attributes.put("GENRE", new SongAttribute("GENRE", GENRE));
-        attributes.put("LEAD_SING", new SongAttribute("LEAD_SING", LEAD_SING));
-    }
-
 
     public String printTuple() {
 
@@ -108,14 +65,18 @@ public class DataTuple {
 
 
     public SongAttribute getTargetClass() {
-        return attributes.get("CHART_POS");
+
+        if(attributes.get("CHART_POS")!=null){
+            return attributes.get("CHART_POS");
+        }
+        else return null;
     }
 
     public SongAttribute getAttribute(String typeOfAttribute) {
         return attributes.get(typeOfAttribute);
     }
 
-    public List getAllAttributes() {
+    public List getAllTupleAttributeValues() {
         ArrayList<SongAttribute> listOfAllAttr= new ArrayList<>();
         for (SongAttribute sa : attributes.values()){
             listOfAllAttr.add(sa);

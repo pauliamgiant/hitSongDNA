@@ -87,7 +87,7 @@ public class NaiveBayes implements Classifier {
         double[] condProbHit = new double[toClassify.numberOfAttributes()];
         double[] condProbMiss = new double[toClassify.numberOfAttributes()];
 
-        List<SongAttribute> allAttributes = toClassify.getAllAttributes();
+        List<SongAttribute> allAttributes = toClassify.getAllTupleAttributeValues();
         System.out.println("condProb_HIT");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "HIT");

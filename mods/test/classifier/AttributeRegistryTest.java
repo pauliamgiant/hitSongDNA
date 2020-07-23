@@ -12,22 +12,19 @@ import static org.testng.Assert.assertEquals;
 
 public class AttributeRegistryTest {
 
+    DataSet dataset;
+
     @BeforeMethod
     public void setUp() {
+        dataset = null;
     }
 
     @AfterMethod
     public void tearDown() {
+        dataset = null;
     }
 
-    @Test
-    public void testUpdateAttributeDataFromARFF() throws FileNotFoundException {
-        Map<String, Set> testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
-        assertEquals(0,testMapEmpty.size());
-        DataSet ds = new DataSet();
-        testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
-        assertEquals(30,testMapEmpty.size());
-    }
+
 
     @Test
     public void testValidAttributeValue() {
@@ -44,8 +41,21 @@ public class AttributeRegistryTest {
 
     @Test
     public void testPrintAttributesAndVals() throws FileNotFoundException {
-        DataSet ds2 = new DataSet();
 
+        System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
+        assertEquals(AttributeRegistry.getInstance().printAttributesAndVals().length(),2);
+        dataset = new DataSet();
+        assertEquals(AttributeRegistry.getInstance().printAttributesAndVals().length(),2017);
 
+    }
+
+    @Test
+    public void testUpdateAttributeDataFromARFF() throws FileNotFoundException {
+        AttributeRegistry.getInstance().flushRegistry();
+        Map<String, Set> testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
+        assertEquals(testMapEmpty.size(),0);
+        dataset = new DataSet();
+        testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
+        assertEquals(testMapEmpty.size(),30);
     }
 }
