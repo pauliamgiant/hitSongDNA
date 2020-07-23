@@ -92,11 +92,17 @@ public class NaiveBayes implements Classifier {
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "HIT");
 
+
         }
         System.out.println("condProb_MISS");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbMiss[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "miss");
-
+            // here is the process of offsetting an attribute based on a 0 value which disrupts the conditional
+            //probability algorithm
+            if(condProbHit[i]==0||condProbMiss[i]==0){
+                condProbHit[i] = 1;
+                condProbMiss[i] = 1;
+            }
 
         }
         double postProbHit = calculatePosteriorProbability(condProbHit);

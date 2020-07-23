@@ -38,11 +38,6 @@ public class DataSet {
         return dataSet;
     }
 
-    /**
-     * YES 9
-     * NO 5
-     */
-
     public void buildDataSet() throws FileNotFoundException {
 
         ImportARFFDataset iad = new ImportARFFDataset();

@@ -5,14 +5,14 @@ public class SongAttribute {
     private String name;
     private String value;
 
-    public SongAttribute(String nameOfAttribute, String value){
-        if(validValue(nameOfAttribute,value)){
-        this.name = nameOfAttribute;
-        this.value = value;}
-        else{
-           // throw new InvalidPropertiesFormatException();
+    public SongAttribute(String nameOfAttribute, String value) throws IllegalArgumentException {
+        if (validValue(nameOfAttribute, value)) {
+            this.name = nameOfAttribute;
+            this.value = value;
+        } else {
+            throw new IllegalArgumentException();
         }
-        }
+    }
 
     public String getName() {
         return name;
@@ -22,10 +22,8 @@ public class SongAttribute {
         return value;
     }
 
-    private boolean validValue(String nameOfAttribute,String value){
-
-        return true;
-
+    private boolean validValue(String nameOfAttribute, String value) {
+        return AttributeRegistry.getInstance().validAttributeValue(nameOfAttribute, value);
     }
 
 }
