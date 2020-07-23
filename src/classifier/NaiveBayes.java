@@ -114,10 +114,11 @@ public class NaiveBayes implements Classifier {
         System.out.println(missResult);
 
         if (hitResult > missResult) {
+            System.out.println("Hit Probability > Miss Probability");
             return true;
         } else {
+            System.out.println("Miss Probability > Hit Probability");
             return false;
-
         }
     }
 }

@@ -1,5 +1,6 @@
 package classifier;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,9 +43,10 @@ public class AttributeRegistry {
 
 
     private static AttributeRegistry INSTANCE;
-    private Map<String, Set> attributesAndValues;
+    private Map<String,Set> attributesAndValues;
 
     private AttributeRegistry() {
+        attributesAndValues = new HashMap<>();
     }
 
     public static AttributeRegistry getInstance() {
@@ -59,6 +61,10 @@ public class AttributeRegistry {
         attributesAndValues = mapOfAttributes;
     }
 
+    public Map<String, Set> getAttributesAndValues(){
+        return attributesAndValues;
+    }
+
     public boolean validAttributeValue(String attributeName, String value) {
         if(attributesAndValues.get(attributeName).contains(value)==false){
             System.out.println(value + " is an INVALID value for "+attributeName);
@@ -66,8 +72,7 @@ public class AttributeRegistry {
         }
         return true;
     }
-
-    public void printAttributesAndVals() {
-        System.out.println(attributesAndValues);
+    public String printAttributesAndVals() {
+        return attributesAndValues.toString();
     }
 }
