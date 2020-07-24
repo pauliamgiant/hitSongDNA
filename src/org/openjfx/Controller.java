@@ -52,8 +52,8 @@ public class Controller {
     @FXML
     private Form toplineAttributes;
 
-
-
+    @FXML
+    private Form lyricAttributes;
 
 
     @FXML
@@ -171,8 +171,47 @@ public class Controller {
         tempos.add("120-130");
         tempos.add("above 130");
 
+
+        songAttributes = Form.of(
+                Group.of(
+
+
+                        Field.ofStringType("")
+                                .label("Song Title")
+                                .required("")
+                                .tooltip("The title of your song.")
+                        .placeholder("Please enter the title of your song here."),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Intro Length")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Tempo")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Genre")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .placeholder("Please select type of Voice(s from the below)")
+                                .label("Lead Singer(s)")
+                                .required("This field can’t be empty")
+                               ,
+
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Basic Drum Pattern")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Co-writer with Top 40 history")
+                )
+        );
+
+
+
+
         chordAttributes = Form.of(
-                Group.of(Field.ofBooleanType(false)
+                Group.of(Field.ofSingleSelectionType(tempos)
+                                .label("Key of Verse")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
                                 .label("Verse Starts on Chord I"),
                         Field.ofSingleSelectionType(tempos)
                                 .label("Verse Ionian")
@@ -183,7 +222,7 @@ public class Controller {
                         Field.ofBooleanType(false)
                                 .label("Vs/Ch same chords"),
                         Field.ofBooleanType(false)
-                                .label("Vs has Key Change")  ,
+                                .label("Vs has Key Change"),
                         Field.ofBooleanType(false)
                                 .label("Chorus Starts on Chord I"),
                         Field.ofSingleSelectionType(tempos)
@@ -197,60 +236,48 @@ public class Controller {
         );
 
 
-        songAttributes = Form.of(
-                Group.of(
-
-
-                        Field.ofStringType("")
-                                .label("Song Title")
-                                .required("")
-                                .tooltip("The title of your song."),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Intro Length")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Tempo")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Genre")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Lead Singer(s)")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Key of Verse")
-                                .required("This field can’t be empty")
-                )
-        );
-
         toplineAttributes = Form.of(
-Group.of(
-        Field.ofSingleSelectionType(tempos)
-                .label("Vs Topline start note")
-                .required("This field can’t be empty"),
-        Field.ofSingleSelectionType(tempos)
-                .label("Vs No. notes in Topline")
-                .required("This field can’t be empty"),
-        Field.ofSingleSelectionType(tempos)
-                .label("Vs Topline Type")
-                .required("This field can’t be empty"),
-        Field.ofSingleSelectionType(tempos)
-                .label("Ch Topline start note")
-                .required("This field can’t be empty"),
-        Field.ofSingleSelectionType(tempos)
-                .label("Ch No. notes in Topline")
-                .required("This field can’t be empty"),
-        Field.ofSingleSelectionType(tempos)
-                .label("Ch Topline Type")
-                .required("This field can’t be empty"),
-        Field.ofStringType("")
-                .multiline(true)
-                .required("This field can’t be empty")
-)
+                Group.of(
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Vs Topline start note")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Vs No. notes in Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Vs Topline Type")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Ch Topline start note")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Ch No. notes in Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Ch Topline Type")
+                                .required("This field can’t be empty")
+
+                )
 
         );
 
 
+        lyricAttributes = Form.of(
+                Group.of(
+                        Field.ofStringType("")
+                                .multiline(true)
+                                .required("This field can’t be empty")
+                        .label("Paste Lyrics"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Rhymecount")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Lyrical Archetype")
+                                .required("This field can’t be empty")
+
+                )
+
+        );
 
 
         forForm.getChildren().add(new Label("Song Attributes"));
@@ -259,6 +286,8 @@ Group.of(
         forForm.getChildren().add(new FormRenderer(chordAttributes));
         forForm.getChildren().add(new Label("Topline Information"));
         forForm.getChildren().add(new FormRenderer(toplineAttributes));
+        forForm.getChildren().add(new Label("Lyrical Information"));
+        forForm.getChildren().add(new FormRenderer(lyricAttributes));
 
 
         //NaiveBayes paulsCl = new NaiveBayes();
