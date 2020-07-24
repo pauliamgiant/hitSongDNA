@@ -1,8 +1,10 @@
 package org.openjfx;
 
+import classifier.*;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.model.structure.StringField;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -16,8 +18,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,6 +28,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +36,34 @@ import java.util.List;
 
 public class Controller {
 
+    private Classifier classifier;
+    private DataSet oneHitWonders;
+    private Boolean hitOrNot;
+    private DataTuple newHitTuple;
+    private DataTuple newMissTuple;
+
+    @FXML
+    private Form songAttributes;
+
+    @FXML
+    private Form chordAttributes;
+
+
+    @FXML
+    private Form toplineAttributes;
+
+
+
+
 
     @FXML
     private ImageView imView;
 
     @FXML
     private FontAwesomeIconView iconView;
+
+    @FXML
+    private FontAwesomeIconView classifyIcon;
 
 
     @FXML
@@ -56,13 +81,25 @@ public class Controller {
     }
 
     @FXML
+    private Label hitLabel;
+
+    @FXML
+    private Tile ledTile;
+
+    @FXML
     private Button okButton;
+
+    @FXML
+    private Button classifyButton;
 
     @FXML
     private Button popMe;
 
     @FXML
     private Gauge gauge1;
+
+    @FXML
+    private Gauge gauge3;
 
     @FXML
     private VBox forForm;
@@ -84,16 +121,29 @@ public class Controller {
 
     @FXML
     public void initialize() throws URISyntaxException {
+        try {
+            oneHitWonders = new DataSet();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        newHitTuple = TupleBuilder.getUnclassifiedHitTuple();
+        newMissTuple = TupleBuilder.getUnclassifiedMissTuple();
+        classifier = new NaiveBayes(oneHitWonders);
 
+
+        classifyIcon.setIcon(FontAwesomeIcon.PIED_PIPER_PP);
+        classifyIcon.setSize("2em");
+        classifyIcon.setFill(Color.LIGHTGRAY);
+        classifyButton.setGraphic(classifyIcon);
 
         iconView.setIcon(FontAwesomeIcon.AMBULANCE);
         iconView.setSize("2em");
         iconView.setFill(Color.CYAN);
         popMe.setGraphic(iconView);
 
-
-        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
-        imView.setImage(image);
+// here is where the logo goes
+//        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+//        imView.setImage(image);
 
         Alert a = new Alert(Alert.AlertType.NONE);
 
@@ -121,51 +171,94 @@ public class Controller {
         tempos.add("120-130");
         tempos.add("above 130");
 
-        Form songAttributes = Form.of(
+        chordAttributes = Form.of(
+                Group.of(Field.ofBooleanType(false)
+                                .label("Verse Starts on Chord I"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Verse Ionian")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Vs Chordcount")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Vs/Ch same chords"),
+                        Field.ofBooleanType(false)
+                                .label("Vs has Key Change")  ,
+                        Field.ofBooleanType(false)
+                                .label("Chorus Starts on Chord I"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Ch Chordcount")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Total chords used")
+                                .required("This field can’t be empty"))
+
+
+        );
+
+
+        songAttributes = Form.of(
                 Group.of(
+
+
                         Field.ofStringType("")
                                 .label("Song Title")
+                                .required("")
+                                .tooltip("The title of your song."),
+                        Field.ofSingleSelectionType(tempos)
+                                .label("Intro Length")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Tempo Range")
+                                .label("Tempo")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Chord Progression")
-                                .required("This field can’t be empty"),
-
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Topline Harmony")
-                                .required("This field can’t be empty"),
-
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Tempo Range")
+                                .label("Genre")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Key")
+                                .label("Lead Singer(s)")
                                 .required("This field can’t be empty"),
                         Field.ofSingleSelectionType(tempos)
-                                .label("Mode")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Lyrical Repetition")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Hook in Song Title")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Time Signature")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Female Artist"),
-                        Field.ofBooleanType(false)
-                                .label("Male Artist")
+                                .label("Key of Verse")
+                                .required("This field can’t be empty")
                 )
+        );
+
+        toplineAttributes = Form.of(
+Group.of(
+        Field.ofSingleSelectionType(tempos)
+                .label("Vs Topline start note")
+                .required("This field can’t be empty"),
+        Field.ofSingleSelectionType(tempos)
+                .label("Vs No. notes in Topline")
+                .required("This field can’t be empty"),
+        Field.ofSingleSelectionType(tempos)
+                .label("Vs Topline Type")
+                .required("This field can’t be empty"),
+        Field.ofSingleSelectionType(tempos)
+                .label("Ch Topline start note")
+                .required("This field can’t be empty"),
+        Field.ofSingleSelectionType(tempos)
+                .label("Ch No. notes in Topline")
+                .required("This field can’t be empty"),
+        Field.ofSingleSelectionType(tempos)
+                .label("Ch Topline Type")
+                .required("This field can’t be empty"),
+        Field.ofStringType("")
+                .multiline(true)
+                .required("This field can’t be empty")
+)
+
+        );
 
 
-        ).title("Song Attributes");
 
 
+        forForm.getChildren().add(new Label("Song Attributes"));
         forForm.getChildren().add(new FormRenderer(songAttributes));
+        forForm.getChildren().add(new Label("Chord Information"));
+        forForm.getChildren().add(new FormRenderer(chordAttributes));
+        forForm.getChildren().add(new Label("Topline Information"));
+        forForm.getChildren().add(new FormRenderer(toplineAttributes));
 
 
         //NaiveBayes paulsCl = new NaiveBayes();
@@ -208,10 +301,11 @@ public class Controller {
 
         //chart.setAnimated(true);
 
-        gauge1.setValue(89);
+        gauge1.setValue(0);
         gauge1.setForegroundBaseColor(Color.AQUA);
         gauge1.setTitleColor(Color.WHITE);
         gauge1.setBarColor(Color.AQUA);
+        gauge3.setValue(0);
 
 
     }
@@ -229,6 +323,64 @@ public class Controller {
         newStage.setScene(stageScene);
         newStage.show();
     }
+
+    @FXML
+    public void loadHit() {
+        System.out.println("HIT");
+        hitOrNot = classifier.songIsLikelyToBeAHit(newHitTuple);
+    }
+
+    @FXML
+    public void loadMiss() {
+        System.out.println("MISS");
+        hitOrNot = classifier.songIsLikelyToBeAHit(newMissTuple);
+    }
+
+    @FXML
+    public void executeClassification() {
+
+        //System.out.println(songAttributes.getElements());
+
+        List info = songAttributes.getElements();
+        String[] tupleData = new String[29];
+        StringField sf1 = (StringField) info.get(0);
+        tupleData[0] = sf1.getValue();
+        System.out.println(songAttributes.isValid());
+
+
+        try {
+            if (hitOrNot) {
+                gauge1.setValue(65);
+                gauge1.setForegroundBaseColor(Color.AQUA);
+                gauge1.setTitleColor(Color.WHITE);
+                gauge1.setBarColor(Color.AQUA);
+                gauge3.setVisible(true);
+                gauge3.setValue(63);
+                hitLabel.setStyle("-fx-text-fill: cyan;");
+                ledTile.setActive(true);
+                ledTile.setActiveColor(Color.CYAN);
+                hitLabel.setText("HIT!!");
+            }
+            if (!hitOrNot) {
+                gauge1.setValue(35);
+                gauge1.setForegroundBaseColor(Color.DARKRED);
+                gauge1.setBarColor(Color.DARKRED);
+                gauge1.setValueColor(Color.RED);
+                gauge3.setVisible(false);
+                ledTile.setActive(true);
+                ledTile.setActiveColor(Color.RED);
+                hitLabel.setStyle("-fx-text-fill: red;");
+                hitLabel.setText("MISS");
+            }
+        } catch (Exception exception) {
+//            Alert pu2 = new Alert(Alert.AlertType.ERROR);
+//            pu2.setContentText("You will need a complete form to continue");
+//            pu2.setHeaderText("Incomplete Song Data");
+//            pu2.setTitle("Error!");
+//            pu2.show();
+        }
+    }
+
 
     public static void showPopup2(Window win) {
         Popup popup = new Popup();

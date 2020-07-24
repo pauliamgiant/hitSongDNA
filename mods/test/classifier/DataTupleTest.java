@@ -16,7 +16,7 @@ public class DataTupleTest {
     @BeforeMethod
     public void setUp() throws FileNotFoundException {
         DataSet dataset = new DataSet();
-        unClTupleToTestWith = TupleBuilder.getUnclassifiedTuple();
+        unClTupleToTestWith = TupleBuilder.getUnclassifiedHitTuple();
         tupleToTestWith = TupleBuilder.getClassifiedTuple();
 
     }

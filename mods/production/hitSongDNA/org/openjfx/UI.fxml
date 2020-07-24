@@ -28,6 +28,8 @@
                 </Menu>
                 <Menu fx:id="mHelp" text="Help">
                     <MenuItem text="How do I get the required data for my song?"></MenuItem>
+                    <MenuItem text="Load Hit Tuple" fx:id="loadHitTuple" onAction="#loadHit"></MenuItem>
+                    <MenuItem text="Load Miss Tuple" fx:id="loadMissTuple" onAction="#loadMiss"></MenuItem>
                 </Menu>
 
             </MenuBar>
@@ -79,14 +81,18 @@
 
         <TabPane fx:id="tabPane">
             <Tab fx:id="tab1" text="Predict Your Song">
-
-
                 <GridPane>
                     <padding>
                         <Insets top="25" right="25" bottom="25" left="25"/>
                     </padding>
                     <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
-                        <Label fx:id="hitLabel">HIT!</Label>
+                        <VBox>
+                        <Label fx:id="hitLabel">
+                            <VBox.margin>
+                                <Insets bottom="0" left="25" right="0" top="0"/>
+                            </VBox.margin>
+                        </Label>
+                        </VBox>
                         <Gauge fx:id="gauge1"
 
                                                 skinType="SIMPLE_DIGITAL"
@@ -106,11 +112,6 @@
                                                 shadowsEnabled="true"
                                                 prefWidth="400"
                                                 prefHeight="400"
-
-
-
-
-
                         />
 
 
@@ -118,45 +119,14 @@
 
                         <HBox GridPane.columnIndex="2"
                               GridPane.rowIndex="2" spacing="20">
-                            <Tile skinType="LED"
+                            <Tile fx:id="ledTile" skinType="LED"
                                   prefWidth="300"
                                   prefHeight="300"
                                   description="PREDICTION"
-                                  active="true"
+                                  active="false"
                                   activeColor="aqua">
-
-
-
                             </Tile>
 
-<!--                            <Gauge fx:id="gauge2"-->
-
-<!--                                   alert="true"-->
-<!--                                   alertMessage="Almost full"-->
-<!--                                   animated="true"-->
-<!--                                   animationDuration="500"-->
-<!--                                   areaTextVisible="true"-->
-<!--                                   layoutX="123.0"-->
-<!--                                   layoutY="113.0"-->
-<!--                                   lcdVisible="true"-->
-<!--                                   lcdFont="ELEKTRA"-->
-<!--                                   tickLabelsVisible="false"-->
-<!--                                   tickMarkColor="#292929"-->
-<!--                                   skinType="MODERN"-->
-<!--                                   decimals="0"-->
-<!--                                   maxValue="1"-->
-<!--                                   unit="HIT"-->
-<!--                                   unitColor="aqua"-->
-<!--                                   valueColor="aqua"-->
-<!--                                   value="1"-->
-
-<!--                                   title="CLASSIFICATION"-->
-<!--                                   shadowsEnabled="true"-->
-<!--                                   backgroundPaint="white"-->
-<!--                                   foregroundPaint="black"-->
-<!--                                   titleColor="WHITE"-->
-
-<!--                            />-->
 
                             <Gauge fx:id="gauge3"
                                    alert="true"
@@ -173,7 +143,6 @@
                                    maxValue="100"
                                    unit="RATE"
                                    unitColor="aqua"
-                                   value="58"
                                    ledVisible="true"
                                    ledOn="true"
                                    ledBlinking="true"
@@ -189,6 +158,9 @@
                         </HBox>
                     </VBox>
 
+                    <VBox GridPane.columnIndex="1"
+                          GridPane.rowIndex="1"
+                          minWidth="600">
                     <ScrollPane GridPane.columnIndex="1"
                                 GridPane.rowIndex="1"
                                 minWidth="600">
@@ -196,10 +168,31 @@
                             <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
                         </GridPane.margin>
                         <content>
-                            <VBox fx:id="forForm" minWidth="600" alignment="CENTER">
+                            <VBox fx:id="forForm" maxWidth="580" minWidth="580" alignment="CENTER">
+
                             </VBox>
                         </content>
                     </ScrollPane>
+
+                        <VBox fx:id="paneLeft" spacing="40">
+                            <VBox.margin>
+                                <Insets bottom="25.0" left="0" right="0" top="25.0"/>
+                            </VBox.margin>
+                        <Button fx:id="classifyButton" text="CLASSIFY" onAction="#executeClassification"
+                                prefWidth="600" minHeight="100" defaultButton="true"
+                                GridPane.columnIndex="0" GridPane.rowIndex="4"
+                                GridPane.columnSpan="2" GridPane.rowSpan="1"
+                                GridPane.halignment="CENTER"
+                                >
+                            <GridPane.margin>
+                                <Insets top="100" right="0" bottom="20" left="0"></Insets>
+                            </GridPane.margin>
+                            <FontAwesomeIconView fx:id="classifyIcon">
+                            </FontAwesomeIconView>
+                        </Button>
+                        </VBox>
+
+                    </VBox>
                 </GridPane>
             </Tab>
             <Tab fx:id="tab2" text="Dataset Metrics">
