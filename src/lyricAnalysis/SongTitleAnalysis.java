@@ -26,9 +26,9 @@ public class SongTitleAnalysis {
             int fromIndex = 0;
             int indexFound = 0;
             String checkMeForTitle = lyrics.get(i).toLowerCase();
-            System.out.println(checkMeForTitle);
+           //System.out.println(checkMeForTitle);
             indexFound = checkMeForTitle.indexOf(songTitle.toLowerCase(), fromIndex);
-            System.out.println(indexFound);
+            //System.out.println(indexFound);
             while (indexFound != -1) {
                 count++;
                 fromIndex = indexFound+1;

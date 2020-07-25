@@ -24,8 +24,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lyricAnalysis.LyricAnalysis;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -37,6 +41,7 @@ public class Controller {
     private Boolean hitOrNot;
     private DataTuple newHitTuple;
     private DataTuple newMissTuple;
+    private LyricAnalysis lyricAnalysis;
 
     @FXML
     private Form songAttributes;
@@ -298,18 +303,25 @@ public class Controller {
             formTupleData[i + 17] = (String) sf6.getSelection();
         }
 
+
         /**
          *
          * some body lyric values for now
          */
+        StringField title = (StringField) songAttr.get(0);
 
-        formTupleData[26] = "7-14";
-        formTupleData[27] = "0.01-0.88";
-        formTupleData[28] = "286.5-328.5";
-        formTupleData[29] = "9-11";
-        formTupleData[30] = "5-6";
-        formTupleData[31] = "20-22";
-        formTupleData[32] = "23-31";
+        lyricAnalysis = new LyricAnalysis(title.getValue());
+        StringField lyricsPasted = (StringField) lyrAttr.get(0);
+        processLyrics(lyricsPasted.getValue());
+        formTupleData[26] = lyricAnalysis.getLineRepeatString();
+        formTupleData[27] = lyricAnalysis.getGradeLevelString();
+        formTupleData[28] = lyricAnalysis.getTotalNumberOfWordsString();
+        formTupleData[29] = lyricAnalysis.getSongTitleRepeatString();
+        formTupleData[30] = lyricAnalysis.getNumberOfDistinctHitWordString();
+        formTupleData[31] = lyricAnalysis.getTotalNumberOfHitWordsString();
+
+        lyricAnalysis.showAllLyricData();
+
 
         SingleSelectionField rhyme = (SingleSelectionField) lyrAttr.get(1);
         formTupleData[32] = (String) rhyme.getSelection();
@@ -318,52 +330,73 @@ public class Controller {
         return formTupleData;
     }
 
+    private void processLyrics(String lyricsPasted) {
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("src/org/openjfx/Resources/lyrics.txt", false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        try {
+            bufferedWriter.write(lyricsPasted);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(lyricsPasted);
+    }
+
     @FXML
     public void executeClassification() {
 
-        if(songAttributes.isValid()){
-        //System.out.println(songAttributes.getElements());
-        String[] tupleData;
-        tupleData = assembleNewTuple();
-//        for (int i = 0; i < tupleData.length; i++) {
-//            System.out.println(tupleData[i]);
-//        }
-        DataTuple newSongFromUser = new DataTuple(tupleData);
-        hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
+
+        if (songAttributes.isValid()) {
+            String[] tupleData;
+            tupleData = assembleNewTuple();
+
+            DataTuple newSongFromUser = new DataTuple(tupleData);
+            hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
 
 
-
-        // System.out.println();
-
-
-        try {
-            if (hitOrNot) {
-                gauge1.setValue(65);
-                gauge1.setForegroundBaseColor(Color.AQUA);
-                gauge1.setTitleColor(Color.WHITE);
-                gauge1.setBarColor(Color.AQUA);
-                gauge3.setVisible(true);
-                gauge3.setValue(63);
-                hitLabel.setStyle("-fx-text-fill: cyan;");
-                ledTile.setActive(true);
-                ledTile.setActiveColor(Color.CYAN);
-                hitLabel.setText("HIT");
-            }
-            if (!hitOrNot) {
-                gauge1.setValue(35);
-                gauge1.setForegroundBaseColor(Color.DARKRED);
-                gauge1.setBarColor(Color.DARKRED);
-                gauge1.setValueColor(Color.RED);
-                gauge3.setVisible(false);
-                ledTile.setActive(true);
-                ledTile.setActiveColor(Color.RED);
-                hitLabel.setStyle("-fx-text-fill: red;");
-                hitLabel.setText("MISS");
-            }
-        } catch (Exception exception) {
+            try {
+                if (hitOrNot) {
+                    gauge1.setValue(65);
+                    gauge1.setForegroundBaseColor(Color.AQUA);
+                    gauge1.setTitleColor(Color.WHITE);
+                    gauge1.setBarColor(Color.AQUA);
+                    gauge3.setVisible(true);
+                    gauge3.setValue(63);
+                    hitLabel.setStyle("-fx-text-fill: cyan;");
+                    ledTile.setActive(true);
+                    ledTile.setActiveColor(Color.CYAN);
+                    hitLabel.setText("HIT");
+                }
+                if (!hitOrNot) {
+                    gauge1.setValue(35);
+                    gauge1.setForegroundBaseColor(Color.DARKRED);
+                    gauge1.setBarColor(Color.DARKRED);
+                    gauge1.setValueColor(Color.RED);
+                    gauge3.setVisible(false);
+                    ledTile.setActive(true);
+                    ledTile.setActiveColor(Color.RED);
+                    hitLabel.setStyle("-fx-text-fill: red;");
+                    hitLabel.setText("MISS");
+                }
+            } catch (Exception exception) {
                 formIncompletePopup();
-        }}
-              else{
+            }
+        } else {
             formIncompletePopup();
         }
 
@@ -501,7 +534,7 @@ public class Controller {
         );
     }
 
-    private void formIncompletePopup(){
+    private void formIncompletePopup() {
         Alert pu2 = new Alert(Alert.AlertType.ERROR);
         pu2.setContentText("You will need a complete form to continue");
         pu2.setHeaderText("Incomplete Song Data");
