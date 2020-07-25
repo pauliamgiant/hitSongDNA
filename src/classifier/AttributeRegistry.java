@@ -1,8 +1,7 @@
 package classifier;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 /**
  * VALUES PERMISSABLE
@@ -39,14 +38,22 @@ import java.util.Set;
  * @attribute CHART_POS {HIT,miss}
  */
 
+
+
 public class AttributeRegistry {
 
 
     private static AttributeRegistry INSTANCE;
-    private Map<String,Set> attributesAndValues;
+    private Map<String,LinkedHashSet> attributesAndValues;
 
     private AttributeRegistry() {
+
         attributesAndValues = new LinkedHashMap<>();
+        try {
+            updateAttributeDataFromARFF();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static AttributeRegistry getInstance() {
@@ -57,11 +64,12 @@ public class AttributeRegistry {
         return INSTANCE;
     }
 
-    public void updateAttributeDataFromARFF(Map<String, Set> mapOfAttributes) {
-        attributesAndValues = mapOfAttributes;
+    public void updateAttributeDataFromARFF() throws FileNotFoundException {
+        ImportARFFDataset iad = new ImportARFFDataset();
+        attributesAndValues =  iad.getAttrAndVals();
     }
 
-    public Map<String, Set> getAttributesAndValues(){
+    public Map<String, LinkedHashSet> getAttributesAndValues(){
         return attributesAndValues;
     }
 
@@ -72,6 +80,11 @@ public class AttributeRegistry {
         }
         return true;
     }
+
+    public boolean validAttributeName(String name){
+
+        return attributesAndValues.keySet().contains(name);
+    }
     public String printAttributesAndVals() {
         return attributesAndValues.toString();
     }
@@ -80,4 +93,16 @@ public class AttributeRegistry {
         attributesAndValues = new LinkedHashMap<>();
 
     }
+
+    public List<String> getValues(String nameOfAttribute){
+        List<String> l = null;
+        try {
+            l = new ArrayList<>(attributesAndValues.get(nameOfAttribute));
+        } catch (NullPointerException exception) {
+            System.out.println("Attribute name valid: "+  validAttributeName(nameOfAttribute));
+            exception.printStackTrace();
+        }
+        return l;
+    }
+
 }

@@ -1,10 +1,7 @@
 package org.openjfx;
 
 import classifier.*;
-import com.dlsc.formsfx.model.structure.Field;
-import com.dlsc.formsfx.model.structure.Form;
-import com.dlsc.formsfx.model.structure.Group;
-import com.dlsc.formsfx.model.structure.StringField;
+import com.dlsc.formsfx.model.structure.*;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -30,7 +27,6 @@ import javafx.stage.Window;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -163,122 +159,10 @@ public class Controller {
         });
 
 
-        List<String> tempos = new ArrayList<>();
-        tempos.add("below 80");
-        tempos.add("80-100");
-        tempos.add("100-110");
-        tempos.add("110-120");
-        tempos.add("120-130");
-        tempos.add("above 130");
-
-
-        songAttributes = Form.of(
-                Group.of(
-
-
-                        Field.ofStringType("")
-                                .label("Song Title")
-                                .required("")
-                                .tooltip("The title of your song.")
-                        .placeholder("Please enter the title of your song here."),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Intro Length")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Tempo")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Genre")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .placeholder("Please select type of Voice(s from the below)")
-                                .label("Lead Singer(s)")
-                                .required("This field can’t be empty")
-                               ,
-
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Basic Drum Pattern")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Co-writer with Top 40 history")
-                )
-        );
-
-
-
-
-        chordAttributes = Form.of(
-                Group.of(Field.ofSingleSelectionType(tempos)
-                                .label("Key of Verse")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Verse Starts on Chord I"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Verse Ionian")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Vs Chordcount")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Vs/Ch same chords"),
-                        Field.ofBooleanType(false)
-                                .label("Vs has Key Change"),
-                        Field.ofBooleanType(false)
-                                .label("Chorus Starts on Chord I"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Ch Chordcount")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Total chords used")
-                                .required("This field can’t be empty"))
-
-
-        );
-
-
-        toplineAttributes = Form.of(
-                Group.of(
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Vs Topline start note")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Vs No. notes in Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Vs Topline Type")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Ch Topline start note")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Ch No. notes in Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Ch Topline Type")
-                                .required("This field can’t be empty")
-
-                )
-
-        );
-
-
-        lyricAttributes = Form.of(
-                Group.of(
-                        Field.ofStringType("")
-                                .multiline(true)
-                                .required("This field can’t be empty")
-                        .label("Paste Lyrics"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Rhymecount")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(tempos)
-                                .label("Lyrical Archetype")
-                                .required("This field can’t be empty")
-
-                )
-
-        );
-
+        songAttributes = buildSongAttributesForm();
+        chordAttributes = buildChordAttributesForm();
+        toplineAttributes = buildToplineAttributesForm();
+        lyricAttributes = buildLyricAttributesForm();
 
         forForm.getChildren().add(new Label("Song Attributes"));
         forForm.getChildren().add(new FormRenderer(songAttributes));
@@ -365,16 +249,91 @@ public class Controller {
         hitOrNot = classifier.songIsLikelyToBeAHit(newMissTuple);
     }
 
+    private String[] assembleNewTuple() {
+        String[] formTupleData = new String[35];
+        List songAttr = songAttributes.getElements();
+        List chrdAttr = chordAttributes.getElements();
+        List topLnAttr = toplineAttributes.getElements();
+        List lyrAttr = lyricAttributes.getElements();
+
+        for (int i = 0; i < 4; i++) {
+            SingleSelectionField sf = (SingleSelectionField) songAttr.get(i + 1);
+            formTupleData[i] = (String) sf.getSelection();
+        }
+        SingleSelectionField sf2 = (SingleSelectionField) songAttr.get(5);
+        formTupleData[25] = (String) sf2.getSelection();
+        BooleanField sf3 = (BooleanField) songAttr.get(6);
+        if (sf3.getValue()) {
+            formTupleData[34] = "yes";
+        } else formTupleData[34] = "no";
+
+        SingleSelectionField keyVerse = (SingleSelectionField) chrdAttr.get(0);
+        formTupleData[4] = (String) keyVerse.getSelection();
+        SingleSelectionField vsChord = (SingleSelectionField) chrdAttr.get(1);
+        formTupleData[5] = (String) vsChord.getSelection();
+        BooleanField vsStart1 = (BooleanField) chrdAttr.get(2);
+        formTupleData[6] = vsStart1.getValue().toString().toUpperCase();
+        for (int i = 3; i < 6; i++) {
+            SingleSelectionField sf4 = (SingleSelectionField) chrdAttr.get(i);
+            formTupleData[i + 4] = (String) sf4.getSelection();
+        }
+        BooleanField vsChSame = (BooleanField) chrdAttr.get(6);
+        formTupleData[10] = String.valueOf(vsChSame.getValue()).toUpperCase();
+        BooleanField vsKeyCh = (BooleanField) chrdAttr.get(7);
+        if (vsKeyCh.getValue()) {
+            formTupleData[11] = "yes";
+        } else formTupleData[11] = "no";
+        SingleSelectionField chChord = (SingleSelectionField) chrdAttr.get(8);
+        formTupleData[12] = (String) chChord.getSelection();
+        BooleanField chStart = (BooleanField) chrdAttr.get(9);
+        formTupleData[13] = String.valueOf(chStart.getValue()).toUpperCase();
+
+        for (int i = 10; i < 13; i++) {
+            SingleSelectionField sf5 = (SingleSelectionField) chrdAttr.get(i);
+            formTupleData[i + 4] = (String) sf5.getSelection();
+        }
+
+        for (int i = 0; i < 8; i++) {
+            SingleSelectionField sf6 = (SingleSelectionField) topLnAttr.get(i);
+            formTupleData[i + 17] = (String) sf6.getSelection();
+        }
+
+        /**
+         *
+         * some body lyric values for now
+         */
+
+        formTupleData[26] = "7-14";
+        formTupleData[27] = "0.01-0.88";
+        formTupleData[28] = "286.5-328.5";
+        formTupleData[29] = "9-11";
+        formTupleData[30] = "5-6";
+        formTupleData[31] = "20-22";
+        formTupleData[32] = "23-31";
+
+        SingleSelectionField rhyme = (SingleSelectionField) lyrAttr.get(1);
+        formTupleData[32] = (String) rhyme.getSelection();
+        SingleSelectionField arche = (SingleSelectionField) lyrAttr.get(2);
+        formTupleData[33] = (String) arche.getSelection();
+        return formTupleData;
+    }
+
     @FXML
     public void executeClassification() {
 
+        if(songAttributes.isValid()){
         //System.out.println(songAttributes.getElements());
+        String[] tupleData;
+        tupleData = assembleNewTuple();
+//        for (int i = 0; i < tupleData.length; i++) {
+//            System.out.println(tupleData[i]);
+//        }
+        DataTuple newSongFromUser = new DataTuple(tupleData);
+        hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
 
-        List info = songAttributes.getElements();
-        String[] tupleData = new String[29];
-        StringField sf1 = (StringField) info.get(0);
-        tupleData[0] = sf1.getValue();
-        System.out.println(songAttributes.isValid());
+
+
+        // System.out.println();
 
 
         try {
@@ -388,7 +347,7 @@ public class Controller {
                 hitLabel.setStyle("-fx-text-fill: cyan;");
                 ledTile.setActive(true);
                 ledTile.setActiveColor(Color.CYAN);
-                hitLabel.setText("HIT!!");
+                hitLabel.setText("HIT");
             }
             if (!hitOrNot) {
                 gauge1.setValue(35);
@@ -402,12 +361,12 @@ public class Controller {
                 hitLabel.setText("MISS");
             }
         } catch (Exception exception) {
-//            Alert pu2 = new Alert(Alert.AlertType.ERROR);
-//            pu2.setContentText("You will need a complete form to continue");
-//            pu2.setHeaderText("Incomplete Song Data");
-//            pu2.setTitle("Error!");
-//            pu2.show();
+                formIncompletePopup();
+        }}
+              else{
+            formIncompletePopup();
         }
+
     }
 
 
@@ -420,4 +379,134 @@ public class Controller {
     }
 
 
+    private Form buildSongAttributesForm() {
+
+        return Form.of(
+                Group.of(
+                        Field.ofStringType("")
+                                .label("Song Title")
+                                .required("")
+                                .tooltip("The title of your song.")
+                                .placeholder("Please enter the title of your song here."),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("INTRO_LEN"))
+                                .label("Intro Length")
+                                .required("Please select the range in seconds that the intro of your song fits into."),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("TEMPO"))
+                                .label("Tempo")
+                                .required("Please select the tempo range of your song"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("GENRE"))
+                                .label("Genre")
+                                .required("Please select the Genre of your song from the following."),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("LEAD_SING"))
+                                .label("Lead Singer(s)")
+                                .required("Please select type of Voice(s) featured in your song."),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("DRUM_PAT"))
+                                .label("Drum Pattern")
+                                .required("Please select from the range of fundamental drum patters."),
+                        Field.ofBooleanType(false)
+                                .label("Co-writer with Top 40 history")
+                                .tooltip("If any of the co-writers have had a top 40 charting song please select yes.")
+                )
+        );
+
+    }
+
+    private Form buildChordAttributesForm() {
+        return Form.of(
+                Group.of(
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("KEY_VS"))
+                                .label("Key of Verse")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CHORDS_VS"))
+                                .label("Vs Chord Progression")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Verse Starts on Chord I"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_VS_KEY"))
+                                .label("Verse Key Ionian")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_VS_CHORDS"))
+                                .label("Verse Chords Ionian")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_DISTINCT_CHRD_COUNT"))
+                                .label("Vs Chordcount")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Vs/Ch same chords"),
+                        Field.ofBooleanType(false)
+                                .label("Vs has Key Change"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CHORDS_CH"))
+                                .label("Ch Chord Progression")
+                                .required("This field can’t be empty"),
+                        Field.ofBooleanType(false)
+                                .label("Chorus Starts on Chord I"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_CH_CHORDS"))
+                                .label("Ch Chords Ionian")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_DISTINCT_CHRD_COUNT"))
+                                .label("Ch Chordcount")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("SONG_TOTAL_CHORD_COUNT"))
+                                .label("Total chords used")
+                                .required("This field can’t be empty"))
+        );
+    }
+
+
+    private Form buildToplineAttributesForm() {
+        return Form.of(
+                Group.of(
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TOPLINE"))
+                                .label("Vs Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_START_NOTE"))
+                                .label("Vs Topline start note")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_DISTINCT_NOTES"))
+                                .label("Vs No. notes in Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_TYPE"))
+                                .label("Vs Topline Type")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TOPLINE"))
+                                .label("Ch Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_START_NOTE"))
+                                .label("Ch Topline start note")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_DISTINCT_NOTES"))
+                                .label("Ch No. notes in Topline")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_TYPE"))
+                                .label("Ch Topline Type")
+                                .required("This field can’t be empty")
+                )
+        );
+    }
+
+    private Form buildLyricAttributesForm() {
+        return Form.of(
+                Group.of(
+                        Field.ofStringType("")
+                                .multiline(true)
+                                .required("This field can’t be empty")
+                                .label("Paste Lyrics"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("RHYMECOUNT"))
+                                .label("Rhymecount")
+                                .required("This field can’t be empty"),
+                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("LYR_ARCHETYPE"))
+                                .label("Lyrical Archetype")
+                                .required("This field can’t be empty")
+                )
+        );
+    }
+
+    private void formIncompletePopup(){
+        Alert pu2 = new Alert(Alert.AlertType.ERROR);
+        pu2.setContentText("You will need a complete form to continue");
+        pu2.setHeaderText("Incomplete Song Data");
+        pu2.setTitle("Error!");
+        pu2.show();
+
+    }
 }

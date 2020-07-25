@@ -12,7 +12,7 @@ public class DataTuple {
 
     public DataTuple(Boolean knownTarget,String[] values ){
         this(values);
-        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[29]));
+        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
     }
 
     public DataTuple(String[] values){
@@ -23,30 +23,36 @@ public class DataTuple {
         attributes.put("GENRE", new SongAttribute("GENRE", values[2]));
         attributes.put("LEAD_SING", new SongAttribute("LEAD_SING", values[3]));
         attributes.put("KEY_VS", new SongAttribute("KEY_VS", values[4]));
-        attributes.put("VS_STARTS_ON_I", new SongAttribute("VS_STARTS_ON_I", values[5]));
-        attributes.put("IONIAN_VS_KEY", new SongAttribute("IONIAN_VS_KEY", values[6]));
-        attributes.put("VS_DISTINCT_CHRD_COUNT", new SongAttribute("VS_DISTINCT_CHRD_COUNT", values[7]));
-        attributes.put("VS_CH_SAME_CHRDS", new SongAttribute("VS_CH_SAME_CHRDS", values[8]));
-        attributes.put("VS_KEY_CHNGS", new SongAttribute("VS_KEY_CHNGS", values[9]));
-        attributes.put("CH_STARTS_ON_I", new SongAttribute("CH_STARTS_ON_I", values[10]));
-        attributes.put("CH_DISTINCT_CHRD_COUNT", new SongAttribute("CH_DISTINCT_CHRD_COUNT", values[11]));
-        attributes.put("SONG_TOTAL_CHORD_COUNT", new SongAttribute("SONG_TOTAL_CHORD_COUNT", values[12]));
-        attributes.put("VS_TL_START_NOTE", new SongAttribute("VS_TL_START_NOTE", values[13]));
-        attributes.put("VS_TL_DISTINCT_NOTES", new SongAttribute("VS_TL_DISTINCT_NOTES", values[14]));
-        attributes.put("VS_TL_TYPE", new SongAttribute("VS_TL_TYPE", values[15]));
-        attributes.put("CH_TL_START_NOTE", new SongAttribute("CH_TL_START_NOTE", values[16]));
-        attributes.put("CH_TL_DISTINCT_NOTES", new SongAttribute("CH_TL_DISTINCT_NOTES", values[17]));
-        attributes.put("CH_TL_TYPE", new SongAttribute("CH_TL_TYPE", values[18]));
-        attributes.put("DRUM_PAT", new SongAttribute("DRUM_PAT", values[19]));
-        attributes.put("LINE_REP", new SongAttribute("LINE_REP", values[20]));
-        attributes.put("LYR_GRADE_LVL", new SongAttribute("LYR_GRADE_LVL", values[21]));
-        attributes.put("TOTAL_WORDS", new SongAttribute("TOTAL_WORDS", values[22]));
-        attributes.put("TITLE_REPEATS", new SongAttribute("TITLE_REPEATS", values[23]));
-        attributes.put("DISTINCT_HITWORDS", new SongAttribute("DISTINCT_HITWORDS", values[24]));
-        attributes.put("HITWORDS_TOTAL", new SongAttribute("HITWORDS_TOTAL", values[25]));
-        attributes.put("RHYMECOUNT", new SongAttribute("RHYMECOUNT", values[26]));
-        attributes.put("LYR_ARCHETYPE", new SongAttribute("LYR_ARCHETYPE", values[27]));
-        attributes.put("HIT_WRITER", new SongAttribute("HIT_WRITER", values[28]));
+        attributes.put("CHORDS_VS", new SongAttribute("CHORDS_VS", values[5]));
+        attributes.put("VS_STARTS_ON_I", new SongAttribute("VS_STARTS_ON_I", values[6]));
+        attributes.put("IONIAN_VS_KEY", new SongAttribute("IONIAN_VS_KEY", values[7]));
+        attributes.put("IONIAN_VS_CHORDS", new SongAttribute("IONIAN_VS_CHORDS", values[8]));
+        attributes.put("VS_DISTINCT_CHRD_COUNT", new SongAttribute("VS_DISTINCT_CHRD_COUNT", values[9]));
+        attributes.put("VS_CH_SAME_CHRDS", new SongAttribute("VS_CH_SAME_CHRDS", values[10]));
+        attributes.put("VS_KEY_CHNGS", new SongAttribute("VS_KEY_CHNGS", values[11]));
+        attributes.put("CHORDS_CH", new SongAttribute("CHORDS_CH", values[12]));
+        attributes.put("CH_STARTS_ON_I", new SongAttribute("CH_STARTS_ON_I", values[13]));
+        attributes.put("IONIAN_CH_CHORDS", new SongAttribute("IONIAN_CH_CHORDS", values[14]));
+        attributes.put("CH_DISTINCT_CHRD_COUNT", new SongAttribute("CH_DISTINCT_CHRD_COUNT", values[15]));
+        attributes.put("SONG_TOTAL_CHORD_COUNT", new SongAttribute("SONG_TOTAL_CHORD_COUNT", values[16]));
+        attributes.put("VS_TOPLINE", new SongAttribute("VS_TOPLINE", values[17]));
+        attributes.put("VS_TL_START_NOTE", new SongAttribute("VS_TL_START_NOTE", values[18]));
+        attributes.put("VS_TL_DISTINCT_NOTES", new SongAttribute("VS_TL_DISTINCT_NOTES", values[19]));
+        attributes.put("VS_TL_TYPE", new SongAttribute("VS_TL_TYPE", values[20]));
+        attributes.put("CH_TOPLINE", new SongAttribute("CH_TOPLINE", values[21]));
+        attributes.put("CH_TL_START_NOTE", new SongAttribute("CH_TL_START_NOTE", values[22]));
+        attributes.put("CH_TL_DISTINCT_NOTES", new SongAttribute("CH_TL_DISTINCT_NOTES", values[23]));
+        attributes.put("CH_TL_TYPE", new SongAttribute("CH_TL_TYPE", values[24]));
+        attributes.put("DRUM_PAT", new SongAttribute("DRUM_PAT", values[25]));
+        attributes.put("LINE_REP", new SongAttribute("LINE_REP", values[26]));
+        attributes.put("LYR_GRADE_LVL", new SongAttribute("LYR_GRADE_LVL", values[27]));
+        attributes.put("TOTAL_WORDS", new SongAttribute("TOTAL_WORDS", values[28]));
+        attributes.put("TITLE_REPEATS", new SongAttribute("TITLE_REPEATS", values[29]));
+        attributes.put("DISTINCT_HITWORDS", new SongAttribute("DISTINCT_HITWORDS", values[30]));
+        attributes.put("HITWORDS_TOTAL", new SongAttribute("HITWORDS_TOTAL", values[31]));
+        attributes.put("RHYMECOUNT", new SongAttribute("RHYMECOUNT", values[32]));
+        attributes.put("LYR_ARCHETYPE", new SongAttribute("LYR_ARCHETYPE", values[33]));
+        attributes.put("HIT_WRITER", new SongAttribute("HIT_WRITER", values[34]));
 
     }
 

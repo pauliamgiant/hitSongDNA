@@ -4,9 +4,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.FileNotFoundException;
+import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
@@ -24,8 +23,6 @@ public class AttributeRegistryTest {
         dataset = null;
     }
 
-
-
     @Test
     public void testValidAttributeValue() {
     String attributeName = "TEMPO" ,
@@ -40,22 +37,22 @@ public class AttributeRegistryTest {
     }
 
     @Test
-    public void testPrintAttributesAndVals() throws FileNotFoundException {
-
+    public void testPrintAttributesAndVals(){
         System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
-        assertEquals(AttributeRegistry.getInstance().printAttributesAndVals().length(),2);
-        dataset = new DataSet();
         assertEquals(AttributeRegistry.getInstance().printAttributesAndVals().length(),2017);
 
     }
 
     @Test
-    public void testUpdateAttributeDataFromARFF() throws FileNotFoundException {
-        AttributeRegistry.getInstance().flushRegistry();
-        Map<String, Set> testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
-        assertEquals(testMapEmpty.size(),0);
-        dataset = new DataSet();
-        testMapEmpty = AttributeRegistry.getInstance().getAttributesAndValues();
-        assertEquals(testMapEmpty.size(),30);
+    public void testUpdateAttributeDataFromARFF() {
+        Map<String, LinkedHashSet> testMap = AttributeRegistry.getInstance().getAttributesAndValues();
+        assertEquals(testMap.size(),30);
+
     }
+
+//    @Test
+//    public void intro_LengthTest(){
+//        List<String> testMe = AttributeRegistry.getInstance().getValues("INTRO");
+//        assertEquals(testMe.size(),4);
+//    }
 }

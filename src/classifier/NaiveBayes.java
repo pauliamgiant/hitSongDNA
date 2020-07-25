@@ -47,6 +47,7 @@ public class NaiveBayes implements Classifier {
 
 
     public double calculateConditionalProbOfAttribute(SongAttribute attribute, String hitValue) {
+        System.out.println("Probability of "+ attribute.getName() + " on "+hitValue +" target attribute");
         int count = 0;
         double probability = 0;
         for (DataTuple dt : dataSet.getTuples()
@@ -91,17 +92,28 @@ public class NaiveBayes implements Classifier {
         System.out.println("condProb_HIT");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "HIT");
-
+            if(condProbHit[i]==0){
+                condProbHit[i] = 2;
+                System.out.println("Zero value adjustment made on HIT target");
+            }
 
         }
         System.out.println("condProb_MISS");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbMiss[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "miss");
+
             // here is the process of offsetting an attribute based on a 0 value which disrupts the conditional
             //probability algorithm
-            if(condProbHit[i]==0||condProbMiss[i]==0){
+            if(condProbHit[i]==2){
                 condProbHit[i] = 1;
                 condProbMiss[i] = 1;
+                System.out.println("Zero value adjustment made for HIT target.");
+            }
+
+            if(condProbMiss[i]==0){
+                condProbHit[i] = 1;
+                condProbMiss[i] = 1;
+                System.out.println("Zero value adjustment made for Miss target.");
             }
 
         }

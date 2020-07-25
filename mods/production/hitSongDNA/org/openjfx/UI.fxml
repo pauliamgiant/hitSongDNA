@@ -79,8 +79,8 @@
     </left>
     <center>
 
-        <TabPane fx:id="tabPane">
-            <Tab fx:id="tab1" text="Predict Your Song">
+        <TabPane fx:id="tabPane" >
+            <Tab fx:id="tab1" text="Predict Your Song" closable="false">
                 <GridPane>
                     <padding>
                         <Insets top="25" right="25" bottom="25" left="25"/>
@@ -195,16 +195,16 @@
                     </VBox>
                 </GridPane>
             </Tab>
-            <Tab fx:id="tab2" text="Dataset Metrics">
+            <Tab fx:id="tab2" text="Dataset Metrics" closable="false">
                 <VBox fx:id="myPie">
 
                 </VBox>
             </Tab>
-            <Tab fx:id="tab3" text="Song Metrics">
+            <Tab fx:id="tab3" text="Song Metrics" closable="false">
                 <VBox fx:id="songMetrics">
                 </VBox>
             </Tab>
-            <Tab fx:id="tab4" text="My Songs">
+            <Tab fx:id="tab4" text="My Songs" closable="false">
                 <VBox fx:id="charts">
                 </VBox>
             </Tab>

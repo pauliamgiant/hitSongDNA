@@ -8,7 +8,7 @@ public class ImportARFFDataset {
 
 
     private List<String> attributes;
-    private Map<String, Set> attributeValues;
+    private Map<String, LinkedHashSet> attributeValues;
     private List<String[]> dataset;
 
 
@@ -17,11 +17,11 @@ public class ImportARFFDataset {
         attributeValues = new LinkedHashMap<>();
         dataset = new ArrayList<String[]>();
         parseARFF();
-        AttributeRegistry.getInstance().updateAttributeDataFromARFF(attributeValues);
+       // AttributeRegistry.getInstance().updateAttributeDataFromARFF(attributeValues);
     }
 
-    public void parseARFF() throws FileNotFoundException {
-        Scanner fileScanner = new Scanner(new File("src/org/openjfx/Resources/one_hit_wonder_preprocessed_reduced.arff"));
+    private void parseARFF() throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(new File("src/org/openjfx/Resources/one_hit_wonder_preprocessed.arff"));
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
             if (line.startsWith("@attribute")) {
@@ -44,13 +44,17 @@ public class ImportARFFDataset {
         return dataset;
     }
 
+    public Map<String,LinkedHashSet> getAttrAndVals(){
+        return attributeValues;
+    }
 
-    private Set<String> getAttributeValues(String line) {
-        Set<String> setOFAttrVals;
+
+    private LinkedHashSet<String> getAttributeValues(String line) {
+        LinkedHashSet<String> setOFAttrVals;
         String selectedSubString = line.substring(line.indexOf('{'), line.indexOf('}'));
         String cleanString = selectedSubString.replaceAll("[{}'()+\\]^:\\\\]", "");
         String[] splitARFFValues = cleanString.split(",");
-        setOFAttrVals = new HashSet<>(Arrays.asList(splitARFFValues));
+        setOFAttrVals = new LinkedHashSet<>(Arrays.asList(splitARFFValues));
         // System.out.println(setOFAttrVals);
         return setOFAttrVals;
     }

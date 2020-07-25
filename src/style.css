@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'DS-Digital Bold';
+    src: url('org/openjfx/Resources/DS-DIGIB.TTF');
+}
+
 .root {
     -fx-accent: #003747;
     -fx-focus-color: -fx-accent;
@@ -6,6 +11,9 @@
     -fx-control-inner-background: derive(-fx-base, 35%);
     -fx-control-inner-background-alt: -fx-control-inner-background ;
 }
+
+
+
 
 
 .label{
@@ -89,6 +97,11 @@
     -fx-text-fill: aqua;
     -fx-font-size: 40pt ;
 -fx-text-alignment: center;
+    -fx-font-family: "DS-Digital Bold";
+
+
+;
+
 
 }
 
