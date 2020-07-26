@@ -170,15 +170,6 @@ public class Controller {
         forForm.getChildren().add(new Label("Lyrical Information"));
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
 
-//        ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
-//                new PieChart.Data("I-IV-V", 13),
-//                new PieChart.Data("i-VII-VI-VII", 25),
-//                new PieChart.Data("VI-VII-i-i", 10),
-//                new PieChart.Data("I-V-vi-IV", 22),
-//                new PieChart.Data("i-i-iv-iv", 30));
-//        final PieChart chart = new PieChart(myPieG);
-//
-//        chart.setPrefSize(400, 400);
 
         ChartData chartData1 = new ChartData("I-IV-V", 24.0, Tile.DARK_BLUE);
         ChartData chartData2 = new ChartData("i-VII-VI-VII", 10.0, Tile.BLUE);
@@ -200,11 +191,6 @@ public class Controller {
 
         myPie.getChildren().add(donutChartTile);
 
-//        chart.setTitle("Chord Progressions");
-//        chart.setLabelLineLength(10);
-//        chart.setLegendSide(Side.LEFT);
-
-        //chart.setAnimated(true);
 
         gauge1.setValue(0);
         gauge1.setForegroundBaseColor(Color.AQUA);
