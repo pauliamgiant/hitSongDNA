@@ -12,10 +12,7 @@ import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -508,7 +505,14 @@ public class Controller {
     }
 
     private void formIncompletePopup() {
+
         Alert pu2 = new Alert(Alert.AlertType.ERROR);
+
+        DialogPane dialogPane = pu2.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+
         pu2.setContentText("You will need a complete form to continue");
         pu2.setHeaderText("Incomplete Song Data");
         pu2.setTitle("Error!");

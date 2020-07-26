@@ -1,0 +1,37 @@
+.dialogs{
+    -fx-accent: #003747;
+    -fx-focus-color: -fx-accent;
+    -fx-base: #343534;
+
+    -fx-control-inner-background: derive(-fx-base, 35%);
+    -fx-control-inner-background-alt: -fx-control-inner-background ;
+    -fx-background-color: #343534;
+
+}
+.dialogs > *.button-bar > *.container{
+    -fx-background-color: #343534;
+}
+
+.dialogs .header-panel{
+    -fx-background-color: #343534;
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+}
+
+
+.dialogs > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.button{
+    -fx-background-color:lightgray;
+    -fx-text-fill:black;
+
+}
+
+.button:hover{
+    -fx-background-color:cyan;
+    -fx-text-fill:black;
+    -fx-font-weight:bold;
+}

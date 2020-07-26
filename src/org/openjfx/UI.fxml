@@ -153,7 +153,7 @@
                                 <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
                             </GridPane.margin>
                             <content>
-                                <VBox fx:id="forForm" maxWidth="640" minWidth="640" alignment="CENTER">
+                                <VBox fx:id="forForm" maxWidth="630" minWidth="630" alignment="CENTER">
 
                                 </VBox>
                             </content>
@@ -182,11 +182,16 @@
                     </VBox>
                 </GridPane>
             </Tab>
+
+
             <Tab fx:id="tab2" text="Dataset Metrics" closable="false">
                 <VBox fx:id="myPie">
 
                 </VBox>
             </Tab>
+
+
+
             <Tab fx:id="tab3" text="Song Metrics" closable="false">
                 <VBox fx:id="songMetrics">
                 </VBox>
