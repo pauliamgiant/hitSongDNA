@@ -35,6 +35,7 @@ public class Controller {
     private Classifier classifier;
     private DataSet oneHitWonders;
     private Boolean hitOrNot;
+    private Integer probOfHitComparedToMiss;
     private DataTuple newHitTuple;
     private DataTuple newMissTuple;
     private LyricAnalysis lyricAnalysis;
@@ -105,14 +106,11 @@ public class Controller {
     private VBox forForm;
 
 
-
     @FXML
     private VBox myPie;
 
     @FXML
     private VBox songMetrics;
-
-
 
 
     @FXML
@@ -121,7 +119,7 @@ public class Controller {
         //System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
         oneHitWonders = new DataSet();
         oneHitWonders.safeDataSet();
-      //  System.out.println(oneHitWonders.printOutDataSet());
+        //  System.out.println(oneHitWonders.printOutDataSet());
 
         TupleBuilder tb = new TupleBuilder();
         newHitTuple = tb.getUnclassifiedHitTuple();
@@ -144,9 +142,7 @@ public class Controller {
 //        popMe.setGraphic(iconView);
 
 
-
 //        Alert a = new Alert(Alert.AlertType.NONE);
-
 
 
 // here is where the logo goes
@@ -159,7 +155,7 @@ public class Controller {
         songAttributes = buildSongAttributesForm();
         chordAttributes = buildChordAttributesForm();
         toplineAttributes = buildToplineAttributesForm();
-       lyricAttributes = buildLyricAttributesForm();
+        lyricAttributes = buildLyricAttributesForm();
 
         forForm.getChildren().add(new Label("Song Attributes"));
         forForm.getChildren().add(new FormRenderer(songAttributes));
@@ -283,7 +279,7 @@ public class Controller {
          */
         StringField title = (StringField) songAttr.get(0);
         StringField lyricsPasted = (StringField) lyrAttr.get(0);
-        lyricAnalysis = new LyricAnalysis(title.getValue(),lyricsPasted.getValue());
+        lyricAnalysis = new LyricAnalysis(title.getValue(), lyricsPasted.getValue());
 
         //processLyrics(lyricsPasted.getValue());
         formTupleData[26] = lyricAnalysis.getLineRepeatString();
@@ -334,17 +330,21 @@ public class Controller {
     public void executeClassification() {
 
 
-        if (songAttributes.isValid()) {
+        if (songAttributes.isValid() &&
+                chordAttributes.isValid() &&
+                lyricAttributes.isValid() &&
+                toplineAttributes.isValid()) {
             String[] tupleData;
             tupleData = assembleNewTuple();
 
             DataTuple newSongFromUser = new DataTuple(tupleData);
             hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
+            probOfHitComparedToMiss = classifier.percentage();
 
 
             try {
                 if (hitOrNot) {
-                    gauge1.setValue(65);
+                    gauge1.setValue(probOfHitComparedToMiss);
                     gauge1.setForegroundBaseColor(Color.AQUA);
                     gauge1.setTitleColor(Color.WHITE);
                     gauge1.setBarColor(Color.AQUA);
@@ -356,7 +356,7 @@ public class Controller {
                     hitLabel.setText("HIT");
                 }
                 if (!hitOrNot) {
-                    gauge1.setValue(35);
+                    gauge1.setValue(probOfHitComparedToMiss);
                     gauge1.setForegroundBaseColor(Color.DARKRED);
                     gauge1.setBarColor(Color.DARKRED);
                     gauge1.setValueColor(Color.RED);

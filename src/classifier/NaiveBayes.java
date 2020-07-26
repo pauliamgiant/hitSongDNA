@@ -11,6 +11,7 @@ public class NaiveBayes implements Classifier {
     private DataSet dataSet;
     private double hitCount;
     private double missCount;
+    private double percentOfHit;
 
     public NaiveBayes(DataSet trainingSet) {
         this.dataSet = trainingSet;
@@ -81,6 +82,11 @@ public class NaiveBayes implements Classifier {
         return 0;
     }
 
+    public Integer percentage(){
+        int convert = (int) percentOfHit;
+        return convert;
+    }
+
 
     public boolean songIsLikelyToBeAHit(DataTuple toClassify) {
         double probOfHit = calculateProbabilityOfHit();
@@ -124,6 +130,8 @@ public class NaiveBayes implements Classifier {
         double missResult = postProbMiss * probOfMiss;
         System.out.println(hitResult);
         System.out.println(missResult);
+
+        percentOfHit = (100/(hitResult+missResult))*hitResult;
 
         if (hitResult > missResult) {
             System.out.println("Hit Probability > Miss Probability");
