@@ -10,13 +10,13 @@ import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,10 +26,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lyricAnalysis.LyricAnalysis;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -85,6 +81,9 @@ public class Controller {
     private Label hitLabel;
 
     @FXML
+    private Label mainTitle;
+
+    @FXML
     private Tile ledTile;
 
     @FXML
@@ -105,8 +104,7 @@ public class Controller {
     @FXML
     private VBox forForm;
 
-    @FXML
-    private Button catchMe;
+
 
     @FXML
     private VBox myPie;
@@ -114,60 +112,54 @@ public class Controller {
     @FXML
     private VBox songMetrics;
 
-    @FXML
-    public Button getPopMe() {
-        return popMe;
-    }
+
 
 
     @FXML
     public void initialize() throws URISyntaxException {
-        try {
-            oneHitWonders = new DataSet();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        newHitTuple = TupleBuilder.getUnclassifiedHitTuple();
-        newMissTuple = TupleBuilder.getUnclassifiedMissTuple();
+        AttributeRegistry.getInstance().updateAttributeDataSafely();
+        //System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
+        oneHitWonders = new DataSet();
+        oneHitWonders.safeDataSet();
+      //  System.out.println(oneHitWonders.printOutDataSet());
+
+        TupleBuilder tb = new TupleBuilder();
+        newHitTuple = tb.getUnclassifiedHitTuple();
+        newMissTuple = tb.getUnclassifiedMissTuple();
+
         classifier = new NaiveBayes(oneHitWonders);
-
-
+//
+//
+//        /**
+//         * Icon on classify button
+//         */
         classifyIcon.setIcon(FontAwesomeIcon.PIED_PIPER_PP);
         classifyIcon.setSize("2em");
         classifyIcon.setFill(Color.LIGHTGRAY);
         classifyButton.setGraphic(classifyIcon);
 
-        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
-        iconView.setSize("2em");
-        iconView.setFill(Color.CYAN);
-        popMe.setGraphic(iconView);
+//        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
+//        iconView.setSize("2em");
+//        iconView.setFill(Color.CYAN);
+//        popMe.setGraphic(iconView);
+
+
+
+//        Alert a = new Alert(Alert.AlertType.NONE);
+
+
 
 // here is where the logo goes
-//        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
-//        imView.setImage(image);
+        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+        imView.setImage(image);
+        imView.setFitHeight(70);
+        imView.setFitWidth(70);
 
-        Alert a = new Alert(Alert.AlertType.NONE);
-
-        // action event
-        EventHandler<ActionEvent> event = e -> {
-            a.setAlertType(Alert.AlertType.CONFIRMATION);
-            a.show();
-        };
-        popMe.setOnAction(event);
-
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                showStage();
-            }
-        });
-
-
+//
         songAttributes = buildSongAttributesForm();
         chordAttributes = buildChordAttributesForm();
         toplineAttributes = buildToplineAttributesForm();
-        lyricAttributes = buildLyricAttributesForm();
+       lyricAttributes = buildLyricAttributesForm();
 
         forForm.getChildren().add(new Label("Song Attributes"));
         forForm.getChildren().add(new FormRenderer(songAttributes));
@@ -177,11 +169,6 @@ public class Controller {
         forForm.getChildren().add(new FormRenderer(toplineAttributes));
         forForm.getChildren().add(new Label("Lyrical Information"));
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
-
-
-        //NaiveBayes paulsCl = new NaiveBayes();
-        catchMe.setText("Classifier go here");
-        // System.out.println(paulsCl.testing());
 
 //        ObservableList<PieChart.Data> myPieG = FXCollections.observableArrayList(
 //                new PieChart.Data("I-IV-V", 13),
@@ -309,10 +296,10 @@ public class Controller {
          * some body lyric values for now
          */
         StringField title = (StringField) songAttr.get(0);
-
-        lyricAnalysis = new LyricAnalysis(title.getValue());
         StringField lyricsPasted = (StringField) lyrAttr.get(0);
-        processLyrics(lyricsPasted.getValue());
+        lyricAnalysis = new LyricAnalysis(title.getValue(),lyricsPasted.getValue());
+
+        //processLyrics(lyricsPasted.getValue());
         formTupleData[26] = lyricAnalysis.getLineRepeatString();
         formTupleData[27] = lyricAnalysis.getGradeLevelString();
         formTupleData[28] = lyricAnalysis.getTotalNumberOfWordsString();
@@ -330,32 +317,32 @@ public class Controller {
         return formTupleData;
     }
 
-    private void processLyrics(String lyricsPasted) {
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter("src/org/openjfx/Resources/lyrics.txt", false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        try {
-            bufferedWriter.write(lyricsPasted);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            bufferedWriter.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(lyricsPasted);
-    }
+//    private void processLyrics(String lyricsPasted) {
+//        FileWriter fileWriter = null;
+//        try {
+//            fileWriter = new FileWriter("lyrics.txt", false);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+//        try {
+//            bufferedWriter.write(lyricsPasted);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            bufferedWriter.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            bufferedWriter.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(lyricsPasted);
+//    }
 
     @FXML
     public void executeClassification() {

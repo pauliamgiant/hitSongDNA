@@ -5,15 +5,25 @@ import java.util.Arrays;
 public class TupleBuilder {
 
 
+    public String whatTheFuck(){
+        return "hi";
+    }
 
-    public static DataTuple getUnclassifiedHitTuple() {
+    public String[] getUnclassifiedHitArray() {
+        String[] tupleData = new String[35];
+        tupleData = populateTestTupleData();
+        return tupleData;
+    }
+
+
+    public DataTuple getUnclassifiedHitTuple() {
         String[] tupleData = new String[30];
         tupleData = populateTestTupleData();
         DataTuple newTuple = new DataTuple(tupleData);
         return newTuple;
     }
 
-    public static DataTuple getUnclassifiedMissTuple() {
+    public DataTuple getUnclassifiedMissTuple() {
         String[] tupleData = new String[35];
         String data2 = "'\\'(-inf-12]\\'',80-95,pop,male,DMAJ,I-iii-IV-I,TRUE,DMAJ,I-iii-IV-I,3,FALSE,no,IV-I-IV-V,FALSE,IV-I-IV-V,3,'\\'(5-6]\\'',3-3-3-1,3,2,thirds,1-1-1-1,1,1,roots,rockbeat-var,'\\'(7-14]\\'','\\'(0.88-1.75]\\'','\\'(249-286.5]\\'','\\'(5-7]\\'','\\'(4-5]\\'','\\'(11-13]\\'','\\'(8-11]\\'',lover,no";
         String cleanString = data2.replaceAll("['(+\\]^:\\\\]", "");
@@ -22,7 +32,7 @@ public class TupleBuilder {
         return newTuple;
     }
 
-    public static DataTuple getClassifiedTuple() {
+    public DataTuple getClassifiedTuple() {
         String[] tupleData;
         tupleData = populateTestTupleData();
         tupleData = Arrays.copyOf(tupleData,35);
@@ -31,10 +41,7 @@ public class TupleBuilder {
         return newTuple;
     }
 
-    public static String[] populateTestTupleData() {
-      //  String data = "'\'(12-23]\'',>130,pop,mf-duet,DMAJ,TRUE,DMAJ,3,FALSE,no,TRUE,4,'\'(5-6]\'',1,3,triad-notes,4,3,mixed-harm,none,'\'(7-14]\'','\'(1.75-2.61]\'','\'(-inf-187]\'','\'(7-9]\'','\'(-inf-2]\'','\'(2-5]\'','\'(8-11]\'',lover,no";
-
-     //   String cleanString = data.replaceAll("['(+\\]^:\\\\]", "");
+    public String[] populateTestTupleData() {
         String customTuple = "12-23," +
                 "111-120," +
                 "edm," +

@@ -33,16 +33,16 @@ public class DataSetTest {
         assertEquals(listOfTuples.size(),166);
     }
 
-    @Test
-    public void testAddTuple() {
-        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-        assertEquals(dataset.dataSetSize(),167.0);
-        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-        assertEquals(dataset.dataSetSize(),168.0);
-        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-        assertEquals(dataset.dataSetSize(),170.0);
-    }
+//    @Test
+//    public void testAddTuple() {
+//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+//        assertEquals(dataset.dataSetSize(),167.0);
+//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+//        assertEquals(dataset.dataSetSize(),168.0);
+//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+//        assertEquals(dataset.dataSetSize(),170.0);
+//    }
 
     @Test
     public void testPrintOutDataSet() {

@@ -1,7 +1,10 @@
 package lyricAnalysis;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class LyricAnalysis {
 
@@ -16,12 +19,9 @@ public class LyricAnalysis {
     private final int totalNumberOfWords;
 
 
-    public LyricAnalysis(String songTitle) {
-        try {
-            lyricsByLine = new TextParser().getLines();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public LyricAnalysis(String songTitle, String lyrics) {
+
+        lyricsByLine = getLines(lyrics);
         LineRepetitionAnalysis lra = new LineRepetitionAnalysis();
         numberOfLineRepeats = lra.analyseRepetition(lyricsByLine);
         LyricalComplexityAnalysis lca = new LyricalComplexityAnalysis(lyricsByLine);
@@ -37,7 +37,64 @@ public class LyricAnalysis {
     }
 
     public static void main(String[] args) {
-        LyricAnalysis analysis = new LyricAnalysis("power of love");
+        String str = "On a dark desert highway\n" +
+                "Cool wind in my hair\n" +
+                "Warm smell of colitas\n" +
+                "Rising up through the air\n" +
+                "Up ahead in the distance\n" +
+                "I saw a shimmering light\n" +
+                "My head grew heavy and my sight grew dim\n" +
+                "I had to stop for the night\n" +
+                "There she stood in the doorway\n" +
+                "I heard the mission bell\n" +
+                "And I was thinkin' to myself\n" +
+                "'This could be heaven or this could be hell\n" +
+                "Then she lit up a candle\n" +
+                "And she showed me the way\n" +
+                "There were voices down the corridor\n" +
+                "I thought I heard them say\n" +
+                "Welcome to the Hotel California\n" +
+                "Such a lovely place (such a lovely place)\n" +
+                "Such a lovely face\n" +
+                "Plenty of room at the Hotel California\n" +
+                "Any time of year (any time of year)\n" +
+                "You can find it here\n" +
+                "Her mind is Tiffany-twisted\n" +
+                "She got the Mercedes Benz, uh\n" +
+                "She got a lot of pretty, pretty boys\n" +
+                "That she calls friends\n" +
+                "How they dance in the courtyard\n" +
+                "Sweet summer sweat\n" +
+                "Some dance to remember\n" +
+                "Some dance to forget\n" +
+                "So I called up the Captain\n" +
+                "\"Please bring me my wine\"\n" +
+                "He said, \"We haven't had that spirit here since 1969\"\n" +
+                "And still those voices are calling from far away\n" +
+                "Wake you up in the middle of the night\n" +
+                "Just to hear them say\n" +
+                "Welcome to the Hotel California\n" +
+                "Such a lovely place (such a lovely place)\n" +
+                "Such a lovely face\n" +
+                "They livin' it up at the Hotel California\n" +
+                "What a nice surprise (what a nice surprise)\n" +
+                "Bring your alibis\n" +
+                "Mirrors on the ceiling\n" +
+                "The pink champagne on ice\n" +
+                "And she said, \"We are all just prisoners here of our own device\"\n" +
+                "And in the master's chambers\n" +
+                "They gathered for the feast\n" +
+                "They stab it with their steely knives\n" +
+                "But they just can't kill the beast\n" +
+                "Last thing I remember\n" +
+                "I was running for the door\n" +
+                "I had to find the passage back\n" +
+                "To the place I was before\n" +
+                "\"Relax\", said the night man\n" +
+                "\"We are programmed to receive\n" +
+                "You can check out any time you like\n" +
+                "But you can never leave\"";
+        LyricAnalysis analysis = new LyricAnalysis("Hotel California",str);
         System.out.println("numberOfLineRepeats: " + analysis.numberOfLineRepeats);
         System.out.println("gradeLevelOfLyrics: " + analysis.gradeLevelOfLyrics);
         System.out.println("totalNumberOfWords: " + analysis.totalNumberOfWords);
@@ -45,6 +102,36 @@ public class LyricAnalysis {
         System.out.println("numberOfDistinctHitWords: " + analysis.numberOfDistinctHitWords);
         System.out.println("totalNumberOfHitWords: " + analysis.totalNumberOfHitWords);
         System.out.println("String title repeats: " + analysis.getLineRepeatString());
+    }
+
+    public List<String> getLines(String lyrics) {
+        List<String> lyricList = new ArrayList<>();
+        String lines[] = lyrics.split("\\r?\\n");
+        for (int i = 0; i < lines.length; i++) {
+            String currentLine = lines[i];
+            if (!currentLine.equals("")) {
+                lyricList.add(currentLine);
+            }
+
+        }
+        return lyricList;
+    }
+
+    public List<String> getLines() {
+        List<String> lyrics = new ArrayList<>();
+        Scanner fileScanner = null;
+        try {
+            fileScanner = new Scanner(new File("lyrics.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (fileScanner.hasNextLine()) {
+            String line = fileScanner.nextLine();
+            if (!line.equals("")) {
+                lyrics.add(line);
+            }
+        }
+        return lyrics;
     }
 
     public void showAllLyricData() {

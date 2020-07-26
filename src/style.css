@@ -177,3 +177,17 @@
     -fx-background-insets: 0,4,6,8,10;
 }
 
+#mainTitle {
+    -fx-text-fill: aqua;
+    -fx-font-size: 30pt ;
+    -fx-text-alignment: center;
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 30 0 5 0;
+    -fx-font-family: "DS-Digital Bold";
+
+}
+
+#buttonStrip {
+    -fx-background-color: #2a2b2a;
+}

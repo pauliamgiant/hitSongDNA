@@ -3,11 +3,15 @@ package classifier;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DataTuple {
 
-    private Map<String, SongAttribute> attributes;
+    private LinkedHashMap<String, SongAttribute> attributes;
+
+    public DataTuple(Boolean fix){
+        attributes = new LinkedHashMap<String, SongAttribute>();
+        SongAttribute sa = new SongAttribute("Test","Test");
+    }
 
 
     public DataTuple(Boolean knownTarget,String[] values ){
@@ -17,7 +21,7 @@ public class DataTuple {
 
     public DataTuple(String[] values){
 
-        attributes = new LinkedHashMap<>();
+        attributes = new LinkedHashMap<String, SongAttribute>();
         attributes.put("INTRO_LEN", new SongAttribute("INTRO_LEN", values[0]));
         attributes.put("TEMPO", new SongAttribute("TEMPO", values[1]));
         attributes.put("GENRE", new SongAttribute("GENRE", values[2]));
@@ -53,7 +57,6 @@ public class DataTuple {
         attributes.put("RHYMECOUNT", new SongAttribute("RHYMECOUNT", values[32]));
         attributes.put("LYR_ARCHETYPE", new SongAttribute("LYR_ARCHETYPE", values[33]));
         attributes.put("HIT_WRITER", new SongAttribute("HIT_WRITER", values[34]));
-
     }
 
 

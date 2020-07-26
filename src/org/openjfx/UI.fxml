@@ -38,25 +38,20 @@
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
+                <ImageView fx:id="imView"></ImageView>
+                <Label fx:id="mainTitle">HitSongDNA</Label>
 
-                <Button fx:id="okButton" text="OK" defaultButton="true"/>
-                <Button text="Cancel" onAction="#showPopup"/>
-                <Button fx:id="catchMe">
-                <FontAwesomeIconView fx:id="iconView">
-                </FontAwesomeIconView></Button>
-                <Button fx:id="popMe"/>
-                <Button text="Error Popup" onAction="#popup2"/>
+<!--                <Button fx:id="okButton" text="OK" defaultButton="true"/>-->
+<!--                <Button text="Cancel" onAction="#showPopup"/>-->
 
-
-
-
-
+<!--                <Button text="seriously" fx:id="popMe">-->
+<!--                    <FontAwesomeIconView fx:id="iconView">-->
+<!--                    </FontAwesomeIconView>-->
+<!--                </Button>-->
+<!--                <Button text="Error Popup" onAction="#popup2"/>-->
 
 
-
-
-<ProgressIndicator></ProgressIndicator>
-
+<!--                <ProgressIndicator></ProgressIndicator>-->
 
             </HBox>
         </VBox>
@@ -65,21 +60,11 @@
     <left>
         <VBox fx:id="sideBarLeft">
 
-
-<!--            <Label text="Select Colour:"/>-->
-            <ImageView fx:id="imView">
-
-            </ImageView>
-
-
-            <ColorPicker/>
-
-
         </VBox>
     </left>
     <center>
 
-        <TabPane fx:id="tabPane" >
+        <TabPane fx:id="tabPane">
             <Tab fx:id="tab1" text="Predict Your Song" closable="false">
                 <GridPane>
                     <padding>
@@ -87,34 +72,33 @@
                     </padding>
                     <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
                         <VBox>
-                        <Label fx:id="hitLabel">
-                            <VBox.margin>
-                                <Insets bottom="0" left="25" right="0" top="0"/>
-                            </VBox.margin>
-                        </Label>
+
+                            <Label fx:id="hitLabel">
+                                <VBox.margin>
+                                    <Insets bottom="0" left="25" right="0" top="0"/>
+                                </VBox.margin>
+                            </Label>
                         </VBox>
                         <Gauge fx:id="gauge1"
 
-                                                skinType="SIMPLE_DIGITAL"
-                                                decimals="0"
-                                                valueColor="white"
-                                                titleColor="WHITE"
-                                                subTitleColor="white"
-                                                unitColor="white"
-                                                needleColor="white"
-                                                tickLabelsVisible=""
-                                                tickMarkColor="black"
-                                                tickLabelOrientation="ORTHOGONAL"
-                                                animated="true"
-                                                animationDuration="500"
-                                                areaTextVisible="true"
-                                                title=""
-                                                shadowsEnabled="true"
-                                                prefWidth="400"
-                                                prefHeight="400"
+                               skinType="SIMPLE_DIGITAL"
+                               decimals="0"
+                               valueColor="white"
+                               titleColor="WHITE"
+                               subTitleColor="white"
+                               unitColor="white"
+                               needleColor="white"
+                               tickLabelsVisible=""
+                               tickMarkColor="black"
+                               tickLabelOrientation="ORTHOGONAL"
+                               animated="true"
+                               animationDuration="500"
+                               areaTextVisible="true"
+                               title=""
+                               shadowsEnabled="true"
+                               prefWidth="400"
+                               prefHeight="400"
                         />
-
-
 
 
                         <HBox GridPane.columnIndex="2"
@@ -161,35 +145,38 @@
                     <VBox GridPane.columnIndex="1"
                           GridPane.rowIndex="1"
                           minWidth="600">
-                    <ScrollPane GridPane.columnIndex="1"
-                                GridPane.rowIndex="1"
-                                minWidth="600">
-                        <GridPane.margin>
-                            <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
-                        </GridPane.margin>
-                        <content>
-                            <VBox fx:id="forForm" maxWidth="580" minWidth="580" alignment="CENTER">
+                        <ScrollPane GridPane.columnIndex="1"
+                                    GridPane.rowIndex="1"
+                                    minWidth="650"
+                        maxWidth="650">
+                            <GridPane.margin>
+                                <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
+                            </GridPane.margin>
+                            <content>
+                                <VBox fx:id="forForm" maxWidth="640" minWidth="640" alignment="CENTER">
 
-                            </VBox>
-                        </content>
-                    </ScrollPane>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
 
                         <VBox fx:id="paneLeft" spacing="40">
                             <VBox.margin>
                                 <Insets bottom="25.0" left="0" right="0" top="25.0"/>
                             </VBox.margin>
-                        <Button fx:id="classifyButton" text="CLASSIFY" onAction="#executeClassification"
-                                prefWidth="600" minHeight="100" defaultButton="true"
-                                GridPane.columnIndex="0" GridPane.rowIndex="4"
-                                GridPane.columnSpan="2" GridPane.rowSpan="1"
-                                GridPane.halignment="CENTER"
-                                >
-                            <GridPane.margin>
-                                <Insets top="100" right="0" bottom="20" left="0"></Insets>
-                            </GridPane.margin>
-                            <FontAwesomeIconView fx:id="classifyIcon">
-                            </FontAwesomeIconView>
-                        </Button>
+
+                            <Button fx:id="classifyButton" text="CLASSIFY" onAction="#executeClassification"
+
+                                    prefWidth="650" minHeight="100" defaultButton="true"
+                                    GridPane.columnIndex="0" GridPane.rowIndex="4"
+                                    GridPane.columnSpan="2" GridPane.rowSpan="1"
+                                    GridPane.halignment="CENTER"
+                            >
+                                <GridPane.margin>
+                                    <Insets top="100" right="0" bottom="20" left="0"></Insets>
+                                </GridPane.margin>
+                                <FontAwesomeIconView fx:id="classifyIcon">
+                                </FontAwesomeIconView>
+                            </Button>
                         </VBox>
 
                     </VBox>

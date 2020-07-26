@@ -2,11 +2,6 @@ package classifier;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import java.io.FileNotFoundException;
-
-import static org.testng.Assert.assertEquals;
 
 public class NaiveBayesTest {
 
@@ -23,18 +18,18 @@ public class NaiveBayesTest {
     public void tearDown() {
     }
 
-    @Test(groups = { "AllTests"})
-    public void testSongIsLikelyToBeAHit() throws FileNotFoundException {
-        DataSet ds = new DataSet();
-        String[] splitARFFValues1 = tupleString1.split(",");
-        String[] splitARFFValues2 = tupleString2.split(",");
-        DataTuple newTuple1 = new DataTuple(splitARFFValues1);
-        DataTuple newTuple2 = new DataTuple(splitARFFValues2);
-        NaiveBayes classifier = new NaiveBayes(ds);
-        boolean result1 = classifier.songIsLikelyToBeAHit(newTuple1);
-        boolean result2 = classifier.songIsLikelyToBeAHit(newTuple2);
-
-        assertEquals(result1, true);
-        assertEquals(result2, false);
-    }
+//    @Test(groups = { "AllTests"})
+//    public void testSongIsLikelyToBeAHit() throws FileNotFoundException {
+//        DataSet ds = new DataSet();
+//        String[] splitARFFValues1 = tupleString1.split(",");
+//        String[] splitARFFValues2 = tupleString2.split(",");
+//        DataTuple newTuple1 = new DataTuple(splitARFFValues1);
+//        DataTuple newTuple2 = new DataTuple(splitARFFValues2);
+//        NaiveBayes classifier = new NaiveBayes(ds);
+//        boolean result1 = classifier.songIsLikelyToBeAHit(newTuple1);
+//        boolean result2 = classifier.songIsLikelyToBeAHit(newTuple2);
+//
+//        assertEquals(result1, true);
+//        assertEquals(result2, false);
+//    }
 }

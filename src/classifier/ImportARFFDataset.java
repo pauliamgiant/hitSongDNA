@@ -20,8 +20,14 @@ public class ImportARFFDataset {
        // AttributeRegistry.getInstance().updateAttributeDataFromARFF(attributeValues);
     }
 
-    private void parseARFF() throws FileNotFoundException {
-        Scanner fileScanner = new Scanner(new File("src/org/openjfx/Resources/one_hit_wonder_preprocessed.arff"));
+    private void parseARFF(){
+        Scanner fileScanner = null;
+        try {
+
+            fileScanner = new Scanner(new File("src/org/openjfx/Resources/one_hit_wonder_preprocessed.arff"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
             if (line.startsWith("@attribute")) {
