@@ -1,7 +1,9 @@
 package classifier;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 
 public class ImportARFFDataset {
@@ -22,12 +24,16 @@ public class ImportARFFDataset {
 
     private void parseARFF(){
         Scanner fileScanner = null;
-        try {
 
-            fileScanner = new Scanner(new File("src/org/openjfx/Resources/one_hit_wonder_preprocessed.arff"));
-        } catch (FileNotFoundException e) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        URL resource = classLoader.getResource("one_hit_wonder_preprocessed.arff");
+        InputStream in = null;
+        try {
+            in = resource.openStream();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        fileScanner = new Scanner(in);
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
             if (line.startsWith("@attribute")) {

@@ -145,7 +145,8 @@
                     <VBox GridPane.columnIndex="1"
                           GridPane.rowIndex="1"
                           minWidth="600">
-                        <ScrollPane GridPane.columnIndex="1"
+                        <ScrollPane fx:id="tab1Scroll"
+                                GridPane.columnIndex="1"
                                     GridPane.rowIndex="1"
                                     minWidth="650"
                         maxWidth="650">
@@ -153,7 +154,7 @@
                                 <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
                             </GridPane.margin>
                             <content>
-                                <VBox fx:id="forForm" maxWidth="630" minWidth="630" alignment="CENTER">
+                                <VBox fx:id="forForm" maxWidth="634" minWidth="634" alignment="CENTER">
 
                                 </VBox>
                             </content>

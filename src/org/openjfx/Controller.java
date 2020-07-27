@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lyricAnalysis.LyricAnalysis;
 
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -112,10 +113,16 @@ public class Controller {
 
     @FXML
     public void initialize() throws URISyntaxException {
-        AttributeRegistry.getInstance().updateAttributeDataSafely();
+       // AttributeRegistry.getInstance().updateAttributeDataSafely();
+        try {
+            AttributeRegistry.getInstance().updateAttributeDataFromARFF();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         //System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
         oneHitWonders = new DataSet();
-        oneHitWonders.safeDataSet();
+        //oneHitWonders.safeDataSet();
+        oneHitWonders.buildDataSet();
         //  System.out.println(oneHitWonders.printOutDataSet());
 
         TupleBuilder tb = new TupleBuilder();
