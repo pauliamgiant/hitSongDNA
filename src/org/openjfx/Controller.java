@@ -37,6 +37,8 @@ public class Controller {
     private DataTuple newHitTuple;
     private DataTuple newMissTuple;
     private LyricAnalysis lyricAnalysis;
+    Image mainLogo;
+    Image mainLogoRed;
 
     @FXML
     private Form songAttributes;
@@ -150,8 +152,9 @@ public class Controller {
 
 
 // here is where the logo goes
-        Image image = new Image(getClass().getResource("Resources/1.png").toURI().toString());
-        imView.setImage(image);
+        mainLogo = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+        mainLogoRed = new Image(getClass().getResource("Resources/2.png").toURI().toString());
+        imView.setImage(mainLogo);
         imView.setFitHeight(70);
         imView.setFitWidth(70);
 
@@ -354,7 +357,9 @@ public class Controller {
                     gauge1.setBarColor(Color.AQUA);
                     gauge3.setVisible(true);
                     gauge3.setValue(63);
+                    mainTitle.setStyle("-fx-text-fill: cyan;");
                     hitLabel.setStyle("-fx-text-fill: cyan;");
+                    imView.setImage(mainLogo);
                     ledTile.setActive(true);
                     ledTile.setActiveColor(Color.CYAN);
                     hitLabel.setText("HIT");
@@ -363,6 +368,8 @@ public class Controller {
                     gauge1.setValue(probOfHitComparedToMiss);
                     gauge1.setForegroundBaseColor(Color.DARKRED);
                     gauge1.setBarColor(Color.DARKRED);
+                    mainTitle.setStyle("-fx-text-fill: red;");
+                    imView.setImage(mainLogoRed);
                     gauge1.setValueColor(Color.RED);
                     gauge3.setVisible(false);
                     ledTile.setActive(true);
