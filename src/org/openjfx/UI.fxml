@@ -8,6 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import com.dlsc.formsfx.view.renderer.FormRenderer?>
 
 <?import eu.hansolo.tilesfx.Tile?>
 <BorderPane fx:controller="org.openjfx.Controller"
@@ -155,6 +156,7 @@
                             </GridPane.margin>
                             <content>
                                 <VBox fx:id="forForm" maxWidth="634" minWidth="634" alignment="CENTER">
+
 
                                 </VBox>
                             </content>

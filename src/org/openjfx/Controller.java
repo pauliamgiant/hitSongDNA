@@ -11,15 +11,16 @@ import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import lyricAnalysis.LyricAnalysis;
 
@@ -115,7 +116,9 @@ public class Controller {
 
     @FXML
     public void initialize() throws URISyntaxException {
-       // AttributeRegistry.getInstance().updateAttributeDataSafely();
+
+
+        // AttributeRegistry.getInstance().updateAttributeDataSafely();
         try {
             AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         } catch (FileNotFoundException e) {
@@ -137,7 +140,7 @@ public class Controller {
 //        /**
 //         * Icon on classify button
 //         */
-        classifyIcon.setIcon(FontAwesomeIcon.PIED_PIPER_PP);
+        classifyIcon.setIcon(FontAwesomeIcon.CROSSHAIRS);
         classifyIcon.setSize("2em");
         classifyIcon.setFill(Color.LIGHTGRAY);
         classifyButton.setGraphic(classifyIcon);
@@ -159,18 +162,33 @@ public class Controller {
         imView.setFitWidth(70);
 
 //
-        songAttributes = buildSongAttributesForm();
-        chordAttributes = buildChordAttributesForm();
-        toplineAttributes = buildToplineAttributesForm();
-        lyricAttributes = buildLyricAttributesForm();
+        songAttributes = FormBuilder.buildSongAttributesForm();
+        chordAttributes = FormBuilder.buildChordAttributesForm();
+        toplineAttributes = FormBuilder.buildToplineAttributesForm();
+        lyricAttributes = FormBuilder.buildLyricAttributesForm();
 
-        forForm.getChildren().add(new Label("Song Attributes"));
+
+//        List elements = songAttributes.getElements();
+//        SingleSelectionField tempo = (SingleSelectionField) elements.get(1);
+
+
+        Label songAttrLab = new Label("Song Information");
+        songAttrLab.getStyleClass().add("formHeadings");
+        Label chordAttrLab = new Label("Chord Information");
+        chordAttrLab.getStyleClass().add("formHeadings");
+        Label toplineAttrLab = new Label("Topline Information");
+        toplineAttrLab.getStyleClass().add("formHeadings");
+        Label lyricalAttrLab = new Label("Lyrical Information");
+        lyricalAttrLab.getStyleClass().add("formHeadings");
+
+
+        forForm.getChildren().add(songAttrLab);
         forForm.getChildren().add(new FormRenderer(songAttributes));
-        forForm.getChildren().add(new Label("Chord Information"));
+        forForm.getChildren().add(chordAttrLab);
         forForm.getChildren().add(new FormRenderer(chordAttributes));
-        forForm.getChildren().add(new Label("Topline Information"));
+        forForm.getChildren().add(toplineAttrLab);
         forForm.getChildren().add(new FormRenderer(toplineAttributes));
-        forForm.getChildren().add(new Label("Lyrical Information"));
+        forForm.getChildren().add(lyricalAttrLab);
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
 
 
@@ -206,16 +224,7 @@ public class Controller {
 
     @FXML
     public static void showStage() {
-        Stage newStage = new Stage();
-        VBox comp = new VBox();
-        TextField nameField = new TextField("Name");
-        TextField phoneNumber = new TextField("Phone Number");
-        comp.getChildren().add(nameField);
-        comp.getChildren().add(phoneNumber);
-
-        Scene stageScene = new Scene(comp, 300, 300);
-        newStage.setScene(stageScene);
-        newStage.show();
+        HitSongDNA.LoadingPopup();
     }
 
     @FXML
@@ -376,6 +385,7 @@ public class Controller {
                     ledTile.setActiveColor(Color.RED);
                     hitLabel.setStyle("-fx-text-fill: red;");
                     hitLabel.setText("MISS");
+
                 }
             } catch (Exception exception) {
                 formIncompletePopup();
@@ -395,128 +405,6 @@ public class Controller {
         popup.show(win);
     }
 
-
-    private Form buildSongAttributesForm() {
-
-        return Form.of(
-                Group.of(
-                        Field.ofStringType("")
-                                .label("Song Title")
-                                .required("")
-                                .tooltip("The title of your song.")
-                                .placeholder("Please enter the title of your song here."),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("INTRO_LEN"))
-                                .label("Intro Length")
-                                .required("Please select the range in seconds that the intro of your song fits into."),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("TEMPO"))
-                                .label("Tempo")
-                                .required("Please select the tempo range of your song"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("GENRE"))
-                                .label("Genre")
-                                .required("Please select the Genre of your song from the following."),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("LEAD_SING"))
-                                .label("Lead Singer(s)")
-                                .required("Please select type of Voice(s) featured in your song."),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("DRUM_PAT"))
-                                .label("Drum Pattern")
-                                .required("Please select from the range of fundamental drum patters."),
-                        Field.ofBooleanType(false)
-                                .label("Co-writer with Top 40 history")
-                                .tooltip("If any of the co-writers have had a top 40 charting song please select yes.")
-                )
-        );
-
-    }
-
-    private Form buildChordAttributesForm() {
-        return Form.of(
-                Group.of(
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("KEY_VS"))
-                                .label("Key of Verse")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CHORDS_VS"))
-                                .label("Vs Chord Progression")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Verse Starts on Chord I"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_VS_KEY"))
-                                .label("Verse Key Ionian")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_VS_CHORDS"))
-                                .label("Verse Chords Ionian")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_DISTINCT_CHRD_COUNT"))
-                                .label("Vs Chordcount")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Vs/Ch same chords"),
-                        Field.ofBooleanType(false)
-                                .label("Vs has Key Change"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CHORDS_CH"))
-                                .label("Ch Chord Progression")
-                                .required("This field can’t be empty"),
-                        Field.ofBooleanType(false)
-                                .label("Chorus Starts on Chord I"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("IONIAN_CH_CHORDS"))
-                                .label("Ch Chords Ionian")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_DISTINCT_CHRD_COUNT"))
-                                .label("Ch Chordcount")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("SONG_TOTAL_CHORD_COUNT"))
-                                .label("Total chords used")
-                                .required("This field can’t be empty"))
-        );
-    }
-
-
-    private Form buildToplineAttributesForm() {
-        return Form.of(
-                Group.of(
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TOPLINE"))
-                                .label("Vs Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_START_NOTE"))
-                                .label("Vs Topline start note")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_DISTINCT_NOTES"))
-                                .label("Vs No. notes in Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("VS_TL_TYPE"))
-                                .label("Vs Topline Type")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TOPLINE"))
-                                .label("Ch Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_START_NOTE"))
-                                .label("Ch Topline start note")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_DISTINCT_NOTES"))
-                                .label("Ch No. notes in Topline")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("CH_TL_TYPE"))
-                                .label("Ch Topline Type")
-                                .required("This field can’t be empty")
-                )
-        );
-    }
-
-    private Form buildLyricAttributesForm() {
-        return Form.of(
-                Group.of(
-                        Field.ofStringType("")
-                                .multiline(true)
-                                .required("This field can’t be empty")
-                                .label("Paste Lyrics"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("RHYMECOUNT"))
-                                .label("Rhymecount")
-                                .required("This field can’t be empty"),
-                        Field.ofSingleSelectionType(AttributeRegistry.getInstance().getValues("LYR_ARCHETYPE"))
-                                .label("Lyrical Archetype")
-                                .required("This field can’t be empty")
-                )
-        );
-    }
 
     private void formIncompletePopup() {
 
