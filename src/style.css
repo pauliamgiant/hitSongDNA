@@ -320,17 +320,26 @@
 
 }
 
+.changeLabel{
+
+-fx-min-width: 130px;
+
+}
+
 .changeLabel .label {
 
     -fx-font-family: "DS-Digital Bold";
     -fx-font-size: 130%;
-    -fx-min-width: 100px;
+    -fx-min-width:100px;
 
 }
 
 .changeLabel .combo-box-base{
-    /*-fx-max-width: 200px;*/
+
+
 }
+
+
 
 
 .formHeadings{
@@ -365,7 +374,14 @@
 }
 
 #grabTitle .text-field{
-    /*-fx-max-width: 200px;*/
+    -fx-max-width: 100px;
+
+
+}
+
+#grabTitle2 .text-area{
+    -fx-max-width: 100px;
+
 
 }
 #grabTitle .label{

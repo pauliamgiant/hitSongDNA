@@ -23,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import lyricAnalysis.LyricAnalysis;
+import org.openjfx.ControllerClasses.FormBuilder;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
