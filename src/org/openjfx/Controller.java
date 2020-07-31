@@ -9,6 +9,7 @@ import eu.hansolo.medusa.Gauge;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.chart.ChartData;
+import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -88,6 +89,18 @@ public class Controller {
 
     @FXML
     private Tile ledTile;
+
+    @FXML
+    private Tile meter1;
+
+    @FXML
+    private Tile meter2;
+
+    @FXML
+    private Tile meter3;
+
+    @FXML
+    private Tile meter4;
 
     @FXML
     private Button okButton;
@@ -201,6 +214,17 @@ public class Controller {
         ChartData chartData6 = new ChartData("Item 6", 13.0, Tile.BLUE);
         ChartData chartData7 = new ChartData("Item 7", 13.0, Tile.BLUE);
         ChartData chartData8 = new ChartData("Item 8", 13.0, Tile.BLUE);
+
+
+        BarChartItem bc1 = new BarChartItem("Gmaj",20);
+        BarChartItem bc2 = new BarChartItem("Amaj",30);
+        BarChartItem bc3 = new BarChartItem("Bmaj",99);
+        BarChartItem bc4 = new BarChartItem("Cmaj",7);
+
+        meter2.addBarChartItem(bc1);
+        meter2.addBarChartItem(bc2);
+        meter2.addBarChartItem(bc3);
+        meter2.addBarChartItem(bc4);
 
         Tile donutChartTile = TileBuilder.create()
                 .skinType(Tile.SkinType.DONUT_CHART)

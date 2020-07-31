@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding = "UTF-8" ?>
 
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import eu.hansolo.medusa.Gauge?>
-<?import javafx.geometry.Insets?>
+<?import eu.hansolo.tilesfx.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import com.dlsc.formsfx.view.renderer.FormRenderer?>
-
-<?import eu.hansolo.tilesfx.Tile?>
+<?import java.lang.String?>
 <BorderPane fx:controller="org.openjfx.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
@@ -42,17 +41,17 @@
                 <ImageView fx:id="imView"></ImageView>
                 <Label fx:id="mainTitle">HitSongDNA</Label>
 
-<!--                <Button fx:id="okButton" text="OK" defaultButton="true"/>-->
-<!--                <Button text="Cancel" onAction="#showPopup"/>-->
+                <!--                <Button fx:id="okButton" text="OK" defaultButton="true"/>-->
+                <!--                <Button text="Cancel" onAction="#showPopup"/>-->
 
-<!--                <Button text="seriously" fx:id="popMe">-->
-<!--                    <FontAwesomeIconView fx:id="iconView">-->
-<!--                    </FontAwesomeIconView>-->
-<!--                </Button>-->
-<!--                <Button text="Error Popup" onAction="#popup2"/>-->
+                <!--                <Button text="seriously" fx:id="popMe">-->
+                <!--                    <FontAwesomeIconView fx:id="iconView">-->
+                <!--                    </FontAwesomeIconView>-->
+                <!--                </Button>-->
+                <!--                <Button text="Error Popup" onAction="#popup2"/>-->
 
 
-<!--                <ProgressIndicator></ProgressIndicator>-->
+                <!--                <ProgressIndicator></ProgressIndicator>-->
 
             </HBox>
         </VBox>
@@ -147,10 +146,10 @@
                           GridPane.rowIndex="1"
                           minWidth="600">
                         <ScrollPane fx:id="tab1Scroll"
-                                GridPane.columnIndex="1"
+                                    GridPane.columnIndex="1"
                                     GridPane.rowIndex="1"
                                     minWidth="650"
-                        maxWidth="650">
+                                    maxWidth="650">
                             <GridPane.margin>
                                 <Insets bottom="25.0" left="25.0" right="50.0" top="50.0"/>
                             </GridPane.margin>
@@ -188,11 +187,65 @@
 
 
             <Tab fx:id="tab2" text="Dataset Metrics" closable="false">
-                <VBox fx:id="myPie">
 
-                </VBox>
+                <BorderPane>
+
+                    <top>
+                        <HBox fx:id="topOfAttributes">
+                            <Label fx:id="labelForAttributeSeclection" styleClass="formHeadings" text="Select Attribute">
+                                   </Label>
+                            <HBox.margin>
+                                <Insets top="40" right="0" bottom="10" left="0"></Insets>
+                            </HBox.margin>
+                            <ComboBox fx:id="selectAttribute" minWidth="100" >
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Tempo"/>
+                                        <String fx:value="Chords"/>
+                                        <String fx:value="Title Repetition"/>
+                                    </FXCollections>
+
+                                </items>
+
+
+                            </ComboBox>
+                        </HBox>
+                    </top>
+                    <left>
+
+
+                    </left>
+                    <center>
+                        <VBox fx:id="myPie">
+
+                        </VBox>
+                    </center>
+                    <bottom>
+
+                        <HBox>
+                            <Tile fx:id="meter1" skinType="BAR_GAUGE" value="50">
+
+                            </Tile>
+                            <Tile fx:id="meter2" skinType="BAR_CHART">
+
+                            </Tile>
+                            <Tile fx:id="meter3" value="50" skinType="GAUGE_SPARK_LINE">
+
+                            </Tile>
+                            <Tile fx:id="meter4" value="50" skinType="RADAR_NODE_CHART">
+
+                            </Tile>
+                            <Tile fx:id="meter5" value="50" skinType="RADIAL_PERCENTAGE">
+
+                            </Tile>
+                            <Tile fx:id="meter6" value="50" skinType="TIMELINE">
+
+                            </Tile>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+
             </Tab>
-
 
 
             <Tab fx:id="tab3" text="Song Metrics" closable="false">

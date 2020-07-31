@@ -387,3 +387,14 @@
 #grabTitle .label{
     -fx-max-width: 150px;
 }
+
+#topOfAttributes{
+    -fx-background-color: #2a2b2a;
+    -fx-min-height: 80;
+
+}
+
+.selectAttribute {
+    -fx-padding: 30%;
+
+}
