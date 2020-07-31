@@ -191,13 +191,11 @@
                 <BorderPane>
 
                     <top>
-                        <HBox fx:id="topOfAttributes">
+                        <HBox fx:id="topOfAttributes" alignment="CENTER_LEFT">
                             <Label fx:id="labelForAttributeSeclection" styleClass="formHeadings" text="Select Attribute">
                                    </Label>
-                            <HBox.margin>
-                                <Insets top="40" right="0" bottom="10" left="0"></Insets>
-                            </HBox.margin>
-                            <ComboBox fx:id="selectAttribute" minWidth="100" >
+
+                            <ComboBox fx:id="selectAttribute" minWidth="200" promptText="Select an Attribute">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="Tempo"/>
