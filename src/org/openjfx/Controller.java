@@ -390,7 +390,7 @@ public class Controller {
                     gauge1.setTitleColor(Color.WHITE);
                     gauge1.setBarColor(Color.AQUA);
                     gauge3.setVisible(true);
-                    gauge3.setValue(63);
+                    gauge3.setValue(62);
                     mainTitle.setStyle("-fx-text-fill: cyan;");
                     hitLabel.setStyle("-fx-text-fill: cyan;");
                     imView.setImage(mainLogo);

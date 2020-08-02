@@ -26,7 +26,7 @@ public class ImportARFFDataset {
         Scanner fileScanner = null;
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        URL resource = classLoader.getResource("one_hit_wonder_preprocessed.arff");
+        URL resource = classLoader.getResource("one_hit_wonder_preprocessed_FINAL.arff");
         InputStream in = null;
         try {
             in = resource.openStream();
