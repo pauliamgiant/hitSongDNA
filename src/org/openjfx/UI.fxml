@@ -64,8 +64,8 @@
     </left>
     <center>
 
-        <TabPane fx:id="tabPane">
-            <Tab fx:id="tab1" text="Predict Your Song" closable="false">
+        <TabPane fx:id="tabPane" >
+            <Tab fx:id="tab1" text="Song Prediction" closable="false" >
                 <GridPane>
                     <padding>
                         <Insets top="25" right="25" bottom="25" left="25"/>
@@ -161,24 +161,31 @@
                             </content>
                         </ScrollPane>
 
-                        <VBox fx:id="paneLeft" spacing="40">
+                        <VBox fx:id="paneLeft" spacing="10">
                             <VBox.margin>
-                                <Insets bottom="25.0" left="0" right="0" top="25.0"/>
+                                <Insets bottom="1.0" left="0" right="0" top="15.0"/>
                             </VBox.margin>
 
                             <Button fx:id="classifyButton" text="" onAction="#executeClassification"
 
-                                    prefWidth="650" minHeight="100" defaultButton="true"
+                                    prefWidth="650" minHeight="70" defaultButton="true"
                                     GridPane.columnIndex="0" GridPane.rowIndex="4"
                                     GridPane.columnSpan="2" GridPane.rowSpan="1"
                                     GridPane.halignment="CENTER"
                             >
                                 <GridPane.margin>
-                                    <Insets top="100" right="0" bottom="20" left="0"></Insets>
+                                    <Insets top="100" right="0" bottom="1" left="0"></Insets>
                                 </GridPane.margin>
                                 <FontAwesomeIconView fx:id="classifyIcon">
                                 </FontAwesomeIconView>
                             </Button>
+                            <HBox spacing="10">  <Button fx:id="saveButton" text="" >
+
+                            </Button>
+                                <Button fx:id="clearButton" text="" >
+
+                                </Button></HBox>
+
                         </VBox>
 
                     </VBox>

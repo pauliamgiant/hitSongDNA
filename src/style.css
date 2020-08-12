@@ -206,6 +206,41 @@
     -fx-background-insets: 0, 4, 6, 8, 10;
 }
 
+#clearButton {
+    -fx-background-color: rgba(255, 0, 0, 0.53);
+    -fx-background-insets: 0, 1, 4, 5, 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+
+}
+#clearButton:hover {
+    -fx-background-color: rgb(255, 0, 0);
+    -fx-background-insets: 0, 0, 3, 5, 5;
+}
+
+#clearButton:pressed {
+-fx-background-color: darkred;
+    -fx-background-insets: 0, 4, 6, 8, 10;
+}
+
+
+#saveButton {
+    -fx-background-color: darkcyan;
+    -fx-background-insets: 0, 4, 6, 8, 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+}
+
+#saveButton:hover {
+    -fx-background-color: cyan;
+    -fx-background-insets: 0, 0, 3, 5, 5;
+    -fx-text-fill: #020b02;
+
+}
+
+#saveButton:pressed {
+    -fx-background-color: #003747;
+    -fx-background-insets: 0, 4, 6, 8, 10;
+}
+
 /*https://stackoverflow.com/questions/48048943/javafx-8-scroll-bar-css/48050208*/
 
 .scroll-bar:horizontal .track,
@@ -406,3 +441,27 @@
     -fx-padding: 30%;
 
 }
+
+
+.tab-label {
+    -fx-content-display: top;
+
+
+}
+
+.tab-pane {
+    -fx-tab-min-height: 40;
+    -fx-tab-max-height: 40;
+    -fx-tab-min-width: 80;
+}
+
+.tab {
+
+
+}
+.tab:selected {
+
+
+}
+
+

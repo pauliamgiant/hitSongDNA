@@ -47,6 +47,18 @@ public class Controller {
     private Form songAttributes;
 
     @FXML
+    private Tab tab1;
+
+    @FXML
+    private Tab tab2;
+
+    @FXML
+    private Tab tab3;
+
+    @FXML
+    private Tab tab4;
+
+    @FXML
     private Form chordAttributes;
 
 
@@ -110,6 +122,14 @@ public class Controller {
     @FXML
     private Button classifyButton;
 
+
+    @FXML
+    private Button saveButton;
+
+
+    @FXML
+    private Button clearButton;
+
     @FXML
     private Button popMe;
 
@@ -156,6 +176,38 @@ public class Controller {
 //        /**
 //         * Icon on classify button
 //         */
+
+        FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab2Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab3Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab4Icon = new FontAwesomeIconView();
+
+
+        tab1Icon.setIcon(FontAwesomeIcon.DASHBOARD);
+        tab1Icon.setSize("1em");
+        tab1Icon.setFill(Color.LIGHTGRAY);
+        tab1.setGraphic(tab1Icon);
+
+        tab2Icon.setIcon(FontAwesomeIcon.BAR_CHART);
+        tab2Icon.setSize("1em");
+        tab2Icon.setFill(Color.LIGHTGRAY);
+        tab2.setGraphic(tab2Icon);
+
+        tab3Icon.setIcon(FontAwesomeIcon.MUSIC);
+        tab3Icon.setSize("1em");
+        tab3Icon.setFill(Color.LIGHTGRAY);
+        tab3.setGraphic(tab3Icon);
+
+        tab4Icon.setIcon(FontAwesomeIcon.SAVE);
+        tab4Icon.setSize("1em");
+        tab4Icon.setFill(Color.LIGHTGRAY);
+        tab4.setGraphic(tab4Icon);
+
+
+
+
+
+
         classifyIcon.setIcon(FontAwesomeIcon.PLAY);
         classifyIcon.setSize("2em");
         classifyIcon.setFill(Color.LIGHTGRAY);
@@ -168,6 +220,22 @@ public class Controller {
         classifyButton.setOnMouseExited(e ->{
             classifyIcon.setFill(Color.LIGHTGRAY);
         });
+
+        FontAwesomeIconView clearIcon = new FontAwesomeIconView();
+        clearIcon.setIcon(FontAwesomeIcon.TIMES_CIRCLE);
+        clearIcon.setSize("1em");
+        clearIcon.setFill(Color.LIGHTGRAY);
+
+        clearButton.setGraphic(clearIcon);
+        clearButton.setContentDisplay(ContentDisplay.RIGHT);
+
+        FontAwesomeIconView saveIcon = new FontAwesomeIconView();
+        saveIcon.setIcon(FontAwesomeIcon.SAVE);
+        saveIcon.setSize("1em");
+        saveIcon.setFill(Color.LIGHTGRAY);
+        saveButton.setGraphic(saveIcon);
+        saveButton.setContentDisplay(ContentDisplay.RIGHT);
+
 
 
 
