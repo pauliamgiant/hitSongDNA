@@ -5,15 +5,16 @@ public class SongAttribute {
     private String name;
     private String value;
 
-    public SongAttribute(String nameOfAttribute, String value){
-//        if (validValue(nameOfAttribute, value)) {
-//            this.name = nameOfAttribute;
-//            this.value = value;
-//        } else {
-//            System.out.println("Not a valid Attribute value");;
-//        }
-                    this.name = nameOfAttribute;
+    public SongAttribute(String nameOfAttribute, String value) {
+        if (validValue(nameOfAttribute, value)) {
+            this.name = nameOfAttribute;
             this.value = value;
+        } else {
+            System.out.println("Not a valid Attribute value");
+
+        }
+        this.name = nameOfAttribute;
+        this.value = value;
     }
 
     public String getName() {

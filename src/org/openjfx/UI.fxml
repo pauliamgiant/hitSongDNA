@@ -166,7 +166,7 @@
                                 <Insets bottom="25.0" left="0" right="0" top="25.0"/>
                             </VBox.margin>
 
-                            <Button fx:id="classifyButton" text="CLASSIFY" onAction="#executeClassification"
+                            <Button fx:id="classifyButton" text="" onAction="#executeClassification"
 
                                     prefWidth="650" minHeight="100" defaultButton="true"
                                     GridPane.columnIndex="0" GridPane.rowIndex="4"

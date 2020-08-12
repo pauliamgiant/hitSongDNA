@@ -98,18 +98,20 @@ public class NaiveBayes implements Classifier {
         System.out.println("condProb_HIT");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbHit[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "HIT");
+            // version of Laplacian correction
+            // offsetting an attribute based on a 0 value which disrupts the conditional
+            //probability algorithm
             if(condProbHit[i]==0){
                 condProbHit[i] = 2;
                 System.out.println("Zero value adjustment made on HIT target");
             }
-
         }
         System.out.println("condProb_MISS");
         for (int i = 0; i < allAttributes.size(); i++) {
             condProbMiss[i] = calculateConditionalProbOfAttribute(allAttributes.get(i), "miss");
 
-            // here is the process of offsetting an attribute based on a 0 value which disrupts the conditional
-            //probability algorithm
+
+            // Laplacian correction
             if(condProbHit[i]==2){
                 condProbHit[i] = 1;
                 condProbMiss[i] = 1;

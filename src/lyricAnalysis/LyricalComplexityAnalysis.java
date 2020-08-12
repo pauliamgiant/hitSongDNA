@@ -23,12 +23,7 @@ public class LyricalComplexityAnalysis {
     }
 
     public double getGradeLevel() {
-//        System.out.println("Words:"+numberOfWords);
-//        System.out.println("Sentences:"+numberOfSentences);
-//        System.out.println("Syllables:"+syllableCount);
-
       return (0.39 * (numberOfWords / numberOfSentences)) + (11.8 * (syllableCount / numberOfWords)) - 15.59;
-
     }
 
     private int countSyllablesInWords() {

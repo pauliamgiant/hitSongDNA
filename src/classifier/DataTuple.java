@@ -8,33 +8,6 @@ public class DataTuple {
 
     private LinkedHashMap<String, SongAttribute> attributes;
 
-    public DataTuple(Boolean fix){
-        attributes = new LinkedHashMap<String, SongAttribute>();
-        SongAttribute sa = new SongAttribute("Test","Test");
-    }
-
-    public DataTuple(Boolean knownTarget, String[] values, Boolean fullAnalysisSet){
-        this(values);
-        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
-        attributes.put("SONG", new SongAttribute("SONG", values[36]));
-        attributes.put("ARTIST", new SongAttribute("ARTIST", values[37]));
-        attributes.put("KEY_CH", new SongAttribute("KEY_CH", values[38]));
-        attributes.put("IONIAN_CH_KEY", new SongAttribute("IONIAN_CH_KEY", values[39]));
-        attributes.put("CH_KEY_CHNGS", new SongAttribute("CH_KEY_CHNGS", values[40]));
-        attributes.put("DISTINCT_WORDS", new SongAttribute("DISTINCT_WORDS", values[41]));
-        attributes.put("TITLE_IN_LYRICS", new SongAttribute("TITLE_IN_LYRICS", values[42]));
-        attributes.put("STAR_COLLAB", new SongAttribute("STAR_COLLAB", values[43]));
-
-    }
-
-
-    public DataTuple(Boolean knownTarget,String[] values ){
-        this(values);
-        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
-
-
-    }
-
     public DataTuple(String[] values){
 
         attributes = new LinkedHashMap<String, SongAttribute>();
@@ -74,6 +47,35 @@ public class DataTuple {
         attributes.put("LYR_ARCHETYPE", new SongAttribute("LYR_ARCHETYPE", values[33]));
         attributes.put("HIT_WRITER", new SongAttribute("HIT_WRITER", values[34]));
     }
+
+    public DataTuple(Boolean fix){
+        attributes = new LinkedHashMap<String, SongAttribute>();
+        SongAttribute sa = new SongAttribute("Test","Test");
+    }
+
+    public DataTuple(Boolean knownTarget, String[] values, Boolean fullAnalysisSet){
+        this(values);
+        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
+        attributes.put("SONG", new SongAttribute("SONG", values[36]));
+        attributes.put("ARTIST", new SongAttribute("ARTIST", values[37]));
+        attributes.put("KEY_CH", new SongAttribute("KEY_CH", values[38]));
+        attributes.put("IONIAN_CH_KEY", new SongAttribute("IONIAN_CH_KEY", values[39]));
+        attributes.put("CH_KEY_CHNGS", new SongAttribute("CH_KEY_CHNGS", values[40]));
+        attributes.put("DISTINCT_WORDS", new SongAttribute("DISTINCT_WORDS", values[41]));
+        attributes.put("TITLE_IN_LYRICS", new SongAttribute("TITLE_IN_LYRICS", values[42]));
+        attributes.put("STAR_COLLAB", new SongAttribute("STAR_COLLAB", values[43]));
+
+    }
+
+
+    public DataTuple(Boolean knownTarget,String[] values ){
+        this(values);
+        attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
+
+
+    }
+
+
 
 
     public String printTuple() {

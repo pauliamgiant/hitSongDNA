@@ -11,6 +11,7 @@ public class DataSet {
      */
 
     private String hardCodedDataSet;
+
     private List<DataTuple> tuples;
 
     public DataSet(){
@@ -41,7 +42,6 @@ public class DataSet {
     }
 
     public void buildDataSet() {
-
         ImportARFFDataset iad = null;
         try {
             iad = new ImportARFFDataset();

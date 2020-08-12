@@ -3,6 +3,8 @@
     src: url('org/openjfx/Resources/DS-DIGIB.TTF');
 }
 
+/*https://stackoverflow.com/questions/49159286/make-a-dark-mode-with-javafx*/
+
 .root {
     -fx-accent: #003747;
     -fx-focus-color: -fx-accent;
@@ -374,11 +376,15 @@
 }
 
 #grabTitle .text-field{
-    -fx-max-width: 100px;
+    /*-fx-max-width: 100px;*/
 
 
 }
 
+#classifyIcon {
+
+
+}
 #grabTitle2 .text-area{
     -fx-max-width: 100px;
 

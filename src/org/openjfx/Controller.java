@@ -1,7 +1,10 @@
 package org.openjfx;
 
 import classifier.*;
-import com.dlsc.formsfx.model.structure.*;
+import com.dlsc.formsfx.model.structure.BooleanField;
+import com.dlsc.formsfx.model.structure.Form;
+import com.dlsc.formsfx.model.structure.SingleSelectionField;
+import com.dlsc.formsfx.model.structure.StringField;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -12,10 +15,7 @@ import eu.hansolo.tilesfx.chart.ChartData;
 import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -71,6 +71,8 @@ public class Controller {
     public void showPopup(ActionEvent event) {
         showStage();
     }
+
+
 
     @FXML
     public void popup2(ActionEvent event) {
@@ -154,10 +156,25 @@ public class Controller {
 //        /**
 //         * Icon on classify button
 //         */
-        classifyIcon.setIcon(FontAwesomeIcon.CROSSHAIRS);
+        classifyIcon.setIcon(FontAwesomeIcon.PLAY);
         classifyIcon.setSize("2em");
         classifyIcon.setFill(Color.LIGHTGRAY);
         classifyButton.setGraphic(classifyIcon);
+        classifyButton.setContentDisplay(ContentDisplay.RIGHT);
+
+        classifyButton.setOnMouseEntered(e ->{
+            classifyIcon.setFill(Color.CYAN);
+        });
+        classifyButton.setOnMouseExited(e ->{
+            classifyIcon.setFill(Color.LIGHTGRAY);
+        });
+
+
+
+
+
+
+
 
 //        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
 //        iconView.setSize("2em");
