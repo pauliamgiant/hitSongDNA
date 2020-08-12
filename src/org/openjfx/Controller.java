@@ -14,6 +14,7 @@ import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.chart.ChartData;
 import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -47,6 +48,16 @@ public class Controller {
     private Form songAttributes;
 
     @FXML
+    private Form chordAttributes;
+
+
+    @FXML
+    private Form toplineAttributes;
+
+    @FXML
+    private Form lyricAttributes;
+
+    @FXML
     private Tab tab1;
 
     @FXML
@@ -58,15 +69,7 @@ public class Controller {
     @FXML
     private Tab tab4;
 
-    @FXML
-    private Form chordAttributes;
 
-
-    @FXML
-    private Form toplineAttributes;
-
-    @FXML
-    private Form lyricAttributes;
 
 
     @FXML
@@ -228,6 +231,18 @@ public class Controller {
 
         clearButton.setGraphic(clearIcon);
         clearButton.setContentDisplay(ContentDisplay.RIGHT);
+        clearButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                songAttributes.reset();
+                   chordAttributes.reset();
+                   lyricAttributes.reset();
+                   toplineAttributes.reset();
+
+              genericPopup("Form Reset","Form reset!");
+
+            }
+        });
 
         FontAwesomeIconView saveIcon = new FontAwesomeIconView();
         saveIcon.setIcon(FontAwesomeIcon.SAVE);
@@ -529,6 +544,21 @@ public class Controller {
         pu2.setHeaderText("Incomplete Song Data");
         pu2.setTitle("Error!");
         pu2.show();
+
+    }
+
+    private void genericPopup(String title, String message){
+        Alert genPop = new Alert(Alert.AlertType.INFORMATION);
+
+        DialogPane dialogPane = genPop.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+
+        genPop.setContentText(message);
+        genPop.setHeaderText(title);
+        genPop.setTitle(title);
+        genPop.show();
 
     }
 }
