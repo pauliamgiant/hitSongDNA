@@ -231,6 +231,7 @@ public class Controller {
 
         clearButton.setGraphic(clearIcon);
         clearButton.setContentDisplay(ContentDisplay.RIGHT);
+        clearButton.setTooltip(new Tooltip("Reset all form fields"));
         clearButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -249,6 +250,7 @@ public class Controller {
         saveIcon.setSize("1em");
         saveIcon.setFill(Color.LIGHTGRAY);
         saveButton.setGraphic(saveIcon);
+        saveButton.setTooltip(new Tooltip("Save progress to 'My Songs'"));
         saveButton.setContentDisplay(ContentDisplay.RIGHT);
 
 

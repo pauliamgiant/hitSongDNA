@@ -179,10 +179,10 @@
                                 <FontAwesomeIconView fx:id="classifyIcon">
                                 </FontAwesomeIconView>
                             </Button>
-                            <HBox spacing="10">  <Button fx:id="saveButton" text="" >
+                            <HBox spacing="10">  <Button fx:id="saveButton" text="">
 
                             </Button>
-                                <Button fx:id="clearButton" text="" >
+                                <Button fx:id="clearButton" text="">
 
                                 </Button></HBox>
 
