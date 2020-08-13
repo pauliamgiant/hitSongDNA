@@ -63,7 +63,6 @@
         </VBox>
     </left>
     <center>
-
         <TabPane fx:id="tabPane" >
             <Tab fx:id="tab1" text="Song Prediction" closable="false" >
                 <GridPane>
@@ -141,7 +140,6 @@
 
                         </HBox>
                     </VBox>
-
                     <VBox GridPane.columnIndex="1"
                           GridPane.rowIndex="1"
                           minWidth="600">
@@ -191,8 +189,6 @@
                     </VBox>
                 </GridPane>
             </Tab>
-
-
             <Tab fx:id="tab2" text="Dataset Metrics" closable="false">
 
                 <BorderPane>
@@ -251,8 +247,6 @@
                 </BorderPane>
 
             </Tab>
-
-
             <Tab fx:id="tab3" text="Song Metrics" closable="false">
                 <VBox fx:id="songMetrics">
                 </VBox>
@@ -261,12 +255,8 @@
                 <VBox fx:id="charts">
                 </VBox>
             </Tab>
-
         </TabPane>
-
     </center>
     <bottom>
-
-
     </bottom>
 </BorderPane>

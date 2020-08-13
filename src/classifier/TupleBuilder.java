@@ -5,9 +5,6 @@ import java.util.Arrays;
 public class TupleBuilder {
 
 
-    public String whatTheFuck(){
-        return "hi";
-    }
 
     public String[] getUnclassifiedHitArray() {
         String[] tupleData = new String[35];
@@ -16,7 +13,7 @@ public class TupleBuilder {
     }
 
 
-    public DataTuple getUnclassifiedHitTuple() {
+    public static DataTuple getUnclassifiedHitTuple() {
         String[] tupleData = new String[30];
         tupleData = populateTestTupleData();
         DataTuple newTuple = new DataTuple(tupleData);
@@ -32,16 +29,16 @@ public class TupleBuilder {
         return newTuple;
     }
 
-    public DataTuple getClassifiedTuple() {
+    public static DataTuple getClassifiedTuple() {
         String[] tupleData;
         tupleData = populateTestTupleData();
-        tupleData = Arrays.copyOf(tupleData,35);
-        tupleData[34] = "HIT";
+        tupleData = Arrays.copyOf(tupleData,36);
+        tupleData[35] = "HIT";
         DataTuple newTuple = new DataTuple(true,tupleData);
         return newTuple;
     }
 
-    public String[] populateTestTupleData() {
+    public static String[] populateTestTupleData() {
         String customTuple = "12-23," +
                 "111-120," +
                 "edm," +

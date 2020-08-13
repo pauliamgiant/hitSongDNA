@@ -10,18 +10,10 @@ import javafx.stage.Stage;
 
 
 public class HitSongDNA extends Application {
-
-
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-
-
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("UI.fxml"));
-        //Controller controller = (Controller) loader.getController();
         Scene scene = new Scene(root, 1280, 768);
         scene.getStylesheets().add("style.css");
         primaryStage.setTitle("HitSongDNA");

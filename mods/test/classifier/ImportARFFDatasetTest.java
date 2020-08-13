@@ -26,6 +26,6 @@ public class ImportARFFDatasetTest {
 
     @Test
     public void testGetTuples() {
-        assertEquals(iaf.getTuples().size(), 166.0);
+        assertEquals(iaf.getTuples().size(), 160.0);
     }
 }

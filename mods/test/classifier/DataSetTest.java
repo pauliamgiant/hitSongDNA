@@ -15,7 +15,10 @@ public class DataSetTest {
 
     @BeforeMethod
     public void setUp() throws FileNotFoundException {
+        AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         dataset = new DataSet();
+        dataset.buildDataSet();
+
     }
 
     @AfterMethod
@@ -24,30 +27,30 @@ public class DataSetTest {
 
     @Test
     public void testDataSetSize() {
-        assertEquals(dataset.dataSetSize(),166.0);
+        assertEquals(dataset.dataSetSize(),160.0);
     }
 
     @Test
     public void testGetTuples() {
         List listOfTuples = dataset.getTuples();
-        assertEquals(listOfTuples.size(),166);
+        assertEquals(listOfTuples.size(),160);
     }
 
-//    @Test
-//    public void testAddTuple() {
-//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-//        assertEquals(dataset.dataSetSize(),167.0);
-//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-//        assertEquals(dataset.dataSetSize(),168.0);
-//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-//        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
-//        assertEquals(dataset.dataSetSize(),170.0);
-//    }
+    @Test
+    public void testAddTuple() {
+        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+        assertEquals(dataset.dataSetSize(),161.0);
+        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+        assertEquals(dataset.dataSetSize(),162.0);
+        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+        dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
+        assertEquals(dataset.dataSetSize(),164.0);
+    }
 
     @Test
     public void testPrintOutDataSet() {
         String printout = dataset.printOutDataSet();
-        assertEquals(printout.length(),101914);
+        assertEquals(printout.length(),120435);
 
     }
 

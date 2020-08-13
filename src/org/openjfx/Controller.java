@@ -70,8 +70,6 @@ public class Controller {
     private Tab tab4;
 
 
-
-
     @FXML
     private ImageView imView;
 
@@ -86,7 +84,6 @@ public class Controller {
     public void showPopup(ActionEvent event) {
         showStage();
     }
-
 
 
     @FXML
@@ -207,20 +204,16 @@ public class Controller {
         tab4.setGraphic(tab4Icon);
 
 
-
-
-
-
         classifyIcon.setIcon(FontAwesomeIcon.PLAY);
         classifyIcon.setSize("2em");
         classifyIcon.setFill(Color.LIGHTGRAY);
         classifyButton.setGraphic(classifyIcon);
         classifyButton.setContentDisplay(ContentDisplay.RIGHT);
 
-        classifyButton.setOnMouseEntered(e ->{
+        classifyButton.setOnMouseEntered(e -> {
             classifyIcon.setFill(Color.CYAN);
         });
-        classifyButton.setOnMouseExited(e ->{
+        classifyButton.setOnMouseExited(e -> {
             classifyIcon.setFill(Color.LIGHTGRAY);
         });
 
@@ -236,11 +229,11 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 songAttributes.reset();
-                   chordAttributes.reset();
-                   lyricAttributes.reset();
-                   toplineAttributes.reset();
+                chordAttributes.reset();
+                lyricAttributes.reset();
+                toplineAttributes.reset();
 
-              genericPopup("Form Reset","Form reset!");
+                genericPopup("Form Reset", "Form reset!");
 
             }
         });
@@ -252,13 +245,6 @@ public class Controller {
         saveButton.setGraphic(saveIcon);
         saveButton.setTooltip(new Tooltip("Save progress to 'My Songs'"));
         saveButton.setContentDisplay(ContentDisplay.RIGHT);
-
-
-
-
-
-
-
 
 
 //        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
@@ -318,10 +304,10 @@ public class Controller {
         ChartData chartData8 = new ChartData("Item 8", 13.0, Tile.BLUE);
 
 
-        BarChartItem bc1 = new BarChartItem("Gmaj",20);
-        BarChartItem bc2 = new BarChartItem("Amaj",30);
-        BarChartItem bc3 = new BarChartItem("Bmaj",99);
-        BarChartItem bc4 = new BarChartItem("Cmaj",7);
+        BarChartItem bc1 = new BarChartItem("Gmaj", 20);
+        BarChartItem bc2 = new BarChartItem("Amaj", 30);
+        BarChartItem bc3 = new BarChartItem("Bmaj", 99);
+        BarChartItem bc4 = new BarChartItem("Cmaj", 7);
 
         meter2.addBarChartItem(bc1);
         meter2.addBarChartItem(bc2);
@@ -472,7 +458,6 @@ public class Controller {
     @FXML
     public void executeClassification() {
 
-
         if (songAttributes.isValid() &&
                 chordAttributes.isValid() &&
                 lyricAttributes.isValid() &&
@@ -549,7 +534,7 @@ public class Controller {
 
     }
 
-    private void genericPopup(String title, String message){
+    private void genericPopup(String title, String message) {
         Alert genPop = new Alert(Alert.AlertType.INFORMATION);
 
         DialogPane dialogPane = genPop.getDialogPane();
