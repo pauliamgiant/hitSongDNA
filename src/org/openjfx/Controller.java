@@ -153,19 +153,13 @@ public class Controller {
     @FXML
     public void initialize() throws URISyntaxException {
 
-
-        // AttributeRegistry.getInstance().updateAttributeDataSafely();
         try {
             AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
-        oneHitWonders = new DataSet();
-        //oneHitWonders.safeDataSet();
-        oneHitWonders.buildDataSet();
-        //  System.out.println(oneHitWonders.printOutDataSet());
 
+        oneHitWonders = new DataSet();
         TupleBuilder tb = new TupleBuilder();
         newHitTuple = tb.getUnclassifiedHitTuple();
         newMissTuple = tb.getUnclassifiedMissTuple();

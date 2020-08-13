@@ -13,7 +13,7 @@ public class DataTupleTest {
     DataTuple unClTupleToTestWith;
     DataTuple tupleToTestWith;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "Classifier"})
     public void setUp() throws FileNotFoundException {
         AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         DataSet dataset = new DataSet();
@@ -22,7 +22,7 @@ public class DataTupleTest {
 
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
     }
 

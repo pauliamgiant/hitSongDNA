@@ -17,7 +17,7 @@ public class DataSet {
     public DataSet(){
         tuples = new ArrayList<DataTuple>();
         hardCodedDataSet = getHardCodeData();
-   //     buildDataSet();
+       buildDataSet();
     }
 
     public List<DataTuple> getTuples() {

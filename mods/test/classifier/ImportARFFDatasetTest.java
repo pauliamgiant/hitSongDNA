@@ -15,17 +15,17 @@ public class ImportARFFDatasetTest {
     public ImportARFFDatasetTest() throws FileNotFoundException {
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "Classifier"})
     public void setUp() {
 
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testGetTuples() {
-        assertEquals(iaf.getTuples().size(), 160.0);
+        assertEquals(iaf.getTuples().size(), 160);
     }
 }

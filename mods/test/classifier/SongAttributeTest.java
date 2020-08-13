@@ -16,18 +16,18 @@ public class SongAttributeTest {
     SongAttribute arrt4;
     SongAttribute arrt5;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "Classifier"})
     public void setUp() throws FileNotFoundException {
         DataSet ds = new DataSet();
         arrt1 = new SongAttribute("TEMPO","95-110" );
         arrt3 = new SongAttribute("VS_CH_SAME_CHRDS","TRUE");
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testGetName() {
         try {
             arrt2 = new SongAttribute("TEMPO","95-111" );
@@ -40,7 +40,7 @@ public class SongAttributeTest {
         assertEquals(arrt3.getName(),"VS_CH_SAME_CHRDS");
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testGetValue() {
         assertEquals(arrt1.getValue(),"95-110");
         assertEquals(arrt3.getValue(),"TRUE");

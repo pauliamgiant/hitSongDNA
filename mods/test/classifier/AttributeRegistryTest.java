@@ -15,18 +15,19 @@ public class AttributeRegistryTest {
 
     DataSet dataset;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "Classifier"})
     public void setUp() throws FileNotFoundException {
         dataset = null;
         AttributeRegistry.getInstance().updateAttributeDataFromARFF();
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
         dataset = null;
+        AttributeRegistry.getInstance().flushRegistry();
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testValidAttributeValue() {
     String attributeName = "TEMPO" ,
             attrVal1 = "111-120",
@@ -39,21 +40,21 @@ public class AttributeRegistryTest {
     assertEquals(false,AttributeRegistry.getInstance().validAttributeValue(attributeName,attrVal4));
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testPrintAttributesAndVals(){
         System.out.println(AttributeRegistry.getInstance().printAttributesAndVals());
         assertEquals(AttributeRegistry.getInstance().printAttributesAndVals().length(),9997);
 
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testUpdateAttributeDataFromARFF() {
         Map<String, LinkedHashSet> testMap = AttributeRegistry.getInstance().getAttributesAndValues();
         assertEquals(testMap.size(),36);
 
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void intro_LengthTest(){
         List<String> testMe = AttributeRegistry.getInstance().getValues("INTRO_LEN");
         assertEquals(testMe.size(),4);

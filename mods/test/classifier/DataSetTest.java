@@ -13,30 +13,30 @@ public class DataSetTest {
 
     DataSet dataset;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"AllTests", "Classifier"})
     public void setUp() throws FileNotFoundException {
         AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         dataset = new DataSet();
-        dataset.buildDataSet();
+
 
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testDataSetSize() {
         assertEquals(dataset.dataSetSize(),160.0);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testGetTuples() {
         List listOfTuples = dataset.getTuples();
         assertEquals(listOfTuples.size(),160);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testAddTuple() {
         dataset.addTuple(TupleBuilder.getUnclassifiedHitTuple());
         assertEquals(dataset.dataSetSize(),161.0);
@@ -47,7 +47,7 @@ public class DataSetTest {
         assertEquals(dataset.dataSetSize(),164.0);
     }
 
-    @Test
+    @Test(groups = {"AllTests", "Classifier"})
     public void testPrintOutDataSet() {
         String printout = dataset.printOutDataSet();
         assertEquals(printout.length(),120435);
