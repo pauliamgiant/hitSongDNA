@@ -19,9 +19,7 @@ public class DataTupleTest {
         DataSet dataset = new DataSet();
         unClTupleToTestWith = TupleBuilder.getUnclassifiedHitTuple();
         tupleToTestWith = TupleBuilder.getClassifiedTuple();
-
     }
-
     @AfterMethod(groups = {"AllTests", "Classifier"})
     public void tearDown() {
     }

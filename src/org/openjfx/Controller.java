@@ -10,8 +10,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.tilesfx.Tile;
-import eu.hansolo.tilesfx.TileBuilder;
-import eu.hansolo.tilesfx.chart.ChartData;
 import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -105,6 +103,10 @@ public class Controller {
     private Tile ledTile;
 
     @FXML
+    private TableView attributeTable;
+
+
+    @FXML
     private Tile meter1;
 
     @FXML
@@ -140,11 +142,26 @@ public class Controller {
     private Gauge gauge3;
 
     @FXML
-    private VBox forForm;
-
+    private Gauge dMGauge1;
 
     @FXML
-    private VBox myPie;
+    private Gauge dMGauge2;
+
+    @FXML
+    private Gauge dMGauge3;
+
+    @FXML
+    private Gauge dMGauge4;
+
+    @FXML
+    private Gauge dMGauge5;
+
+    @FXML
+    private Gauge dMGauge6;
+
+    @FXML
+    private VBox forForm;
+
 
     @FXML
     private VBox songMetrics;
@@ -288,36 +305,15 @@ public class Controller {
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
 
 
-        ChartData chartData1 = new ChartData("I-IV-V", 24.0, Tile.DARK_BLUE);
-        ChartData chartData2 = new ChartData("i-VII-VI-VII", 10.0, Tile.BLUE);
-        ChartData chartData3 = new ChartData("VI-VII-i-i", 12.0, Tile.GRAY);
-        ChartData chartData4 = new ChartData("I-V-vi-IV", 13.0, Tile.GREEN);
-        ChartData chartData5 = new ChartData("Item 5", 13.0, Tile.BLUE);
-        ChartData chartData6 = new ChartData("Item 6", 13.0, Tile.BLUE);
-        ChartData chartData7 = new ChartData("Item 7", 13.0, Tile.BLUE);
-        ChartData chartData8 = new ChartData("Item 8", 13.0, Tile.BLUE);
-
-
         BarChartItem bc1 = new BarChartItem("Gmaj", 20);
         BarChartItem bc2 = new BarChartItem("Amaj", 30);
         BarChartItem bc3 = new BarChartItem("Bmaj", 99);
         BarChartItem bc4 = new BarChartItem("Cmaj", 7);
 
-        meter2.addBarChartItem(bc1);
-        meter2.addBarChartItem(bc2);
-        meter2.addBarChartItem(bc3);
-        meter2.addBarChartItem(bc4);
-
-        Tile donutChartTile = TileBuilder.create()
-                .skinType(Tile.SkinType.DONUT_CHART)
-                .prefSize(800, 800)
-                .title("Most Common Chords")
-                .text("")
-                .textVisible(false)
-                .chartData(chartData1, chartData2, chartData3, chartData4)
-                .build();
-
-        myPie.getChildren().add(donutChartTile);
+//        meter2.addBarChartItem(bc1);
+//        meter2.addBarChartItem(bc2);
+//        meter2.addBarChartItem(bc3);
+//        meter2.addBarChartItem(bc4);
 
 
         gauge1.setValue(0);
@@ -325,6 +321,46 @@ public class Controller {
         gauge1.setTitleColor(Color.WHITE);
         gauge1.setBarColor(Color.AQUA);
         gauge3.setValue(0);
+
+        dMGauge1.setValue(74);
+        dMGauge1.setForegroundBaseColor(Color.AQUA);
+        dMGauge1.setTitleColor(Color.WHITE);
+        dMGauge1.setBarColor(Color.AQUA);
+        dMGauge1.setTitle("<80bpm");
+
+        dMGauge2.setValue(23);
+        dMGauge2.setForegroundBaseColor(Color.RED);
+        dMGauge2.setTitleColor(Color.WHITE);
+        dMGauge2.setBarColor(Color.RED);
+        dMGauge2.setTitle("80-95bpm");
+
+        dMGauge3.setValue(56);
+        dMGauge3.setForegroundBaseColor(Color.AQUA);
+        dMGauge3.setTitleColor(Color.WHITE);
+        dMGauge3.setBarColor(Color.AQUA);
+        dMGauge3.setTitle("95-110bpm");
+
+
+        dMGauge4.setValue(90);
+        dMGauge4.setForegroundBaseColor(Color.AQUA);
+        dMGauge4.setTitleColor(Color.WHITE);
+        dMGauge4.setBarColor(Color.AQUA);
+        dMGauge4.setTitle("111-120bpm");
+
+        dMGauge5.setValue(12);
+        dMGauge5.setForegroundBaseColor(Color.RED);
+        dMGauge5.setTitleColor(Color.WHITE);
+        dMGauge5.setBarColor(Color.RED);
+        dMGauge5.setTitle("121-130bpm");
+
+
+        dMGauge6.setValue(77);
+        dMGauge6.setForegroundBaseColor(Color.AQUA);
+        dMGauge6.setTitleColor(Color.WHITE);
+        dMGauge6.setBarColor(Color.AQUA);
+        dMGauge6.setTitle(">130bpm");
+
+
 
 
     }

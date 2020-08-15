@@ -386,6 +386,13 @@
     -fx-font-size: 150%;
 }
 
+.formHeadings2{
+    -fx-label-padding: 20px 0.5em 10px 0.5em;
+    -fx-text-fill: cyan;
+
+
+}
+
 .changeMe {
     -fx-text-fill: #b3b3b3;
     -fx-label-padding: 10px 0em 5px 0em;
@@ -462,6 +469,24 @@
 .tab:selected {
 
 
+}
+
+.songAttrList  .list-cell:odd{
+    -fx-background-color: #505250;
+}
+.songAttrList  .list-cell:odd{
+    -fx-background-color: #3C3C3C;
+}
+
+.songValsList {
+
+    -fx-background-color: #2a2b2a;
+}
+
+.songValsList .list-cell
+{
+
+    -fx-background-color: #2a2b2a;
 }
 
 
