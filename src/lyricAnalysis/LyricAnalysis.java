@@ -36,6 +36,23 @@ public class LyricAnalysis {
         totalNumberOfWords = wca.totalNumberOfWords();
     }
 
+    public LyricAnalysis(String songTitle) {
+
+        lyricsByLine = getLines();
+        LineRepetitionAnalysis lra = new LineRepetitionAnalysis();
+        numberOfLineRepeats = lra.analyseRepetition(lyricsByLine);
+        LyricalComplexityAnalysis lca = new LyricalComplexityAnalysis(lyricsByLine);
+        gradeLevelOfLyrics = lca.getGradeLevel();
+        SongTitleAnalysis sta = new SongTitleAnalysis(songTitle);
+        songTitleInLyrics = sta.titleInLyrics(lyricsByLine);
+        songTitleRepeats = sta.songTitleRepeats(lyricsByLine);
+        WordCountAnalysis wca = new WordCountAnalysis(lyricsByLine);
+        numberOfDistinctHitWords = wca.numberOfDistinctHitWordsUsed();
+        totalNumberOfHitWords = wca.totalNumberOfHitWords();
+        numberOfDistinctWords = wca.numberOfDistinctWords();
+        totalNumberOfWords = wca.totalNumberOfWords();
+    }
+
     public static void main(String[] args) {
         String str = "On a dark desert highway\n" +
                 "Cool wind in my hair\n" +
@@ -95,6 +112,10 @@ public class LyricAnalysis {
                 "You can check out any time you like\n" +
                 "But you can never leave\"";
         LyricAnalysis analysis = new LyricAnalysis("Hotel California",str);
+
+     //   LyricAnalysis analysis = new LyricAnalysis("I will always love you");
+
+
         System.out.println("numberOfLineRepeats: " + analysis.numberOfLineRepeats);
         System.out.println("gradeLevelOfLyrics: " + analysis.gradeLevelOfLyrics);
         System.out.println("totalNumberOfWords: " + analysis.totalNumberOfWords);

@@ -17,21 +17,15 @@
         <VBox>
             <MenuBar fx:id="menuBar">
                 <Menu fx:id="mMain" text="Main">
-                    <MenuItem text="About"></MenuItem>
-                    <MenuItem text="Exit"></MenuItem>
+                    <MenuItem text="About" onAction="#aboutPopup"></MenuItem>
+                    <MenuItem text="Exit" fx:id="exit" onAction="#exitProg"></MenuItem>
                 </Menu>
-                <Menu fx:id="mPredict" text="Predict">
-                </Menu>
-                <Menu fx:id="mMetrics" text="Dataset Metrics">
-                </Menu>
-                <Menu fx:id="mDataSet" text="Song Metrics">
-                </Menu>
-                <Menu fx:id="mHelp" text="Help">
-                    <MenuItem text="How do I get the required data for my song?"></MenuItem>
-                    <MenuItem text="Load Hit Tuple" fx:id="loadHitTuple" onAction="#loadHit"></MenuItem>
-                    <MenuItem text="Load Miss Tuple" fx:id="loadMissTuple" onAction="#loadMiss"></MenuItem>
+                <Menu fx:id="mMySongs" text="My Songs">
                 </Menu>
 
+                <Menu fx:id="mHelp" text="Help">
+                    <MenuItem text="How do I get the required data for my song?"></MenuItem>
+                </Menu>
             </MenuBar>
 
             <HBox spacing="10.0" fx:id="buttonStrip">
@@ -40,19 +34,6 @@
                 </padding>
                 <ImageView fx:id="imView"></ImageView>
                 <Label fx:id="mainTitle">HitSongDNA</Label>
-
-                <!--                <Button fx:id="okButton" text="OK" defaultButton="true"/>-->
-                <!--                <Button text="Cancel" onAction="#showPopup"/>-->
-
-                <!--                <Button text="seriously" fx:id="popMe">-->
-                <!--                    <FontAwesomeIconView fx:id="iconView">-->
-                <!--                    </FontAwesomeIconView>-->
-                <!--                </Button>-->
-                <!--                <Button text="Error Popup" onAction="#popup2"/>-->
-
-
-                <!--                <ProgressIndicator></ProgressIndicator>-->
-
             </HBox>
         </VBox>
 
@@ -577,7 +558,28 @@
                 </BorderPane>
             </Tab>
             <Tab fx:id="tab4" text="My Songs" closable="false">
-                <VBox fx:id="charts">
+                <VBox>
+                <ListView fx:id="listOfMySongs" maxHeight="488">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="City Limits [DRAFT]"/>
+                            <String fx:value="Hotel California"/>
+                            <String fx:value="Song 1"/>
+                            <String fx:value="Song 2 [DRAFT]"/>
+
+
+                        </FXCollections>
+
+                    </items>
+                </ListView>
+                <HBox spacing="10">
+                    <Button fx:id="retrieveButton" text="Retrieve">
+
+                    </Button>
+                    <Button fx:id="deleteButton" text="Remove">
+
+                    </Button>
+                </HBox>
                 </VBox>
             </Tab>
         </TabPane>

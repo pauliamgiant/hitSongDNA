@@ -12,16 +12,12 @@ import eu.hansolo.medusa.Gauge;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 import lyricAnalysis.LyricAnalysis;
 import org.openjfx.ControllerClasses.FormBuilder;
 
@@ -67,30 +63,25 @@ public class Controller {
     @FXML
     private Tab tab4;
 
-
     @FXML
     private ImageView imView;
-
-    @FXML
-    private FontAwesomeIconView iconView;
 
     @FXML
     private FontAwesomeIconView classifyIcon;
 
 
     @FXML
-    public void showPopup(ActionEvent event) {
-        showStage();
+    private void aboutPopup(ActionEvent event) {
+        Alert pu2 = new Alert(Alert.AlertType.INFORMATION);
+        pu2.setContentText("2020 Hit Song Prediction & Metrics");
+        pu2.setHeaderText("HitSongDNA");
+        pu2.setTitle("HitSongDNA");
+        pu2.show();
     }
 
-
     @FXML
-    public void popup2(ActionEvent event) {
-        Alert pu2 = new Alert(Alert.AlertType.ERROR);
-        pu2.setContentText("Stop fool!");
-        pu2.setHeaderText("Arrrrrggghhhhhh");
-        pu2.setTitle("IMBECILE!!!");
-        pu2.show();
+    private void exitProg(ActionEvent event) {
+        System.exit(0);
     }
 
     @FXML
@@ -131,9 +122,13 @@ public class Controller {
 
     @FXML
     private Button clearButton;
+    @FXML
+    private Button retrieveButton;
+
 
     @FXML
-    private Button popMe;
+    private Button deleteButton;
+
 
     @FXML
     private Gauge gauge1;
@@ -162,58 +157,10 @@ public class Controller {
     @FXML
     private VBox forForm;
 
-
     @FXML
     private VBox songMetrics;
 
-
-    @FXML
-    public void initialize() throws URISyntaxException {
-
-        try {
-            AttributeRegistry.getInstance().updateAttributeDataFromARFF();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        oneHitWonders = new DataSet();
-        TupleBuilder tb = new TupleBuilder();
-        newHitTuple = tb.getUnclassifiedHitTuple();
-        newMissTuple = tb.getUnclassifiedMissTuple();
-
-        classifier = new NaiveBayes(oneHitWonders);
-//
-//
-//        /**
-//         * Icon on classify button
-//         */
-
-        FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab2Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab3Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab4Icon = new FontAwesomeIconView();
-
-
-        tab1Icon.setIcon(FontAwesomeIcon.DASHBOARD);
-        tab1Icon.setSize("1em");
-        tab1Icon.setFill(Color.LIGHTGRAY);
-        tab1.setGraphic(tab1Icon);
-
-        tab2Icon.setIcon(FontAwesomeIcon.BAR_CHART);
-        tab2Icon.setSize("1em");
-        tab2Icon.setFill(Color.LIGHTGRAY);
-        tab2.setGraphic(tab2Icon);
-
-        tab3Icon.setIcon(FontAwesomeIcon.MUSIC);
-        tab3Icon.setSize("1em");
-        tab3Icon.setFill(Color.LIGHTGRAY);
-        tab3.setGraphic(tab3Icon);
-
-        tab4Icon.setIcon(FontAwesomeIcon.SAVE);
-        tab4Icon.setSize("1em");
-        tab4Icon.setFill(Color.LIGHTGRAY);
-        tab4.setGraphic(tab4Icon);
-
+    private void buildClassifyButton() {
 
         classifyIcon.setIcon(FontAwesomeIcon.PLAY);
         classifyIcon.setSize("2em");
@@ -227,26 +174,24 @@ public class Controller {
         classifyButton.setOnMouseExited(e -> {
             classifyIcon.setFill(Color.LIGHTGRAY);
         });
+    }
 
+    private void buildPredictionButtons() {
+
+        // clear button
         FontAwesomeIconView clearIcon = new FontAwesomeIconView();
         clearIcon.setIcon(FontAwesomeIcon.TIMES_CIRCLE);
         clearIcon.setSize("1em");
         clearIcon.setFill(Color.LIGHTGRAY);
-
         clearButton.setGraphic(clearIcon);
         clearButton.setContentDisplay(ContentDisplay.RIGHT);
         clearButton.setTooltip(new Tooltip("Reset all form fields"));
-        clearButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                songAttributes.reset();
-                chordAttributes.reset();
-                lyricAttributes.reset();
-                toplineAttributes.reset();
-
-                genericPopup("Form Reset", "Form reset!");
-
-            }
+        clearButton.setOnAction(e -> {
+            songAttributes.reset();
+            chordAttributes.reset();
+            lyricAttributes.reset();
+            toplineAttributes.reset();
+            genericPopup("Form Reset", "Form reset!");
         });
 
         FontAwesomeIconView saveIcon = new FontAwesomeIconView();
@@ -256,6 +201,47 @@ public class Controller {
         saveButton.setGraphic(saveIcon);
         saveButton.setTooltip(new Tooltip("Save progress to 'My Songs'"));
         saveButton.setContentDisplay(ContentDisplay.RIGHT);
+        saveButton.setTooltip(new Tooltip("Save draft of form"));
+        saveButton.setOnAction(e->{
+            saveFormDraft();
+        });
+
+    }
+
+    private void saveFormDraft(){
+        genericPopup("Draft saved!", "");
+    }
+
+    @FXML
+    public void initialize() throws URISyntaxException {
+
+
+        try {
+            AttributeRegistry.getInstance().updateAttributeDataFromARFF();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        oneHitWonders = new DataSet();
+        classifier = new NaiveBayes(oneHitWonders);
+
+        setupTabs();
+        buildClassifyButton();
+        buildPredictionButtons();
+
+
+
+
+        FontAwesomeIconView retrieveIcon = new FontAwesomeIconView();
+        retrieveIcon.setIcon(FontAwesomeIcon.CHECK_CIRCLE);
+        retrieveIcon.setSize("1em");
+        retrieveIcon.setFill(Color.LIGHTGRAY);
+        retrieveButton.setGraphic(retrieveIcon);
+
+        FontAwesomeIconView deleteIcon = new FontAwesomeIconView();
+        deleteIcon.setIcon(FontAwesomeIcon.REMOVE);
+        deleteIcon.setSize("1em");
+        deleteIcon.setFill(Color.LIGHTGRAY);
+        deleteButton.setGraphic(deleteIcon);
 
 
 //        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
@@ -361,26 +347,8 @@ public class Controller {
         dMGauge6.setTitle(">130bpm");
 
 
-
-
     }
 
-    @FXML
-    public static void showStage() {
-        HitSongDNA.LoadingPopup();
-    }
-
-    @FXML
-    public void loadHit() {
-        System.out.println("HIT");
-        hitOrNot = classifier.songIsLikelyToBeAHit(newHitTuple);
-    }
-
-    @FXML
-    public void loadMiss() {
-        System.out.println("MISS");
-        hitOrNot = classifier.songIsLikelyToBeAHit(newMissTuple);
-    }
 
     private String[] assembleNewTuple() {
         String[] formTupleData = new String[35];
@@ -499,7 +467,6 @@ public class Controller {
             hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
             probOfHitComparedToMiss = classifier.percentage();
 
-
             try {
                 if (hitOrNot) {
                     gauge1.setValue(probOfHitComparedToMiss);
@@ -535,28 +502,15 @@ public class Controller {
         } else {
             formIncompletePopup();
         }
-
-    }
-
-
-    public static void showPopup2(Window win) {
-        Popup popup = new Popup();
-        popup.setX(300);
-        popup.setY(200);
-        popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
-        popup.show(win);
     }
 
 
     private void formIncompletePopup() {
-
         Alert pu2 = new Alert(Alert.AlertType.ERROR);
-
         DialogPane dialogPane = pu2.getDialogPane();
         dialogPane.getStylesheets().add(
                 getClass().getResource("Resources/dialog.css").toExternalForm());
         dialogPane.getStyleClass().add("dialogs");
-
         pu2.setContentText("You will need a complete form to continue");
         pu2.setHeaderText("Incomplete Song Data");
         pu2.setTitle("Error!");
@@ -566,16 +520,43 @@ public class Controller {
 
     private void genericPopup(String title, String message) {
         Alert genPop = new Alert(Alert.AlertType.INFORMATION);
-
         DialogPane dialogPane = genPop.getDialogPane();
         dialogPane.getStylesheets().add(
                 getClass().getResource("Resources/dialog.css").toExternalForm());
         dialogPane.getStyleClass().add("dialogs");
-
         genPop.setContentText(message);
         genPop.setHeaderText(title);
         genPop.setTitle(title);
         genPop.show();
+
+    }
+
+    private void setupTabs() {
+
+        FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab2Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab3Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab4Icon = new FontAwesomeIconView();
+
+        tab1Icon.setIcon(FontAwesomeIcon.DASHBOARD);
+        tab1Icon.setSize("1em");
+        tab1Icon.setFill(Color.LIGHTGRAY);
+        tab1.setGraphic(tab1Icon);
+
+        tab2Icon.setIcon(FontAwesomeIcon.BAR_CHART);
+        tab2Icon.setSize("1em");
+        tab2Icon.setFill(Color.LIGHTGRAY);
+        tab2.setGraphic(tab2Icon);
+
+        tab3Icon.setIcon(FontAwesomeIcon.MUSIC);
+        tab3Icon.setSize("1em");
+        tab3Icon.setFill(Color.LIGHTGRAY);
+        tab3.setGraphic(tab3Icon);
+
+        tab4Icon.setIcon(FontAwesomeIcon.SAVE);
+        tab4Icon.setSize("1em");
+        tab4Icon.setFill(Color.LIGHTGRAY);
+        tab4.setGraphic(tab4Icon);
 
     }
 }
