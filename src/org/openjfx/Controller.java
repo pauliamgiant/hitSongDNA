@@ -10,7 +10,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.tilesfx.Tile;
-import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -38,12 +37,12 @@ public class Controller {
     Image mainLogo;
     Image mainLogoRed;
 
+    // fields for creating sub forms for user input form
     @FXML
     private Form songAttributes;
 
     @FXML
     private Form chordAttributes;
-
 
     @FXML
     private Form toplineAttributes;
@@ -51,6 +50,7 @@ public class Controller {
     @FXML
     private Form lyricAttributes;
 
+    // tabs for the 4 screens
     @FXML
     private Tab tab1;
 
@@ -63,26 +63,12 @@ public class Controller {
     @FXML
     private Tab tab4;
 
+    // For the Logo
     @FXML
-    private ImageView imView;
+    private ImageView logoImageView;
 
     @FXML
     private FontAwesomeIconView classifyIcon;
-
-
-    @FXML
-    private void aboutPopup(ActionEvent event) {
-        Alert pu2 = new Alert(Alert.AlertType.INFORMATION);
-        pu2.setContentText("2020 Hit Song Prediction & Metrics");
-        pu2.setHeaderText("HitSongDNA");
-        pu2.setTitle("HitSongDNA");
-        pu2.show();
-    }
-
-    @FXML
-    private void exitProg(ActionEvent event) {
-        System.exit(0);
-    }
 
     @FXML
     private Label hitLabel;
@@ -92,25 +78,6 @@ public class Controller {
 
     @FXML
     private Tile ledTile;
-
-    @FXML
-    private TableView attributeTable;
-
-
-    @FXML
-    private Tile meter1;
-
-    @FXML
-    private Tile meter2;
-
-    @FXML
-    private Tile meter3;
-
-    @FXML
-    private Tile meter4;
-
-    @FXML
-    private Button okButton;
 
     @FXML
     private Button classifyButton;
@@ -131,10 +98,10 @@ public class Controller {
 
 
     @FXML
-    private Gauge gauge1;
+    private Gauge mainClassifyGauge;
 
     @FXML
-    private Gauge gauge3;
+    private Gauge classifyRateGauge;
 
     @FXML
     private Gauge dMGauge1;
@@ -160,62 +127,31 @@ public class Controller {
     @FXML
     private VBox songMetrics;
 
-    private void buildClassifyButton() {
+    /**
+     * Methods Start
+     */
 
-        classifyIcon.setIcon(FontAwesomeIcon.PLAY);
-        classifyIcon.setSize("2em");
-        classifyIcon.setFill(Color.LIGHTGRAY);
-        classifyButton.setGraphic(classifyIcon);
-        classifyButton.setContentDisplay(ContentDisplay.RIGHT);
-
-        classifyButton.setOnMouseEntered(e -> {
-            classifyIcon.setFill(Color.CYAN);
-        });
-        classifyButton.setOnMouseExited(e -> {
-            classifyIcon.setFill(Color.LIGHTGRAY);
-        });
-    }
-
-    private void buildPredictionButtons() {
-
-        // clear button
-        FontAwesomeIconView clearIcon = new FontAwesomeIconView();
-        clearIcon.setIcon(FontAwesomeIcon.TIMES_CIRCLE);
-        clearIcon.setSize("1em");
-        clearIcon.setFill(Color.LIGHTGRAY);
-        clearButton.setGraphic(clearIcon);
-        clearButton.setContentDisplay(ContentDisplay.RIGHT);
-        clearButton.setTooltip(new Tooltip("Reset all form fields"));
-        clearButton.setOnAction(e -> {
-            songAttributes.reset();
-            chordAttributes.reset();
-            lyricAttributes.reset();
-            toplineAttributes.reset();
-            genericPopup("Form Reset", "Form reset!");
-        });
-
-        FontAwesomeIconView saveIcon = new FontAwesomeIconView();
-        saveIcon.setIcon(FontAwesomeIcon.SAVE);
-        saveIcon.setSize("1em");
-        saveIcon.setFill(Color.LIGHTGRAY);
-        saveButton.setGraphic(saveIcon);
-        saveButton.setTooltip(new Tooltip("Save progress to 'My Songs'"));
-        saveButton.setContentDisplay(ContentDisplay.RIGHT);
-        saveButton.setTooltip(new Tooltip("Save draft of form"));
-        saveButton.setOnAction(e->{
-            saveFormDraft();
-        });
-
-    }
-
-    private void saveFormDraft(){
-        genericPopup("Draft saved!", "");
+    @FXML
+    private void aboutPopup(ActionEvent event) {
+        Alert pu2 = new Alert(Alert.AlertType.INFORMATION);
+        pu2.setContentText("2020 Hit Song Prediction & Metrics");
+        pu2.setHeaderText("HitSongDNA");
+        pu2.setTitle("HitSongDNA");
+        pu2.show();
     }
 
     @FXML
+    private void exitProg(ActionEvent event) {
+        System.exit(0);
+    }
+
+    private void saveFormDraft() {
+        genericPopup("Draft saved!", "");
+    }
+
+
+    @FXML
     public void initialize() throws URISyntaxException {
-
-
         try {
             AttributeRegistry.getInstance().updateAttributeDataFromARFF();
         } catch (FileNotFoundException e) {
@@ -227,126 +163,11 @@ public class Controller {
         setupTabs();
         buildClassifyButton();
         buildPredictionButtons();
-
-
-
-
-        FontAwesomeIconView retrieveIcon = new FontAwesomeIconView();
-        retrieveIcon.setIcon(FontAwesomeIcon.CHECK_CIRCLE);
-        retrieveIcon.setSize("1em");
-        retrieveIcon.setFill(Color.LIGHTGRAY);
-        retrieveButton.setGraphic(retrieveIcon);
-
-        FontAwesomeIconView deleteIcon = new FontAwesomeIconView();
-        deleteIcon.setIcon(FontAwesomeIcon.REMOVE);
-        deleteIcon.setSize("1em");
-        deleteIcon.setFill(Color.LIGHTGRAY);
-        deleteButton.setGraphic(deleteIcon);
-
-
-//        iconView.setIcon(FontAwesomeIcon.AMBULANCE);
-//        iconView.setSize("2em");
-//        iconView.setFill(Color.CYAN);
-//        popMe.setGraphic(iconView);
-
-
-//        Alert a = new Alert(Alert.AlertType.NONE);
-
-
-// here is where the logo goes
-        mainLogo = new Image(getClass().getResource("Resources/1.png").toURI().toString());
-        mainLogoRed = new Image(getClass().getResource("Resources/2.png").toURI().toString());
-        imView.setImage(mainLogo);
-        imView.setFitHeight(70);
-        imView.setFitWidth(70);
-
-//
-        songAttributes = FormBuilder.buildSongAttributesForm();
-        chordAttributes = FormBuilder.buildChordAttributesForm();
-        toplineAttributes = FormBuilder.buildToplineAttributesForm();
-        lyricAttributes = FormBuilder.buildLyricAttributesForm();
-
-
-//        List elements = songAttributes.getElements();
-//        SingleSelectionField tempo = (SingleSelectionField) elements.get(1);
-
-
-        Label songAttrLab = new Label("Song Information");
-        songAttrLab.getStyleClass().add("formHeadings");
-        Label chordAttrLab = new Label("Chord Information");
-        chordAttrLab.getStyleClass().add("formHeadings");
-        Label toplineAttrLab = new Label("Topline Information");
-        toplineAttrLab.getStyleClass().add("formHeadings");
-        Label lyricalAttrLab = new Label("Lyrical Information");
-        lyricalAttrLab.getStyleClass().add("formHeadings");
-
-
-        forForm.getChildren().add(songAttrLab);
-        forForm.getChildren().add(new FormRenderer(songAttributes));
-        forForm.getChildren().add(chordAttrLab);
-        forForm.getChildren().add(new FormRenderer(chordAttributes));
-        forForm.getChildren().add(toplineAttrLab);
-        forForm.getChildren().add(new FormRenderer(toplineAttributes));
-        forForm.getChildren().add(lyricalAttrLab);
-        forForm.getChildren().add(new FormRenderer(lyricAttributes));
-
-
-        BarChartItem bc1 = new BarChartItem("Gmaj", 20);
-        BarChartItem bc2 = new BarChartItem("Amaj", 30);
-        BarChartItem bc3 = new BarChartItem("Bmaj", 99);
-        BarChartItem bc4 = new BarChartItem("Cmaj", 7);
-
-//        meter2.addBarChartItem(bc1);
-//        meter2.addBarChartItem(bc2);
-//        meter2.addBarChartItem(bc3);
-//        meter2.addBarChartItem(bc4);
-
-
-        gauge1.setValue(0);
-        gauge1.setForegroundBaseColor(Color.AQUA);
-        gauge1.setTitleColor(Color.WHITE);
-        gauge1.setBarColor(Color.AQUA);
-        gauge3.setValue(0);
-
-        dMGauge1.setValue(74);
-        dMGauge1.setForegroundBaseColor(Color.AQUA);
-        dMGauge1.setTitleColor(Color.WHITE);
-        dMGauge1.setBarColor(Color.AQUA);
-        dMGauge1.setTitle("<80bpm");
-
-        dMGauge2.setValue(23);
-        dMGauge2.setForegroundBaseColor(Color.RED);
-        dMGauge2.setTitleColor(Color.WHITE);
-        dMGauge2.setBarColor(Color.RED);
-        dMGauge2.setTitle("80-95bpm");
-
-        dMGauge3.setValue(56);
-        dMGauge3.setForegroundBaseColor(Color.AQUA);
-        dMGauge3.setTitleColor(Color.WHITE);
-        dMGauge3.setBarColor(Color.AQUA);
-        dMGauge3.setTitle("95-110bpm");
-
-
-        dMGauge4.setValue(90);
-        dMGauge4.setForegroundBaseColor(Color.AQUA);
-        dMGauge4.setTitleColor(Color.WHITE);
-        dMGauge4.setBarColor(Color.AQUA);
-        dMGauge4.setTitle("111-120bpm");
-
-        dMGauge5.setValue(12);
-        dMGauge5.setForegroundBaseColor(Color.RED);
-        dMGauge5.setTitleColor(Color.WHITE);
-        dMGauge5.setBarColor(Color.RED);
-        dMGauge5.setTitle("121-130bpm");
-
-
-        dMGauge6.setValue(77);
-        dMGauge6.setForegroundBaseColor(Color.AQUA);
-        dMGauge6.setTitleColor(Color.WHITE);
-        dMGauge6.setBarColor(Color.AQUA);
-        dMGauge6.setTitle(">130bpm");
-
-
+        buildMySongsButtons();
+        buildUserInputForm();
+        initializeGauge(mainClassifyGauge);
+        addLogoToUI();
+        buildDataMetricsGauges();
     }
 
 
@@ -426,32 +247,6 @@ public class Controller {
         return formTupleData;
     }
 
-//    private void processLyrics(String lyricsPasted) {
-//        FileWriter fileWriter = null;
-//        try {
-//            fileWriter = new FileWriter("lyrics.txt", false);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-//        try {
-//            bufferedWriter.write(lyricsPasted);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            bufferedWriter.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            bufferedWriter.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(lyricsPasted);
-//    }
 
     @FXML
     public void executeClassification() {
@@ -469,27 +264,27 @@ public class Controller {
 
             try {
                 if (hitOrNot) {
-                    gauge1.setValue(probOfHitComparedToMiss);
-                    gauge1.setForegroundBaseColor(Color.AQUA);
-                    gauge1.setTitleColor(Color.WHITE);
-                    gauge1.setBarColor(Color.AQUA);
-                    gauge3.setVisible(true);
-                    gauge3.setValue(62);
+                    mainClassifyGauge.setValue(probOfHitComparedToMiss);
+                    mainClassifyGauge.setForegroundBaseColor(Color.AQUA);
+                    mainClassifyGauge.setTitleColor(Color.WHITE);
+                    mainClassifyGauge.setBarColor(Color.AQUA);
+                    classifyRateGauge.setVisible(true);
+                    classifyRateGauge.setValue(62);
                     mainTitle.setStyle("-fx-text-fill: cyan;");
                     hitLabel.setStyle("-fx-text-fill: cyan;");
-                    imView.setImage(mainLogo);
+                    logoImageView.setImage(mainLogo);
                     ledTile.setActive(true);
                     ledTile.setActiveColor(Color.CYAN);
                     hitLabel.setText("HIT");
                 }
                 if (!hitOrNot) {
-                    gauge1.setValue(probOfHitComparedToMiss);
-                    gauge1.setForegroundBaseColor(Color.DARKRED);
-                    gauge1.setBarColor(Color.DARKRED);
+                    mainClassifyGauge.setValue(probOfHitComparedToMiss);
+                    mainClassifyGauge.setForegroundBaseColor(Color.DARKRED);
+                    mainClassifyGauge.setBarColor(Color.DARKRED);
                     mainTitle.setStyle("-fx-text-fill: red;");
-                    imView.setImage(mainLogoRed);
-                    gauge1.setValueColor(Color.RED);
-                    gauge3.setVisible(false);
+                    logoImageView.setImage(mainLogoRed);
+                    mainClassifyGauge.setValueColor(Color.RED);
+                    classifyRateGauge.setVisible(false);
                     ledTile.setActive(true);
                     ledTile.setActiveColor(Color.RED);
                     hitLabel.setStyle("-fx-text-fill: red;");
@@ -558,5 +353,124 @@ public class Controller {
         tab4Icon.setFill(Color.LIGHTGRAY);
         tab4.setGraphic(tab4Icon);
 
+    }
+
+    private void buildUserInputForm() {
+
+        // this builds the prediction form
+        songAttributes = FormBuilder.buildSongAttributesForm();
+        chordAttributes = FormBuilder.buildChordAttributesForm();
+        toplineAttributes = FormBuilder.buildToplineAttributesForm();
+        lyricAttributes = FormBuilder.buildLyricAttributesForm();
+
+        // Add labels to form
+        Label songAttrLab = new Label("Song Information");
+        songAttrLab.getStyleClass().add("formHeadings");
+        Label chordAttrLab = new Label("Chord Information");
+        chordAttrLab.getStyleClass().add("formHeadings");
+        Label toplineAttrLab = new Label("Topline Information");
+        toplineAttrLab.getStyleClass().add("formHeadings");
+        Label lyricalAttrLab = new Label("Lyrical Information");
+        lyricalAttrLab.getStyleClass().add("formHeadings");
+
+        // add form components to form VBox
+        forForm.getChildren().add(songAttrLab);
+        forForm.getChildren().add(new FormRenderer(songAttributes));
+        forForm.getChildren().add(chordAttrLab);
+        forForm.getChildren().add(new FormRenderer(chordAttributes));
+        forForm.getChildren().add(toplineAttrLab);
+        forForm.getChildren().add(new FormRenderer(toplineAttributes));
+        forForm.getChildren().add(lyricalAttrLab);
+        forForm.getChildren().add(new FormRenderer(lyricAttributes));
+    }
+
+    private void buildClassifyButton() {
+
+        classifyIcon.setIcon(FontAwesomeIcon.PLAY);
+        classifyIcon.setSize("2em");
+        classifyIcon.setFill(Color.LIGHTGRAY);
+        classifyButton.setGraphic(classifyIcon);
+        classifyButton.setContentDisplay(ContentDisplay.RIGHT);
+
+        classifyButton.setOnMouseEntered(e -> {
+            classifyIcon.setFill(Color.CYAN);
+        });
+        classifyButton.setOnMouseExited(e -> {
+            classifyIcon.setFill(Color.LIGHTGRAY);
+        });
+    }
+
+    private void buildPredictionButtons() {
+
+        // clear button
+        FontAwesomeIconView clearIcon = new FontAwesomeIconView();
+        clearIcon.setIcon(FontAwesomeIcon.TIMES_CIRCLE);
+        clearIcon.setSize("1em");
+        clearIcon.setFill(Color.LIGHTGRAY);
+        clearButton.setGraphic(clearIcon);
+        clearButton.setContentDisplay(ContentDisplay.RIGHT);
+        clearButton.setTooltip(new Tooltip("Reset all form fields"));
+        clearButton.setOnAction(e -> {
+            songAttributes.reset();
+            chordAttributes.reset();
+            lyricAttributes.reset();
+            toplineAttributes.reset();
+            genericPopup("Form Reset", "Form reset!");
+        });
+
+        FontAwesomeIconView saveIcon = new FontAwesomeIconView();
+        saveIcon.setIcon(FontAwesomeIcon.SAVE);
+        saveIcon.setSize("1em");
+        saveIcon.setFill(Color.LIGHTGRAY);
+        saveButton.setGraphic(saveIcon);
+        saveButton.setTooltip(new Tooltip("Save progress to 'My Songs'"));
+        saveButton.setContentDisplay(ContentDisplay.RIGHT);
+        saveButton.setTooltip(new Tooltip("Save draft of form"));
+        saveButton.setOnAction(e -> {
+            saveFormDraft();
+        });
+
+    }
+
+    private void buildMySongsButtons() {
+        // retrieve button
+        FontAwesomeIconView retrieveIcon = new FontAwesomeIconView();
+        retrieveIcon.setIcon(FontAwesomeIcon.CHECK_CIRCLE);
+        retrieveIcon.setSize("1em");
+        retrieveIcon.setFill(Color.LIGHTGRAY);
+        retrieveButton.setGraphic(retrieveIcon);
+
+        // delete button
+        FontAwesomeIconView deleteIcon = new FontAwesomeIconView();
+        deleteIcon.setIcon(FontAwesomeIcon.REMOVE);
+        deleteIcon.setSize("1em");
+        deleteIcon.setFill(Color.LIGHTGRAY);
+        deleteButton.setGraphic(deleteIcon);
+
+    }
+
+    private void addLogoToUI() throws URISyntaxException {
+        // This is the Logo specification
+        mainLogo = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+        mainLogoRed = new Image(getClass().getResource("Resources/2.png").toURI().toString());
+        logoImageView.setImage(mainLogo);
+        logoImageView.setFitHeight(70);
+        logoImageView.setFitWidth(70);
+    }
+
+    private void buildDataMetricsGauges() {
+        initializeGauge(dMGauge1);
+        initializeGauge(dMGauge2);
+        initializeGauge(dMGauge3);
+        initializeGauge(dMGauge4);
+        initializeGauge(dMGauge5);
+        initializeGauge(dMGauge6);
+    }
+
+    private void initializeGauge(Gauge gauge) {
+        gauge.setValue(0);
+        gauge.setForegroundBaseColor(Color.AQUA);
+        gauge.setTitleColor(Color.WHITE);
+        gauge.setBarColor(Color.AQUA);
     }
 }

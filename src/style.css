@@ -546,8 +546,18 @@
     -fx-background-color: #2a2b2a;
 }
 
-#listOfMySongs{
-    /*-fx-background-color: #292929;*/
+
+.songLists{
+    -fx-background-color: black;
 }
+
+.songLists .list-cell:filled{
+    -fx-background-color: #2a2b2a;
+}
+
+.songLists .list-cell:selected{
+    -fx-background-color: cyan;
+}
+
 
 

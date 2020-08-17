@@ -32,7 +32,7 @@
                 <padding>
                     <Insets top="15" bottom="15" left="12" right="12"/>
                 </padding>
-                <ImageView fx:id="imView"></ImageView>
+                <ImageView fx:id="logoImageView"></ImageView>
                 <Label fx:id="mainTitle">HitSongDNA</Label>
             </HBox>
         </VBox>
@@ -59,15 +59,12 @@
                                 </VBox.margin>
                             </Label>
                         </VBox>
-                        <Gauge fx:id="gauge1"
-
+                        <Gauge fx:id="mainClassifyGauge"
                                skinType="SIMPLE_DIGITAL"
+                               value="0"
+                               foregroundPaint="aqua"
+                               barColor="aqua"
                                decimals="0"
-                               valueColor="white"
-                               titleColor="WHITE"
-                               subTitleColor="white"
-                               unitColor="white"
-                               needleColor="white"
                                tickLabelsVisible=""
                                tickMarkColor="black"
                                tickLabelOrientation="ORTHOGONAL"
@@ -92,7 +89,8 @@
                             </Tile>
 
 
-                            <Gauge fx:id="gauge3"
+                            <Gauge fx:id="classifyRateGauge"
+                                   value="0"
                                    alert="true"
                                    alertMessage="Almost full"
                                    animated="true"
@@ -559,20 +557,44 @@
             </Tab>
             <Tab fx:id="tab4" text="My Songs" closable="false">
                 <VBox>
-                <ListView fx:id="listOfMySongs" maxHeight="488">
+                    <HBox spacing="40">
+
+                        <VBox>
+                            <Label styleClass="formHeadings" text="Drafts"></Label>
+                <ListView fx:id="listOfDrafts" styleClass="songLists" maxHeight="488" minWidth="400">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="City Limits [DRAFT]"/>
-                            <String fx:value="Hotel California"/>
-                            <String fx:value="Song 1"/>
-                            <String fx:value="Song 2 [DRAFT]"/>
+
+
+                            <String fx:value="Song 1 [DRAFT]"/>
 
 
                         </FXCollections>
 
                     </items>
                 </ListView>
+                        </VBox>
+                        <VBox>
+                        <Label styleClass="formHeadings" text="My Classified Songs"></Label>
+                        <ListView fx:id="listOfMySongs" maxHeight="488" minWidth="400" styleClass="songLists">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+
+                            <String fx:value="Hotel California"/>
+
+                            <String fx:value="Song 2"/>
+
+
+                        </FXCollections>
+
+                    </items>
+                </ListView>
+                        </VBox>
+                        <VBox minWidth="50"></VBox>
+                    </HBox>
                 <HBox spacing="10">
+
                     <Button fx:id="retrieveButton" text="Retrieve">
 
                     </Button>
