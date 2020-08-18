@@ -10,13 +10,15 @@ import java.util.List;
 
 public class FormBuilder {
 
-    public static Form buildSongAttributesForm() {
+
+    public static Form buildSongAttributesForm(String songTitle){
 
 
         Form newForm;
         newForm = Form.of(
                 Group.of(
-                        Field.ofStringType("")
+                        Field.ofStringType(songTitle)
+
                                 .label("Title")
                                 .styleClass("changeLabel")
                                 .required("")
@@ -65,6 +67,13 @@ public class FormBuilder {
             textField.id("grabTitle");
         }
         return newForm;
+
+    }
+
+
+
+    public static Form buildSongAttributesForm() {
+       return  buildSongAttributesForm("");
     }
 
     public static Form buildChordAttributesForm() {
@@ -146,12 +155,11 @@ public class FormBuilder {
         return assignCSSClass(newForm);
     }
 
-    public static Form buildLyricAttributesForm() {
-
+    public static Form buildLyricAttributesForm(String songLyrics){
         Form newForm;
         newForm = Form.of(
                 Group.of(
-                        Field.ofStringType("")
+                        Field.ofStringType(songLyrics)
                                 .multiline(true)
                                 .required("This field can’t be empty")
                                 .label("Paste Lyrics"),
@@ -168,6 +176,11 @@ public class FormBuilder {
         textField.id("grabTitle2");
 
         return assignCSSClass(newForm);
+
+    }
+
+    public static Form buildLyricAttributesForm() {
+        return buildLyricAttributesForm("");
     }
 
 

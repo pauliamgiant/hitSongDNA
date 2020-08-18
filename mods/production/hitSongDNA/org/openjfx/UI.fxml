@@ -555,24 +555,24 @@
                     </bottom>
                 </BorderPane>
             </Tab>
-            <Tab fx:id="tab4" text="My Songs" closable="false">
+            <Tab fx:id="tab4" text="My Songs" closable="false" onSelectionChanged="#refreshMySongs">
                 <VBox>
                     <HBox spacing="40">
 
                         <VBox>
                             <Label styleClass="formHeadings" text="Drafts"></Label>
                 <ListView fx:id="listOfDrafts" styleClass="songLists" maxHeight="488" minWidth="400">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="City Limits [DRAFT]"/>
+<!--                    <items>-->
+<!--                        <FXCollections fx:factory="observableArrayList">-->
+<!--                            <String fx:value="City Limits [DRAFT]"/>-->
 
 
-                            <String fx:value="Song 1 [DRAFT]"/>
+<!--                            <String fx:value="Song 1 [DRAFT]"/>-->
 
 
-                        </FXCollections>
+<!--                        </FXCollections>-->
 
-                    </items>
+<!--                    </items>-->
                 </ListView>
                         </VBox>
                         <VBox>

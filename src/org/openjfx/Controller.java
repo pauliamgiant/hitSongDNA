@@ -1,10 +1,7 @@
 package org.openjfx;
 
 import classifier.*;
-import com.dlsc.formsfx.model.structure.BooleanField;
-import com.dlsc.formsfx.model.structure.Form;
-import com.dlsc.formsfx.model.structure.SingleSelectionField;
-import com.dlsc.formsfx.model.structure.StringField;
+import com.dlsc.formsfx.model.structure.*;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -19,8 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lyricAnalysis.LyricAnalysis;
 import org.openjfx.ControllerClasses.FormBuilder;
+import org.openjfx.ControllerClasses.LoadUserSongs;
 
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -34,6 +32,8 @@ public class Controller {
     private DataTuple newHitTuple;
     private DataTuple newMissTuple;
     private LyricAnalysis lyricAnalysis;
+
+    private List<String> userSongs;
     Image mainLogo;
     Image mainLogoRed;
 
@@ -50,7 +50,16 @@ public class Controller {
     @FXML
     private Form lyricAttributes;
 
+    @FXML
+    private ListView listOfDrafts;
+
+
     // tabs for the 4 screens
+
+
+    @FXML
+    private TabPane tabPane;
+
     @FXML
     private Tab tab1;
 
@@ -145,7 +154,225 @@ public class Controller {
         System.exit(0);
     }
 
-    private void saveFormDraft() {
+
+    private void reloadSongInForm(String songCSVData) {
+
+        forForm.getChildren().clear();
+
+        String[] values = songCSVData.split(",");
+        System.out.println(values[0]);
+        songAttributes = FormBuilder.buildSongAttributesForm(values[0]);
+
+        SingleSelectionField sf = (SingleSelectionField) songAttributes.getElements().get(1);
+        sf.selectionProperty().set(values[1]);
+        SingleSelectionField sf2 = (SingleSelectionField) songAttributes.getElements().get(2);
+        sf2.selectionProperty().set(values[2]);
+        SingleSelectionField sf3 = (SingleSelectionField) songAttributes.getElements().get(3);
+        sf3.selectionProperty().set(values[3]);
+        SingleSelectionField sf4 = (SingleSelectionField) songAttributes.getElements().get(4);
+        sf4.selectionProperty().set(values[4]);
+        SingleSelectionField sf5 = (SingleSelectionField) songAttributes.getElements().get(5);
+        sf5.selectionProperty().set(values[5]);
+        if (values[6].equals("true")) {
+            BooleanField bf1 = (BooleanField) songAttributes.getElements().get(6);
+            bf1.valueProperty().set(true);
+        }
+
+
+        chordAttributes = FormBuilder.buildChordAttributesForm();
+        SingleSelectionField sf6 = (SingleSelectionField) chordAttributes.getElements().get(0);
+        sf6.selectionProperty().set(values[7]);
+        SingleSelectionField sf7 = (SingleSelectionField) chordAttributes.getElements().get(1);
+        sf7.selectionProperty().set(values[8]);
+        if (values[9].equals("true")) {
+            BooleanField bf2 = (BooleanField) chordAttributes.getElements().get(2);
+            bf2.valueProperty().set(true);
+        }
+        SingleSelectionField sf8 = (SingleSelectionField) chordAttributes.getElements().get(3);
+        sf8.selectionProperty().set(values[10]);
+        SingleSelectionField sf9 = (SingleSelectionField) chordAttributes.getElements().get(4);
+        sf9.selectionProperty().set(values[11]);
+        SingleSelectionField sf10 = (SingleSelectionField) chordAttributes.getElements().get(5);
+        sf10.selectionProperty().set(values[12]);
+        if (values[13].equals("true")) {
+            BooleanField bf3 = (BooleanField) chordAttributes.getElements().get(6);
+            bf3.valueProperty().set(true);
+        }
+        if (values[14].equals("true")) {
+            BooleanField bf4 = (BooleanField) chordAttributes.getElements().get(7);
+            bf4.valueProperty().set(true);
+        }
+        SingleSelectionField sf11 = (SingleSelectionField) chordAttributes.getElements().get(8);
+        sf11.selectionProperty().set(values[15]);
+        if (values[16].equals("true")) {
+            BooleanField bf5 = (BooleanField) chordAttributes.getElements().get(9);
+            bf5.valueProperty().set(true);
+        }
+        SingleSelectionField sf12 = (SingleSelectionField) chordAttributes.getElements().get(10);
+        sf12.selectionProperty().set(values[17]);
+        SingleSelectionField sf13 = (SingleSelectionField) chordAttributes.getElements().get(11);
+        sf13.selectionProperty().set(values[18]);
+        SingleSelectionField sf14 = (SingleSelectionField) chordAttributes.getElements().get(12);
+        sf14.selectionProperty().set(values[19]);
+
+
+        toplineAttributes = FormBuilder.buildToplineAttributesForm();
+
+        for (int i = 0; i < 8; i++) {
+            SingleSelectionField temp = (SingleSelectionField) toplineAttributes.getElements().get(i);
+            temp.selectionProperty().set(values[20 + i]);
+        }
+
+        lyricAttributes = FormBuilder.buildLyricAttributesForm(values[28]);
+
+
+        SingleSelectionField sf15 = (SingleSelectionField) lyricAttributes.getElements().get(1);
+        sf15.selectionProperty().set(values[29]);
+
+        SingleSelectionField sf16 = (SingleSelectionField) lyricAttributes.getElements().get(2);
+        String str = values[30];
+        str = str.substring(0, str.length() - 1);
+        sf16.selectionProperty().set(str);
+
+
+
+        forForm.getChildren().add(new FormRenderer(songAttributes));
+        forForm.getChildren().add(new FormRenderer(chordAttributes));
+        forForm.getChildren().add(new FormRenderer(toplineAttributes));
+        forForm.getChildren().add(new FormRenderer(lyricAttributes));
+
+
+    }
+
+    @FXML
+    private void refreshMySongs() {
+        if (tab4.isSelected()) {
+            userSongs = LoadUserSongs.loadSongs();
+            // genericPopup("Hi mate", "hello");
+            listOfDrafts.getItems().clear();
+            System.out.println(userSongs);
+
+            if (userSongs.size() > 0) {
+                for (int i = 0; i < userSongs.size(); i++) {
+                    String songTitle = userSongs.get(i);
+                    songTitle = songTitle.substring(1, songTitle.indexOf(","));
+                    listOfDrafts.getItems().add(songTitle);
+                }
+            }
+        }
+    }
+
+    private void saveFormDraft() throws IOException {
+
+        List allfields = songAttributes.getElements();
+        List allChordFields = chordAttributes.getElements();
+        List allToplineFields = toplineAttributes.getElements();
+        List allLyricFields = lyricAttributes.getElements();
+
+        StringField title = (StringField) allfields.get(0);
+        SingleSelectionField intro = (SingleSelectionField) allfields.get(1);
+        SingleSelectionField tempo = (SingleSelectionField) allfields.get(2);
+        SingleSelectionField genre = (SingleSelectionField) allfields.get(3);
+        SingleSelectionField singer = (SingleSelectionField) allfields.get(4);
+        SingleSelectionField beat = (SingleSelectionField) allfields.get(5);
+        BooleanField cowriter = (BooleanField) allfields.get(6);
+        SingleSelectionField key_vs = (SingleSelectionField) allChordFields.get(0);
+        SingleSelectionField vs_chords = (SingleSelectionField) allChordFields.get(1);
+        BooleanField vs_start_chord = (BooleanField) allChordFields.get(2);
+        SingleSelectionField vs_ionian_key = (SingleSelectionField) allChordFields.get(3);
+        SingleSelectionField vs_ionian_ch = (SingleSelectionField) allChordFields.get(4);
+        SingleSelectionField vs_ch_count = (SingleSelectionField) allChordFields.get(5);
+        BooleanField vs_ch_same = (BooleanField) allChordFields.get(6);
+        BooleanField vs_key_chng = (BooleanField) allChordFields.get(7);
+        SingleSelectionField ch_chords = (SingleSelectionField) allChordFields.get(8);
+        BooleanField ch_starts_I = (BooleanField) allChordFields.get(9);
+        SingleSelectionField ch_ionian_ch = (SingleSelectionField) allChordFields.get(10);
+        SingleSelectionField ch_ch_count = (SingleSelectionField) allChordFields.get(11);
+        SingleSelectionField total_ch_count = (SingleSelectionField) allChordFields.get(12);
+        SingleSelectionField vs_tl = (SingleSelectionField) allToplineFields.get(0);
+        SingleSelectionField vs_tl_start = (SingleSelectionField) allToplineFields.get(1);
+        SingleSelectionField vs_tl_noteCount = (SingleSelectionField) allToplineFields.get(2);
+        SingleSelectionField vs_tl_type = (SingleSelectionField) allToplineFields.get(3);
+        SingleSelectionField ch_tl = (SingleSelectionField) allToplineFields.get(4);
+        SingleSelectionField ch_tl_start = (SingleSelectionField) allToplineFields.get(5);
+        SingleSelectionField ch_tl_noteCount = (SingleSelectionField) allToplineFields.get(6);
+        SingleSelectionField ch_tl_type = (SingleSelectionField) allToplineFields.get(7);
+        StringField lyrics = (StringField) allLyricFields.get(0);
+        SingleSelectionField rhymecount = (SingleSelectionField) allLyricFields.get(1);
+        SingleSelectionField archetype = (SingleSelectionField) allLyricFields.get(2);
+
+        String songData = "@"+title.getValue() + ","
+                + intro.getSelection() + ","
+                + tempo.getSelection() + ","
+                + genre.getSelection() + ","
+                + singer.getSelection() + ","
+                + beat.getSelection() + ","
+                + cowriter.getValue() + ","
+                + key_vs.getSelection() + ","
+                + vs_chords.getSelection() + ","
+                + vs_start_chord.getValue() + ","
+                + vs_ionian_key.getSelection() + ","
+                + vs_ionian_ch.getSelection() + ","
+                + vs_ch_count.getSelection() + ","
+                + vs_ch_same.getValue() + ","
+                + vs_key_chng.getValue() + ","
+                + ch_chords.getSelection() + ","
+                + ch_starts_I.getValue() + ","
+                + ch_ionian_ch.getSelection() + ","
+                + ch_ch_count.getSelection() + ","
+                + total_ch_count.getSelection() + ","
+                + vs_tl.getSelection() + ","
+                + vs_tl_start.getSelection() + ","
+                + vs_tl_noteCount.getSelection() + ","
+                + vs_tl_type.getSelection() + ","
+                + ch_tl.getSelection() + ","
+                + ch_tl_start.getSelection() + ","
+                + ch_tl_noteCount.getSelection() + ","
+                + ch_tl_type.getSelection() + ","
+                + lyrics.getValue() + ","
+                + rhymecount.getSelection() + ","
+                + archetype.getSelection()+ ",";
+
+
+        // System.out.println(songData);
+
+        String filePath = System.getProperty("user.home");
+        String filename = "HitSongDNA_user_song_data.hsd";
+        filePath += File.separator + "Documents" + File.separator + filename;
+        // System.out.println(filePath);
+
+        // check if file exists
+
+        File tmpDir = new File(filePath);
+        boolean exists = tmpDir.exists();
+
+        if (!exists) {
+            // Write the content in file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                writer.write("#User_Song_Data");
+            } catch (IOException e) {
+                // Exception handling
+            }
+        }
+
+        // Write the content in file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.newLine();
+            writer.write(songData);
+        } catch (IOException e) {
+            // Exception handling
+        }
+
+
+//        writer.println(intro.getSelection());
+//        writer.println(tempo.getSelection());
+//        writer.println(genre.getSelection());
+//        writer.println(singer.getSelection());
+//        writer.println(beat.getSelection());
+//        writer.println(cowriter.getValue());
+//        writer.close();
+
+
         genericPopup("Draft saved!", "");
     }
 
@@ -313,6 +540,19 @@ public class Controller {
 
     }
 
+    private void errorPopup(String title, String content) {
+        Alert errorP = new Alert(Alert.AlertType.ERROR);
+        DialogPane dialogPane = errorP.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        errorP.setContentText(content);
+        errorP.setHeaderText(title);
+        errorP.setTitle(title);
+        errorP.show();
+
+    }
+
     private void genericPopup(String title, String message) {
         Alert genPop = new Alert(Alert.AlertType.INFORMATION);
         DialogPane dialogPane = genPop.getDialogPane();
@@ -427,7 +667,11 @@ public class Controller {
         saveButton.setContentDisplay(ContentDisplay.RIGHT);
         saveButton.setTooltip(new Tooltip("Save draft of form"));
         saveButton.setOnAction(e -> {
-            saveFormDraft();
+            try {
+                saveFormDraft();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
     }
@@ -439,6 +683,13 @@ public class Controller {
         retrieveIcon.setSize("1em");
         retrieveIcon.setFill(Color.LIGHTGRAY);
         retrieveButton.setGraphic(retrieveIcon);
+        retrieveButton.setOnAction(e -> {
+            String songValues = userSongs.get(listOfDrafts.getSelectionModel().getSelectedIndex());
+//            System.out.println(songValues);
+            reloadSongInForm(songValues);
+            tabPane.getSelectionModel().select(0);
+            genericPopup("Draft loaded", "");
+        });
 
         // delete button
         FontAwesomeIconView deleteIcon = new FontAwesomeIconView();
