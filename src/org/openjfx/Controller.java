@@ -160,19 +160,29 @@ public class Controller {
         forForm.getChildren().clear();
 
         String[] values = songCSVData.split(",");
-        System.out.println(values[0]);
-        songAttributes = FormBuilder.buildSongAttributesForm(values[0]);
+        String titleClean = values[0].substring(1);
+        songAttributes = FormBuilder.buildSongAttributesForm(titleClean);
 
-        SingleSelectionField sf = (SingleSelectionField) songAttributes.getElements().get(1);
-        sf.selectionProperty().set(values[1]);
-        SingleSelectionField sf2 = (SingleSelectionField) songAttributes.getElements().get(2);
-        sf2.selectionProperty().set(values[2]);
-        SingleSelectionField sf3 = (SingleSelectionField) songAttributes.getElements().get(3);
-        sf3.selectionProperty().set(values[3]);
-        SingleSelectionField sf4 = (SingleSelectionField) songAttributes.getElements().get(4);
-        sf4.selectionProperty().set(values[4]);
-        SingleSelectionField sf5 = (SingleSelectionField) songAttributes.getElements().get(5);
-        sf5.selectionProperty().set(values[5]);
+        if (!values[1].equals("null")) {
+            SingleSelectionField sf = (SingleSelectionField) songAttributes.getElements().get(1);
+            sf.selectionProperty().set(values[1]);
+        }
+        if (!values[2].equals("null")) {
+            SingleSelectionField sf2 = (SingleSelectionField) songAttributes.getElements().get(2);
+            sf2.selectionProperty().set(values[2]);
+        }
+        if (!values[3].equals("null")) {
+            SingleSelectionField sf3 = (SingleSelectionField) songAttributes.getElements().get(3);
+            sf3.selectionProperty().set(values[3]);
+        }
+        if (!values[4].equals("null")) {
+            SingleSelectionField sf4 = (SingleSelectionField) songAttributes.getElements().get(4);
+            sf4.selectionProperty().set(values[4]);
+        }
+        if (!values[5].equals("null")) {
+            SingleSelectionField sf5 = (SingleSelectionField) songAttributes.getElements().get(5);
+            sf5.selectionProperty().set(values[5]);
+        }
         if (values[6].equals("true")) {
             BooleanField bf1 = (BooleanField) songAttributes.getElements().get(6);
             bf1.valueProperty().set(true);
@@ -180,20 +190,30 @@ public class Controller {
 
 
         chordAttributes = FormBuilder.buildChordAttributesForm();
-        SingleSelectionField sf6 = (SingleSelectionField) chordAttributes.getElements().get(0);
-        sf6.selectionProperty().set(values[7]);
-        SingleSelectionField sf7 = (SingleSelectionField) chordAttributes.getElements().get(1);
-        sf7.selectionProperty().set(values[8]);
+        if (!values[7].equals("null")) {
+            SingleSelectionField sf6 = (SingleSelectionField) chordAttributes.getElements().get(0);
+            sf6.selectionProperty().set(values[7]);
+        }
+        if (!values[8].equals("null")) {
+            SingleSelectionField sf7 = (SingleSelectionField) chordAttributes.getElements().get(1);
+            sf7.selectionProperty().set(values[8]);
+        }
         if (values[9].equals("true")) {
             BooleanField bf2 = (BooleanField) chordAttributes.getElements().get(2);
             bf2.valueProperty().set(true);
         }
-        SingleSelectionField sf8 = (SingleSelectionField) chordAttributes.getElements().get(3);
-        sf8.selectionProperty().set(values[10]);
-        SingleSelectionField sf9 = (SingleSelectionField) chordAttributes.getElements().get(4);
-        sf9.selectionProperty().set(values[11]);
-        SingleSelectionField sf10 = (SingleSelectionField) chordAttributes.getElements().get(5);
-        sf10.selectionProperty().set(values[12]);
+        if (!values[10].equals("null")) {
+            SingleSelectionField sf8 = (SingleSelectionField) chordAttributes.getElements().get(3);
+            sf8.selectionProperty().set(values[10]);
+        }
+        if (!values[11].equals("null")) {
+            SingleSelectionField sf9 = (SingleSelectionField) chordAttributes.getElements().get(4);
+            sf9.selectionProperty().set(values[11]);
+        }
+        if (!values[12].equals("null")) {
+            SingleSelectionField sf10 = (SingleSelectionField) chordAttributes.getElements().get(5);
+            sf10.selectionProperty().set(values[12]);
+        }
         if (values[13].equals("true")) {
             BooleanField bf3 = (BooleanField) chordAttributes.getElements().get(6);
             bf3.valueProperty().set(true);
@@ -202,46 +222,56 @@ public class Controller {
             BooleanField bf4 = (BooleanField) chordAttributes.getElements().get(7);
             bf4.valueProperty().set(true);
         }
-        SingleSelectionField sf11 = (SingleSelectionField) chordAttributes.getElements().get(8);
-        sf11.selectionProperty().set(values[15]);
+        if (!values[15].equals("null")) {
+            SingleSelectionField sf11 = (SingleSelectionField) chordAttributes.getElements().get(8);
+            sf11.selectionProperty().set(values[15]);
+        }
         if (values[16].equals("true")) {
             BooleanField bf5 = (BooleanField) chordAttributes.getElements().get(9);
             bf5.valueProperty().set(true);
         }
-        SingleSelectionField sf12 = (SingleSelectionField) chordAttributes.getElements().get(10);
-        sf12.selectionProperty().set(values[17]);
-        SingleSelectionField sf13 = (SingleSelectionField) chordAttributes.getElements().get(11);
-        sf13.selectionProperty().set(values[18]);
-        SingleSelectionField sf14 = (SingleSelectionField) chordAttributes.getElements().get(12);
-        sf14.selectionProperty().set(values[19]);
+        if (!values[17].equals("null")) {
+            SingleSelectionField sf12 = (SingleSelectionField) chordAttributes.getElements().get(10);
+            sf12.selectionProperty().set(values[17]);
+        }
+        if (!values[18].equals("null")) {
+            SingleSelectionField sf13 = (SingleSelectionField) chordAttributes.getElements().get(11);
+            sf13.selectionProperty().set(values[18]);
+        }
+        if (!values[19].equals("null")) {
+            SingleSelectionField sf14 = (SingleSelectionField) chordAttributes.getElements().get(12);
+            sf14.selectionProperty().set(values[19]);
+        }
 
 
         toplineAttributes = FormBuilder.buildToplineAttributesForm();
 
         for (int i = 0; i < 8; i++) {
+            if (!values[20 + i].equals("null")) {
             SingleSelectionField temp = (SingleSelectionField) toplineAttributes.getElements().get(i);
             temp.selectionProperty().set(values[20 + i]);
+        }
         }
 
         lyricAttributes = FormBuilder.buildLyricAttributesForm(values[28]);
 
+        if (!values[29].equals("null")) {
+            SingleSelectionField sf15 = (SingleSelectionField) lyricAttributes.getElements().get(1);
+            sf15.selectionProperty().set(values[29]);
+        }
 
-        SingleSelectionField sf15 = (SingleSelectionField) lyricAttributes.getElements().get(1);
-        sf15.selectionProperty().set(values[29]);
-
+        if (!values[30].equals("null")) {
         SingleSelectionField sf16 = (SingleSelectionField) lyricAttributes.getElements().get(2);
         String str = values[30];
+
         str = str.substring(0, str.length() - 1);
-        sf16.selectionProperty().set(str);
-
-
+        sf16.selectionProperty().setValue(str);
+        }
 
         forForm.getChildren().add(new FormRenderer(songAttributes));
         forForm.getChildren().add(new FormRenderer(chordAttributes));
         forForm.getChildren().add(new FormRenderer(toplineAttributes));
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
-
-
     }
 
     @FXML
@@ -250,13 +280,15 @@ public class Controller {
             userSongs = LoadUserSongs.loadSongs();
             // genericPopup("Hi mate", "hello");
             listOfDrafts.getItems().clear();
-            System.out.println(userSongs);
+            // System.out.println(userSongs);
 
-            if (userSongs.size() > 0) {
+            if (userSongs != null && userSongs.size() > 0) {
                 for (int i = 0; i < userSongs.size(); i++) {
                     String songTitle = userSongs.get(i);
-                    songTitle = songTitle.substring(1, songTitle.indexOf(","));
-                    listOfDrafts.getItems().add(songTitle);
+                    if (songTitle.length() > 1) {
+                        songTitle = songTitle.substring(1, songTitle.indexOf(","));
+                        listOfDrafts.getItems().add(songTitle);
+                    }
                 }
             }
         }
@@ -298,10 +330,12 @@ public class Controller {
         SingleSelectionField ch_tl_noteCount = (SingleSelectionField) allToplineFields.get(6);
         SingleSelectionField ch_tl_type = (SingleSelectionField) allToplineFields.get(7);
         StringField lyrics = (StringField) allLyricFields.get(0);
+        String stripCommas = lyrics.getValue();
+        stripCommas = stripCommas.replaceAll(",", "\n");
         SingleSelectionField rhymecount = (SingleSelectionField) allLyricFields.get(1);
         SingleSelectionField archetype = (SingleSelectionField) allLyricFields.get(2);
 
-        String songData = "@"+title.getValue() + ","
+        String songData = "@" + title.getValue() + ","
                 + intro.getSelection() + ","
                 + tempo.getSelection() + ","
                 + genre.getSelection() + ","
@@ -329,9 +363,9 @@ public class Controller {
                 + ch_tl_start.getSelection() + ","
                 + ch_tl_noteCount.getSelection() + ","
                 + ch_tl_type.getSelection() + ","
-                + lyrics.getValue() + ","
+                + stripCommas + ","
                 + rhymecount.getSelection() + ","
-                + archetype.getSelection()+ ",";
+                + archetype.getSelection() + ",";
 
 
         // System.out.println(songData);
@@ -342,25 +376,26 @@ public class Controller {
         // System.out.println(filePath);
 
         // check if file exists
-
+//
         File tmpDir = new File(filePath);
         boolean exists = tmpDir.exists();
 
         if (!exists) {
             // Write the content in file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                writer.write("#User_Song_Data");
+                writer.write(songData);
             } catch (IOException e) {
                 // Exception handling
             }
-        }
+        } else {
 
-        // Write the content in file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.newLine();
-            writer.write(songData);
-        } catch (IOException e) {
-            // Exception handling
+            // Write the content in file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                writer.newLine();
+                writer.write(songData);
+            } catch (IOException e) {
+                // Exception handling
+            }
         }
 
 
@@ -651,10 +686,9 @@ public class Controller {
         clearButton.setContentDisplay(ContentDisplay.RIGHT);
         clearButton.setTooltip(new Tooltip("Reset all form fields"));
         clearButton.setOnAction(e -> {
-            songAttributes.reset();
-            chordAttributes.reset();
-            lyricAttributes.reset();
-            toplineAttributes.reset();
+            forForm.getChildren().clear();
+            buildUserInputForm();
+
             genericPopup("Form Reset", "Form reset!");
         });
 
