@@ -16,7 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lyricAnalysis.LyricAnalysis;
 import org.openjfx.ControllerClasses.FormBuilder;
+import org.openjfx.ControllerClasses.FormLoader;
 import org.openjfx.ControllerClasses.LoadUserSongs;
+import org.openjfx.ControllerClasses.SaveFormDraft;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -156,122 +158,12 @@ public class Controller {
 
 
     private void reloadSongInForm(String songCSVData) {
-
         forForm.getChildren().clear();
-
-        String[] values = songCSVData.split(",");
-        String titleClean = values[0].substring(1);
-        songAttributes = FormBuilder.buildSongAttributesForm(titleClean);
-
-        if (!values[1].equals("null")) {
-            SingleSelectionField sf = (SingleSelectionField) songAttributes.getElements().get(1);
-            sf.selectionProperty().set(values[1]);
-        }
-        if (!values[2].equals("null")) {
-            SingleSelectionField sf2 = (SingleSelectionField) songAttributes.getElements().get(2);
-            sf2.selectionProperty().set(values[2]);
-        }
-        if (!values[3].equals("null")) {
-            SingleSelectionField sf3 = (SingleSelectionField) songAttributes.getElements().get(3);
-            sf3.selectionProperty().set(values[3]);
-        }
-        if (!values[4].equals("null")) {
-            SingleSelectionField sf4 = (SingleSelectionField) songAttributes.getElements().get(4);
-            sf4.selectionProperty().set(values[4]);
-        }
-        if (!values[5].equals("null")) {
-            SingleSelectionField sf5 = (SingleSelectionField) songAttributes.getElements().get(5);
-            sf5.selectionProperty().set(values[5]);
-        }
-        if (values[6].equals("true")) {
-            BooleanField bf1 = (BooleanField) songAttributes.getElements().get(6);
-            bf1.valueProperty().set(true);
-        }
-
-
-        chordAttributes = FormBuilder.buildChordAttributesForm();
-        if (!values[7].equals("null")) {
-            SingleSelectionField sf6 = (SingleSelectionField) chordAttributes.getElements().get(0);
-            sf6.selectionProperty().set(values[7]);
-        }
-        if (!values[8].equals("null")) {
-            SingleSelectionField sf7 = (SingleSelectionField) chordAttributes.getElements().get(1);
-            sf7.selectionProperty().set(values[8]);
-        }
-        if (values[9].equals("true")) {
-            BooleanField bf2 = (BooleanField) chordAttributes.getElements().get(2);
-            bf2.valueProperty().set(true);
-        }
-        if (!values[10].equals("null")) {
-            SingleSelectionField sf8 = (SingleSelectionField) chordAttributes.getElements().get(3);
-            sf8.selectionProperty().set(values[10]);
-        }
-        if (!values[11].equals("null")) {
-            SingleSelectionField sf9 = (SingleSelectionField) chordAttributes.getElements().get(4);
-            sf9.selectionProperty().set(values[11]);
-        }
-        if (!values[12].equals("null")) {
-            SingleSelectionField sf10 = (SingleSelectionField) chordAttributes.getElements().get(5);
-            sf10.selectionProperty().set(values[12]);
-        }
-        if (values[13].equals("true")) {
-            BooleanField bf3 = (BooleanField) chordAttributes.getElements().get(6);
-            bf3.valueProperty().set(true);
-        }
-        if (values[14].equals("true")) {
-            BooleanField bf4 = (BooleanField) chordAttributes.getElements().get(7);
-            bf4.valueProperty().set(true);
-        }
-        if (!values[15].equals("null")) {
-            SingleSelectionField sf11 = (SingleSelectionField) chordAttributes.getElements().get(8);
-            sf11.selectionProperty().set(values[15]);
-        }
-        if (values[16].equals("true")) {
-            BooleanField bf5 = (BooleanField) chordAttributes.getElements().get(9);
-            bf5.valueProperty().set(true);
-        }
-        if (!values[17].equals("null")) {
-            SingleSelectionField sf12 = (SingleSelectionField) chordAttributes.getElements().get(10);
-            sf12.selectionProperty().set(values[17]);
-        }
-        if (!values[18].equals("null")) {
-            SingleSelectionField sf13 = (SingleSelectionField) chordAttributes.getElements().get(11);
-            sf13.selectionProperty().set(values[18]);
-        }
-        if (!values[19].equals("null")) {
-            SingleSelectionField sf14 = (SingleSelectionField) chordAttributes.getElements().get(12);
-            sf14.selectionProperty().set(values[19]);
-        }
-
-
-        toplineAttributes = FormBuilder.buildToplineAttributesForm();
-
-        for (int i = 0; i < 8; i++) {
-            if (!values[20 + i].equals("null")) {
-            SingleSelectionField temp = (SingleSelectionField) toplineAttributes.getElements().get(i);
-            temp.selectionProperty().set(values[20 + i]);
-        }
-        }
-
-        lyricAttributes = FormBuilder.buildLyricAttributesForm(values[28]);
-
-        if (!values[29].equals("null")) {
-            SingleSelectionField sf15 = (SingleSelectionField) lyricAttributes.getElements().get(1);
-            sf15.selectionProperty().set(values[29]);
-        }
-
-        if (!values[30].equals("null")) {
-        SingleSelectionField sf16 = (SingleSelectionField) lyricAttributes.getElements().get(2);
-        String str = values[30];
-
-        str = str.substring(0, str.length() - 1);
-        sf16.selectionProperty().setValue(str);
-        }
-
-        forForm.getChildren().add(new FormRenderer(songAttributes));
-        forForm.getChildren().add(new FormRenderer(chordAttributes));
-        forForm.getChildren().add(new FormRenderer(toplineAttributes));
-        forForm.getChildren().add(new FormRenderer(lyricAttributes));
+        Form[] reloadedForms = FormLoader.reloadForm(songCSVData);
+        forForm.getChildren().add(new FormRenderer(reloadedForms[0]));
+        forForm.getChildren().add(new FormRenderer(reloadedForms[1]));
+        forForm.getChildren().add(new FormRenderer(reloadedForms[2]));
+        forForm.getChildren().add(new FormRenderer(reloadedForms[3]));
     }
 
     @FXML
@@ -301,111 +193,12 @@ public class Controller {
         List allToplineFields = toplineAttributes.getElements();
         List allLyricFields = lyricAttributes.getElements();
 
-        StringField title = (StringField) allfields.get(0);
-        SingleSelectionField intro = (SingleSelectionField) allfields.get(1);
-        SingleSelectionField tempo = (SingleSelectionField) allfields.get(2);
-        SingleSelectionField genre = (SingleSelectionField) allfields.get(3);
-        SingleSelectionField singer = (SingleSelectionField) allfields.get(4);
-        SingleSelectionField beat = (SingleSelectionField) allfields.get(5);
-        BooleanField cowriter = (BooleanField) allfields.get(6);
-        SingleSelectionField key_vs = (SingleSelectionField) allChordFields.get(0);
-        SingleSelectionField vs_chords = (SingleSelectionField) allChordFields.get(1);
-        BooleanField vs_start_chord = (BooleanField) allChordFields.get(2);
-        SingleSelectionField vs_ionian_key = (SingleSelectionField) allChordFields.get(3);
-        SingleSelectionField vs_ionian_ch = (SingleSelectionField) allChordFields.get(4);
-        SingleSelectionField vs_ch_count = (SingleSelectionField) allChordFields.get(5);
-        BooleanField vs_ch_same = (BooleanField) allChordFields.get(6);
-        BooleanField vs_key_chng = (BooleanField) allChordFields.get(7);
-        SingleSelectionField ch_chords = (SingleSelectionField) allChordFields.get(8);
-        BooleanField ch_starts_I = (BooleanField) allChordFields.get(9);
-        SingleSelectionField ch_ionian_ch = (SingleSelectionField) allChordFields.get(10);
-        SingleSelectionField ch_ch_count = (SingleSelectionField) allChordFields.get(11);
-        SingleSelectionField total_ch_count = (SingleSelectionField) allChordFields.get(12);
-        SingleSelectionField vs_tl = (SingleSelectionField) allToplineFields.get(0);
-        SingleSelectionField vs_tl_start = (SingleSelectionField) allToplineFields.get(1);
-        SingleSelectionField vs_tl_noteCount = (SingleSelectionField) allToplineFields.get(2);
-        SingleSelectionField vs_tl_type = (SingleSelectionField) allToplineFields.get(3);
-        SingleSelectionField ch_tl = (SingleSelectionField) allToplineFields.get(4);
-        SingleSelectionField ch_tl_start = (SingleSelectionField) allToplineFields.get(5);
-        SingleSelectionField ch_tl_noteCount = (SingleSelectionField) allToplineFields.get(6);
-        SingleSelectionField ch_tl_type = (SingleSelectionField) allToplineFields.get(7);
-        StringField lyrics = (StringField) allLyricFields.get(0);
-        String stripCommas = lyrics.getValue();
-        stripCommas = stripCommas.replaceAll(",", "\n");
-        SingleSelectionField rhymecount = (SingleSelectionField) allLyricFields.get(1);
-        SingleSelectionField archetype = (SingleSelectionField) allLyricFields.get(2);
-
-        String songData = "@" + title.getValue() + ","
-                + intro.getSelection() + ","
-                + tempo.getSelection() + ","
-                + genre.getSelection() + ","
-                + singer.getSelection() + ","
-                + beat.getSelection() + ","
-                + cowriter.getValue() + ","
-                + key_vs.getSelection() + ","
-                + vs_chords.getSelection() + ","
-                + vs_start_chord.getValue() + ","
-                + vs_ionian_key.getSelection() + ","
-                + vs_ionian_ch.getSelection() + ","
-                + vs_ch_count.getSelection() + ","
-                + vs_ch_same.getValue() + ","
-                + vs_key_chng.getValue() + ","
-                + ch_chords.getSelection() + ","
-                + ch_starts_I.getValue() + ","
-                + ch_ionian_ch.getSelection() + ","
-                + ch_ch_count.getSelection() + ","
-                + total_ch_count.getSelection() + ","
-                + vs_tl.getSelection() + ","
-                + vs_tl_start.getSelection() + ","
-                + vs_tl_noteCount.getSelection() + ","
-                + vs_tl_type.getSelection() + ","
-                + ch_tl.getSelection() + ","
-                + ch_tl_start.getSelection() + ","
-                + ch_tl_noteCount.getSelection() + ","
-                + ch_tl_type.getSelection() + ","
-                + stripCommas + ","
-                + rhymecount.getSelection() + ","
-                + archetype.getSelection() + ",";
+        SaveFormDraft.save(allfields,allChordFields,allToplineFields,allLyricFields);
 
 
-        // System.out.println(songData);
-
-        String filePath = System.getProperty("user.home");
-        String filename = "HitSongDNA_user_song_data.hsd";
-        filePath += File.separator + "Documents" + File.separator + filename;
-        // System.out.println(filePath);
-
-        // check if file exists
-//
-        File tmpDir = new File(filePath);
-        boolean exists = tmpDir.exists();
-
-        if (!exists) {
-            // Write the content in file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                writer.write(songData);
-            } catch (IOException e) {
-                // Exception handling
-            }
-        } else {
-
-            // Write the content in file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                writer.newLine();
-                writer.write(songData);
-            } catch (IOException e) {
-                // Exception handling
-            }
-        }
 
 
-//        writer.println(intro.getSelection());
-//        writer.println(tempo.getSelection());
-//        writer.println(genre.getSelection());
-//        writer.println(singer.getSelection());
-//        writer.println(beat.getSelection());
-//        writer.println(cowriter.getValue());
-//        writer.close();
+
 
 
         genericPopup("Draft saved!", "");
@@ -420,6 +213,8 @@ public class Controller {
             e.printStackTrace();
         }
         oneHitWonders = new DataSet();
+
+
         classifier = new NaiveBayes(oneHitWonders);
 
         setupTabs();
