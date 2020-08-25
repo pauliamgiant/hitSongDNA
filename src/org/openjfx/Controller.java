@@ -1,13 +1,19 @@
 package org.openjfx;
 
 import classifier.*;
-import com.dlsc.formsfx.model.structure.*;
+import com.dlsc.formsfx.model.structure.BooleanField;
+import com.dlsc.formsfx.model.structure.Form;
+import com.dlsc.formsfx.model.structure.SingleSelectionField;
+import com.dlsc.formsfx.model.structure.StringField;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.tilesfx.Tile;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,10 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lyricAnalysis.LyricAnalysis;
-import org.openjfx.ControllerClasses.FormBuilder;
-import org.openjfx.ControllerClasses.FormLoader;
-import org.openjfx.ControllerClasses.LoadUserSongs;
-import org.openjfx.ControllerClasses.SaveFormDraft;
+import org.openjfx.ControllerClasses.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -36,6 +39,7 @@ public class Controller {
     private LyricAnalysis lyricAnalysis;
 
     private List<String> userSongs;
+    private List<String> userClassifiedSongs;
     Image mainLogo;
     Image mainLogoRed;
 
@@ -54,6 +58,9 @@ public class Controller {
 
     @FXML
     private ListView listOfDrafts;
+
+    @FXML
+    private ListView listOfMySongs;
 
 
     // tabs for the 4 screens
@@ -100,8 +107,12 @@ public class Controller {
 
     @FXML
     private Button clearButton;
+
     @FXML
     private Button retrieveButton;
+
+    @FXML
+    private Button retrieveButton2;
 
 
     @FXML
@@ -160,48 +171,74 @@ public class Controller {
     private void reloadSongInForm(String songCSVData) {
         forForm.getChildren().clear();
         Form[] reloadedForms = FormLoader.reloadForm(songCSVData);
-        forForm.getChildren().add(new FormRenderer(reloadedForms[0]));
-        forForm.getChildren().add(new FormRenderer(reloadedForms[1]));
-        forForm.getChildren().add(new FormRenderer(reloadedForms[2]));
-        forForm.getChildren().add(new FormRenderer(reloadedForms[3]));
+        songAttributes = reloadedForms[0];
+        chordAttributes = reloadedForms[1];
+        toplineAttributes = reloadedForms[2];
+        lyricAttributes = reloadedForms[3];
+
+        forForm.getChildren().add(new FormRenderer(songAttributes));
+        forForm.getChildren().add(new FormRenderer(chordAttributes));
+        forForm.getChildren().add(new FormRenderer(toplineAttributes));
+        forForm.getChildren().add(new FormRenderer(lyricAttributes));
     }
 
     @FXML
     private void refreshMySongs() {
         if (tab4.isSelected()) {
             userSongs = LoadUserSongs.loadSongs();
+            userClassifiedSongs = LoadUserSongs.loadClassifiedSongs();
             // genericPopup("Hi mate", "hello");
             listOfDrafts.getItems().clear();
+            listOfMySongs.getItems().clear();
             // System.out.println(userSongs);
+            populateSongList(userSongs, listOfDrafts);
+            populateSongList(userClassifiedSongs, listOfMySongs);
 
-            if (userSongs != null && userSongs.size() > 0) {
-                for (int i = 0; i < userSongs.size(); i++) {
-                    String songTitle = userSongs.get(i);
-                    if (songTitle.length() > 1) {
-                        songTitle = songTitle.substring(1, songTitle.indexOf(","));
-                        listOfDrafts.getItems().add(songTitle);
-                    }
+
+        }
+    }
+
+    private void populateSongList(List<String> userClassifiedSongs, ListView listOfMySongs) {
+        if (userClassifiedSongs != null && userClassifiedSongs.size() > 0) {
+            for (int i = 0; i < userClassifiedSongs.size(); i++) {
+                String songTitle = userClassifiedSongs.get(i);
+                songTitle = songTitle.replaceAll("\n", ",");
+                if (songTitle.length() > 1) {
+                    songTitle = songTitle.substring(1, songTitle.indexOf(","));
+                    listOfMySongs.getItems().add(songTitle);
                 }
             }
         }
     }
 
+    private boolean songTitleExists(String songTitle) {
+        System.out.println(songTitle);
+        System.out.println(listOfDrafts.getItems().contains(songTitle));
+        return listOfDrafts.getItems().contains(songTitle);
+    }
+
     private void saveFormDraft() throws IOException {
 
-        List allfields = songAttributes.getElements();
-        List allChordFields = chordAttributes.getElements();
-        List allToplineFields = toplineAttributes.getElements();
-        List allLyricFields = lyricAttributes.getElements();
+        StringField title = (StringField) songAttributes.getElements().get(0);
+        if (!title.isValid()) {
+            errorPopup("No song title!", "You will need to name your song to save a draft.");
+        } else {
 
-        SaveFormDraft.save(allfields,allChordFields,allToplineFields,allLyricFields);
+            if (songTitleExists(title.getValue())) {
+                errorPopup("Song already exists!", "Please choose a unique name for your song");
+
+            } else {
+                List allfields = songAttributes.getElements();
+                List allChordFields = chordAttributes.getElements();
+                List allToplineFields = toplineAttributes.getElements();
+                List allLyricFields = lyricAttributes.getElements();
+
+                SaveForm.save(allfields, allChordFields, allToplineFields, allLyricFields);
 
 
-
-
-
-
-
-        genericPopup("Draft saved!", "");
+                genericPopup("Draft saved!", "");
+            }
+        }
     }
 
 
@@ -305,6 +342,24 @@ public class Controller {
     }
 
 
+    public void resetClassifierPanel() {
+
+        mainClassifyGauge.setValue(0);
+        mainClassifyGauge.setForegroundBaseColor(Color.AQUA);
+        mainClassifyGauge.setTitleColor(Color.WHITE);
+        mainClassifyGauge.setBarColor(Color.AQUA);
+        classifyRateGauge.setVisible(true);
+        classifyRateGauge.setValue(0);
+        mainTitle.setStyle("-fx-text-fill: cyan;");
+        hitLabel.setStyle("-fx-text-fill: cyan;");
+        logoImageView.setImage(mainLogo);
+        ledTile.setActive(false);
+        ledTile.setActiveColor(Color.CYAN);
+        hitLabel.setText("");
+
+
+    }
+
     @FXML
     public void executeClassification() {
 
@@ -313,11 +368,16 @@ public class Controller {
                 lyricAttributes.isValid() &&
                 toplineAttributes.isValid()) {
             String[] tupleData;
+            StringField stfl = (StringField) songAttributes.getElements().get(0);
+            String songTitle = stfl.getValue();
             tupleData = assembleNewTuple();
+
 
             DataTuple newSongFromUser = new DataTuple(tupleData);
             hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
             probOfHitComparedToMiss = classifier.percentage();
+
+
 
             try {
                 if (hitOrNot) {
@@ -351,8 +411,80 @@ public class Controller {
             } catch (Exception exception) {
                 formIncompletePopup();
             }
+
+//            https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code
+
+            Task<Void> pauseAlert = new Task<>() {
+                @Override
+                protected Void call() {
+                    try {
+                        Thread.sleep(4000);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            pauseAlert.setOnSucceeded(new EventHandler<>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    Alert saveClassification = new Alert(Alert.AlertType.CONFIRMATION,
+                            "",
+                            ButtonType.YES,
+                            ButtonType.NO);
+                    DialogPane dialogPane = saveClassification.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getResource("Resources/dialog.css").toExternalForm());
+                    dialogPane.getStyleClass().add("dialogs");
+                    saveClassification.setContentText("Would you like to save this Prediction?");
+                    saveClassification.setHeaderText("Save Prediction?");
+                    saveClassification.setTitle("Save?");
+                    if (saveClassification.showAndWait().get() == ButtonType.YES) {
+                        saveClassification(songTitle, tupleData, hitOrNot, probOfHitComparedToMiss);
+                    }
+                }
+            });
+            new Thread(pauseAlert).start();
+
         } else {
             formIncompletePopup();
+        }
+
+    }
+
+    private void saveClassification(String songTitle, String[] tupleData, Boolean hitOrNot, Integer probOfHitComparedToMiss) {
+        String filePath = System.getProperty("user.home");
+        String filename = "HitSongDNA_user_class_song_data.hsd";
+        filePath += File.separator + "Documents" + File.separator + filename;
+        // System.out.println(filePath);
+        // check if file exists
+        String songData = "@"+songTitle +"\n";
+        for (int i = 0; i < tupleData.length; i++) {
+            songData += tupleData[i] + "\n";
+        }
+        songData += hitOrNot + "\n"+ probOfHitComparedToMiss;
+        writeSongData(filePath, songData);
+    }
+
+    public static void writeSongData(String filePath, String songData) {
+        File tmpDir = new File(filePath);
+        boolean exists = tmpDir.exists();
+
+        if (!exists) {
+            // Write the content in file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                writer.write(songData);
+            } catch (IOException e) {
+                // Exception handling
+            }
+        } else {
+
+            // Write the content in file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                writer.newLine();
+                writer.write(songData);
+            } catch (IOException e) {
+                // Exception handling
+            }
         }
     }
 
@@ -482,6 +614,7 @@ public class Controller {
         clearButton.setTooltip(new Tooltip("Reset all form fields"));
         clearButton.setOnAction(e -> {
             forForm.getChildren().clear();
+            resetClassifierPanel();
             buildUserInputForm();
 
             genericPopup("Form Reset", "Form reset!");
@@ -498,6 +631,7 @@ public class Controller {
         saveButton.setOnAction(e -> {
             try {
                 saveFormDraft();
+
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -513,11 +647,17 @@ public class Controller {
         retrieveIcon.setFill(Color.LIGHTGRAY);
         retrieveButton.setGraphic(retrieveIcon);
         retrieveButton.setOnAction(e -> {
-            String songValues = userSongs.get(listOfDrafts.getSelectionModel().getSelectedIndex());
+            if (listOfDrafts.getSelectionModel().getSelectedItems().size() > 0) {
+                String songValues = userSongs.get(listOfDrafts.getSelectionModel().getSelectedIndex());
 //            System.out.println(songValues);
-            reloadSongInForm(songValues);
-            tabPane.getSelectionModel().select(0);
-            genericPopup("Draft loaded", "");
+                reloadSongInForm(songValues);
+                resetClassifierPanel();
+                tabPane.getSelectionModel().select(0);
+                genericPopup("Draft loaded", "");
+            } else {
+                errorPopup("No selection!", "You need to select a song.");
+            }
+
         });
 
         // delete button
@@ -526,6 +666,38 @@ public class Controller {
         deleteIcon.setSize("1em");
         deleteIcon.setFill(Color.LIGHTGRAY);
         deleteButton.setGraphic(deleteIcon);
+        deleteButton.setOnAction(e -> {
+
+            String songTitleToGo = listOfDrafts.getSelectionModel().getSelectedItem().toString();
+            int indexToClear = listOfDrafts.getSelectionModel().getSelectedIndex();
+
+            userSongs.remove(indexToClear);
+            listOfDrafts.getItems().remove(indexToClear);
+            DeleteDraft.removeSongFromFile(userSongs);
+//            System.out.println(songValues);
+            //  reloadSongInForm(songValues);
+            //resetClassifierPanel();
+            //tabPane.getSelectionModel().select(0);
+            genericPopup("Draft Removed!", "");
+        });
+        FontAwesomeIconView retrieveIcon2 = new FontAwesomeIconView();
+        retrieveIcon2.setIcon(FontAwesomeIcon.CHECK_CIRCLE);
+        retrieveIcon2.setSize("1em");
+        retrieveIcon2.setFill(Color.LIGHTGRAY);
+        retrieveButton2.setGraphic(retrieveIcon2);
+        retrieveButton2.setOnAction(e -> {
+            if (listOfMySongs.getSelectionModel().getSelectedItems().size() > 0) {
+                String songValues = userClassifiedSongs.get(listOfMySongs.getSelectionModel().getSelectedIndex());
+//            System.out.println(songValues);
+
+
+                genericPopup("Woohoo", songValues);
+            } else {
+                errorPopup("No selection!", "You need to select a song.");
+            }
+
+        });
+
 
     }
 

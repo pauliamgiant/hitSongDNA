@@ -405,39 +405,33 @@
                     <center>
 
                         <HBox>
-                          <ListView fx:id="listOfAttr" maxHeight="488">
-                              <items>
-                                  <FXCollections fx:factory="observableArrayList">
-                                      <String fx:value="Chart Position"/>
-                                      <String fx:value="Chart"/>
-                                      <String fx:value="Intro Length"/>
-                                      <String fx:value="Tempo"/>
-                                      <String fx:value="Genre"/>
-                                      <String fx:value="Lead Singer"/>
-                                      <String fx:value="Key of Verse"/>
-                                      <String fx:value="Verse Chord Sequence"/>
-                                      <String fx:value="Verse starts on Chord I"/>
-                                      <String fx:value="Number of Chords in Verse"/>
-                                      <String fx:value="Verse &amp; Chorus same Chords"/>
-                                      <String fx:value="Verse has Key Change"/>
-                                      <String fx:value="Key of Chorus"/>
-                                      <String fx:value="Chorus Chord Sequence"/>
-                                      <String fx:value="Chorus starts on Chord I"/>
-                                      <String fx:value="Number of Chords in Chorus"/>
-                                      <String fx:value="Chorus has Key Change"/>
-                                      <String fx:value="Total Number of Chords in Song"/>
+                            <ListView fx:id="listOfAttr" maxHeight="488">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Chart Position"/>
+                                        <String fx:value="Chart"/>
+                                        <String fx:value="Intro Length"/>
+                                        <String fx:value="Tempo"/>
+                                        <String fx:value="Genre"/>
+                                        <String fx:value="Lead Singer"/>
+                                        <String fx:value="Key of Verse"/>
+                                        <String fx:value="Verse Chord Sequence"/>
+                                        <String fx:value="Verse starts on Chord I"/>
+                                        <String fx:value="Number of Chords in Verse"/>
+                                        <String fx:value="Verse &amp; Chorus same Chords"/>
+                                        <String fx:value="Verse has Key Change"/>
+                                        <String fx:value="Key of Chorus"/>
+                                        <String fx:value="Chorus Chord Sequence"/>
+                                        <String fx:value="Chorus starts on Chord I"/>
+                                        <String fx:value="Number of Chords in Chorus"/>
+                                        <String fx:value="Chorus has Key Change"/>
+                                        <String fx:value="Total Number of Chords in Song"/>
 
 
+                                    </FXCollections>
 
-
-
-
-
-
-                                  </FXCollections>
-
-                              </items>
-                          </ListView>
+                                </items>
+                            </ListView>
 
                             <ListView fx:id="listOfVals" maxHeight="488" styleClass="songValsList">
                                 <String fx:value="1"/>
@@ -461,18 +455,8 @@
                                 <String fx:value="8-11"/>
 
 
-
-
-
-
-
-
-
-
-
-
                             </ListView>
-                            <ListView fx:id="listOfAttr2" maxHeight="488" >
+                            <ListView fx:id="listOfAttr2" maxHeight="488">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="Verse Topline Harmonic Intervals"/>
@@ -561,47 +545,47 @@
 
                         <VBox>
                             <Label styleClass="formHeadings" text="Drafts"></Label>
-                <ListView fx:id="listOfDrafts" styleClass="songLists" maxHeight="488" minWidth="400">
-<!--                    <items>-->
-<!--                        <FXCollections fx:factory="observableArrayList">-->
-<!--                            <String fx:value="City Limits [DRAFT]"/>-->
+                            <ListView fx:id="listOfDrafts" styleClass="songLists" maxHeight="488" minWidth="400">
 
+                            </ListView>
+                            <HBox minWidth="50"></HBox>
+                            <HBox spacing="3">
+                                <Button fx:id="retrieveButton" text="Retrieve">
 
-<!--                            <String fx:value="Song 1 [DRAFT]"/>-->
+                                </Button>
+                                <Button fx:id="deleteButton" text="Remove">
 
-
-<!--                        </FXCollections>-->
-
-<!--                    </items>-->
-                </ListView>
+                                </Button>
+                            </HBox>
                         </VBox>
                         <VBox>
-                        <Label styleClass="formHeadings" text="My Classified Songs"></Label>
-                        <ListView fx:id="listOfMySongs" maxHeight="488" minWidth="400" styleClass="songLists">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
+                            <Label styleClass="formHeadings" text="My Classified Songs"></Label>
+                            <ListView fx:id="listOfMySongs" maxHeight="488" minWidth="400" styleClass="songLists">
 
-                            <String fx:value="Hotel California"/>
+                            </ListView>
+                            <VBox minWidth="50"></VBox>
+                            <HBox spacing="40">
+                                <Button fx:id="retrieveButton2" text="Retrieve">
 
-                            <String fx:value="Song 2"/>
+                                </Button>
 
-
-                        </FXCollections>
-
-                    </items>
-                </ListView>
+                            </HBox>
                         </VBox>
-                        <VBox minWidth="50"></VBox>
+
                     </HBox>
-                <HBox spacing="10">
+                    <HBox spacing="10">
 
-                    <Button fx:id="retrieveButton" text="Retrieve">
 
-                    </Button>
-                    <Button fx:id="deleteButton" text="Remove">
+                        <HBox spacing="40">
 
-                    </Button>
-                </HBox>
+                        </HBox>
+
+                    </HBox>
+
+
+
+
+
                 </VBox>
             </Tab>
         </TabPane>

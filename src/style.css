@@ -296,6 +296,22 @@
 #retrieveButton:pressed {
     -fx-background-color: #003747;
     -fx-background-insets: 0, 4, 6, 8, 10;
+}#retrieveButton2 {
+    -fx-background-color: darkcyan;
+    -fx-background-insets: 0, 4, 6, 8, 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+}
+
+#retrieveButton2:hover {
+    -fx-background-color: cyan;
+    -fx-background-insets: 0, 0, 3, 5, 5;
+    -fx-text-fill: #020b02;
+
+}
+
+#retrieveButton2:pressed {
+    -fx-background-color: #003747;
+    -fx-background-insets: 0, 4, 6, 8, 10;
 }
 
 /*https://stackoverflow.com/questions/48048943/javafx-8-scroll-bar-css/48050208*/

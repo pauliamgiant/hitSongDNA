@@ -3,6 +3,7 @@ package org.openjfx.ControllerClasses;
 import com.dlsc.formsfx.model.structure.BooleanField;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.SingleSelectionField;
+import com.dlsc.formsfx.model.structure.StringField;
 
 public class FormLoader {
 
@@ -11,9 +12,15 @@ public class FormLoader {
         Form[] reloadedFormParts = new Form[4];
 
         String[] values = songCSVData.split(",");
+        for (int i = 0; i < values.length; i++) {
+            System.out.println(values[i]);
+        }
+
         String titleClean = values[0].substring(1);
         Form songAttributes = FormBuilder.buildSongAttributesForm(titleClean);
 
+        StringField title = (StringField) songAttributes.getElements().get(0);
+        title.valueProperty().setValue(titleClean);
 
         if (!values[1].equals("null")) {
             SingleSelectionField sf = (SingleSelectionField) songAttributes.getElements().get(1);
@@ -109,15 +116,16 @@ public class FormLoader {
 
         if (!values[29].equals("null")) {
             SingleSelectionField sf15 = (SingleSelectionField) lyricAttributes.getElements().get(1);
-            sf15.selectionProperty().set(values[29]);
+            sf15.selectionProperty().setValue(values[29]);
+
         }
 
+//        String cutComma = values[30];
+//        cutComma = cutComma.substring(0,cutComma.length()-1);
+//        System.out.println("Check comma"+cutComma);
         if (!values[30].equals("null")) {
             SingleSelectionField sf16 = (SingleSelectionField) lyricAttributes.getElements().get(2);
-            String str = values[30];
-
-            str = str.substring(0, str.length() - 1);
-            sf16.selectionProperty().setValue(str);
+            sf16.selectionProperty().set(values[30]);
         }
 
         reloadedFormParts[0] = songAttributes;
