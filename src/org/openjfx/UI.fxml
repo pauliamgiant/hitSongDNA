@@ -180,28 +180,52 @@
                                    text="Select Attribute">
                             </Label>
 
-                            <ComboBox fx:id="selectAttribute" minWidth="200" promptText="Select an Attribute">
+                            <ComboBox fx:id="selectAttribute" minWidth="200" promptText="Select an Attribute" onAction="#selectAttribute">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Tempo"/>
                                         <String fx:value="Intro Length"/>
+                                        <String fx:value="Tempo"/>
                                         <String fx:value="Genre"/>
-                                        <String fx:value="Key of Verse"/>
-                                        <String fx:value="Key of Chorus"/>
+                                        <String fx:value="Lead Singer(s)"/>
+                                        <String fx:value="Verse Key"/>
+                                        <String fx:value="Verse Chord Progressions"/>
+                                        <String fx:value="Verse Starts on Chord I"/>
+                                        <String fx:value="Verse Key Relative Major"/>
+                                        <String fx:value="Verse Chord Progression Relative Major"/>
+                                        <String fx:value="Verse Distinct Chord Count"/>
                                         <String fx:value="Same chords in Verse &amp; Chorus"/>
-                                        <String fx:value="Verse Topline Type"/>
-                                        <String fx:value="Chorus Topline Type"/>
+                                        <String fx:value="Verse has Key Change"/>
+                                        <String fx:value="Chorus Chord Progressions"/>
+                                        <String fx:value="Chorus Starts on Chord I"/>
+                                        <String fx:value="Chorus Chord Progression Relative Major"/>
+                                        <String fx:value="Chorus Distinct Chord Count"/>
+                                        <String fx:value="Song Total Distinct Chord Count"/>
+                                        <String fx:value="Verse Topline Sequence"/>
                                         <String fx:value="Verse Topline Starting Note"/>
+                                        <String fx:value="Verse Topline Distinct Notes"/>
+                                        <String fx:value="Verse Topline Type"/>
+                                        <String fx:value="Chorus Topline Sequence"/>
                                         <String fx:value="Chorus Topline Starting Note"/>
-                                        <String fx:value="Title Repetition"/>
+                                        <String fx:value="Chorus Topline Distinct Notes"/>
+                                        <String fx:value="Chorus Topline Type"/>
+                                        <String fx:value="Drum Pattern"/>
                                         <String fx:value="Line Repetition"/>
-
+                                        <String fx:value="Lyrical Grade Level"/>
+                                        <String fx:value="Total Words"/>
+                                        <String fx:value="Title Repetition"/>
+                                        <String fx:value="Distinct Hitword Counts"/>
+                                        <String fx:value="Total Hitwords Used"/>
+                                        <String fx:value="Rhymecount"/>
+                                        <String fx:value="Lyrical Archetype"/>
+                                        <String fx:value="Hit Songwriter Co-writer"/>
                                     </FXCollections>
 
                                 </items>
 
 
                             </ComboBox>
+                            <HBox minWidth="70"></HBox>
+                      <Label text="Meters show the percentage of the selected attribute resulting in a HIT" styleClass="formHeadings3"></Label>
                         </HBox>
                     </top>
                     <left>

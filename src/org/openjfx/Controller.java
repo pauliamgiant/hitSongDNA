@@ -6,6 +6,7 @@ import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.SingleSelectionField;
 import com.dlsc.formsfx.model.structure.StringField;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import datasetMetrics.GetAttributeMetrics;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
@@ -25,7 +26,10 @@ import org.openjfx.ControllerClasses.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class Controller {
@@ -149,6 +153,10 @@ public class Controller {
     @FXML
     private VBox songMetrics;
 
+    @FXML
+    private ComboBox selectAttribute;
+
+
     /**
      * Methods Start
      */
@@ -161,6 +169,116 @@ public class Controller {
         pu2.setTitle("HitSongDNA");
         pu2.show();
     }
+
+    @FXML
+    private void selectAttribute(ActionEvent event) {
+        int index = selectAttribute.getSelectionModel().getSelectedIndex();
+        String attributeName = mapIndexToAttribute(index);
+        Map percentagesOfHits = GetAttributeMetrics.getHitPercentagesOfAttributes(oneHitWonders, attributeName);
+
+//        Alert selectAttr = new Alert(Alert.AlertType.INFORMATION);
+//        selectAttr.setContentText(percentagesOfHits.toString());
+//        selectAttr.setHeaderText(attributeName);
+//        selectAttr.setTitle(attributeName);
+//        selectAttr.show();
+        loadAttributesToGauges(attributeName, percentagesOfHits);
+
+    }
+
+    private String mapIndexToAttribute(int index) {
+        List listOfAttr = new ArrayList(AttributeRegistry.getInstance().getSetOfAttributes());
+        return (String) listOfAttr.get(index);
+    }
+
+    public void setupGauge(Gauge thisGauge, String title, double value, double total) {
+        thisGauge.setVisible(true);
+        thisGauge.setTitle(title);
+        DecimalFormat tidy = new DecimalFormat("###");
+        thisGauge.setUnit("% of "+tidy.format(total));
+
+        thisGauge.setValue(value);
+        if (value >= 50) {
+            thisGauge.setForegroundBaseColor(Color.AQUA);
+            thisGauge.setTitleColor(Color.WHITE);
+            thisGauge.setBarColor(Color.AQUA);
+            thisGauge.setUnitColor(Color.AQUA);
+        } else {
+            thisGauge.setForegroundBaseColor(Color.RED);
+            thisGauge.setTitleColor(Color.WHITE);
+            thisGauge.setBarColor(Color.RED);
+            thisGauge.setUnitColor(Color.RED);
+        }
+
+
+    }
+
+    private void loadAttributesToGauges(String attrName, Map percOfHits) {
+        List<String> valueNames = new ArrayList<>(percOfHits.keySet());
+        List<Double> valueCounts = new ArrayList<>(percOfHits.values());
+        List<Long> totalValues = new ArrayList<>(GetAttributeMetrics.getListOfTotals(oneHitWonders,attrName));
+
+
+        if (percOfHits.size() >= 6) {
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
+            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4),(double)totalValues.get(4));
+            setupGauge(dMGauge6, valueNames.get(5), valueCounts.get(5),(double)totalValues.get(5));
+
+        } else if (percOfHits.size() == 5) {
+            dMGauge6.setVisible(false);
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
+            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4),(double)totalValues.get(4));
+
+        } else if (percOfHits.size() == 4) {
+            dMGauge5.setVisible(false);
+            dMGauge6.setVisible(false);
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
+
+        } else if (percOfHits.size() == 3) {
+            dMGauge4.setVisible(false);
+            dMGauge5.setVisible(false);
+            dMGauge6.setVisible(false);
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
+
+        } else if (percOfHits.size() <= 2) {
+            dMGauge3.setVisible(false);
+            dMGauge4.setVisible(false);
+            dMGauge5.setVisible(false);
+            dMGauge6.setVisible(false);
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),totalValues.get(1));
+        }
+    }
+
+    private void buildDataMetricsGauges() {
+        initializeGauge(dMGauge1);
+        initializeGauge(dMGauge2);
+        initializeGauge(dMGauge3);
+        initializeGauge(dMGauge4);
+        initializeGauge(dMGauge5);
+        initializeGauge(dMGauge6);
+
+
+    }
+
+
+    private void initializeGauge(Gauge gauge) {
+        gauge.setValue(0);
+        gauge.setForegroundBaseColor(Color.AQUA);
+        gauge.setTitleColor(Color.WHITE);
+        gauge.setBarColor(Color.AQUA);
+    }
+
 
     @FXML
     private void exitProg(ActionEvent event) {
@@ -378,7 +496,6 @@ public class Controller {
             probOfHitComparedToMiss = classifier.percentage();
 
 
-
             try {
                 if (hitOrNot) {
                     mainClassifyGauge.setValue(probOfHitComparedToMiss);
@@ -457,11 +574,11 @@ public class Controller {
         filePath += File.separator + "Documents" + File.separator + filename;
         // System.out.println(filePath);
         // check if file exists
-        String songData = "@"+songTitle +"\n";
+        String songData = "@" + songTitle + "\n";
         for (int i = 0; i < tupleData.length; i++) {
             songData += tupleData[i] + "\n";
         }
-        songData += hitOrNot + "\n"+ probOfHitComparedToMiss;
+        songData += hitOrNot + "\n" + probOfHitComparedToMiss;
         writeSongData(filePath, songData);
     }
 
@@ -691,7 +808,7 @@ public class Controller {
 //            System.out.println(songValues);
 
 
-                genericPopup("Woohoo", songValues);
+                genericPopup(songValues.substring(1, songValues.indexOf("\n")), songValues);
             } else {
                 errorPopup("No selection!", "You need to select a song.");
             }
@@ -710,19 +827,5 @@ public class Controller {
         logoImageView.setFitWidth(70);
     }
 
-    private void buildDataMetricsGauges() {
-        initializeGauge(dMGauge1);
-        initializeGauge(dMGauge2);
-        initializeGauge(dMGauge3);
-        initializeGauge(dMGauge4);
-        initializeGauge(dMGauge5);
-        initializeGauge(dMGauge6);
-    }
 
-    private void initializeGauge(Gauge gauge) {
-        gauge.setValue(0);
-        gauge.setForegroundBaseColor(Color.AQUA);
-        gauge.setTitleColor(Color.WHITE);
-        gauge.setBarColor(Color.AQUA);
-    }
 }

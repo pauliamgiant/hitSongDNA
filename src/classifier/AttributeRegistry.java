@@ -58,6 +58,10 @@ public class AttributeRegistry {
         return INSTANCE;
     }
 
+    public Set<String> getSetOfAttributes(){
+        return attributesAndValues.keySet();
+    }
+
     public void updateAttributeDataFromARFF() throws FileNotFoundException {
         ImportARFFDataset iad = new ImportARFFDataset();
         attributesAndValues =  iad.getAttrAndVals();

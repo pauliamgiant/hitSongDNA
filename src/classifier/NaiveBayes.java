@@ -26,10 +26,7 @@ public class NaiveBayes implements Classifier {
         }
     }
 
-    public String testing() {
 
-        return "This class is integrating fine with UI";
-    }
 
     /**
      * Calculate prior probability

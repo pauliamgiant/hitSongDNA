@@ -91,12 +91,6 @@ public class DataTuple {
 
 
 
-
-
-
-
-
-
     public SongAttribute getTargetClass() {
 
         if(attributes.get("CHART_POS")!=null){
