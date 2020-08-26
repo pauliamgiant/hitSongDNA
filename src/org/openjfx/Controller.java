@@ -7,6 +7,7 @@ import com.dlsc.formsfx.model.structure.SingleSelectionField;
 import com.dlsc.formsfx.model.structure.StringField;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import datasetMetrics.GetAttributeMetrics;
+import datasetMetrics.GetSongMetrics;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.hansolo.medusa.Gauge;
@@ -16,11 +17,15 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import lyricAnalysis.LyricAnalysis;
 import org.openjfx.ControllerClasses.*;
 
@@ -30,6 +35,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class Controller {
@@ -66,8 +72,14 @@ public class Controller {
     @FXML
     private ListView listOfMySongs;
 
+    @FXML
+    private ListView listOfVals;
 
-    // tabs for the 4 screens
+    @FXML
+    private ListView listOfVals2;
+
+    @FXML
+    private Label artistName;
 
 
     @FXML
@@ -156,6 +168,23 @@ public class Controller {
     @FXML
     private ComboBox selectAttribute;
 
+    @FXML
+    private ComboBox selectSong;
+
+
+    @FXML
+    private void selectSong(ActionEvent event) {
+        listOfVals.getItems().clear();
+        listOfVals2.getItems().clear();
+        int index = selectSong.getSelectionModel().getSelectedIndex();
+
+        List leftList = GetSongMetrics.listOfSongInfo(index, oneHitWonders).subList(0, 18);
+        List rightList = GetSongMetrics.listOfSongInfo(index, oneHitWonders).subList(18, GetSongMetrics.listOfSongInfo(index, oneHitWonders).size());
+
+        listOfVals.getItems().addAll(leftList);
+        listOfVals2.getItems().addAll(rightList);
+        artistName.setText(GetSongMetrics.mapIndexToArtist(index));
+    }
 
     /**
      * Methods Start
@@ -175,12 +204,6 @@ public class Controller {
         int index = selectAttribute.getSelectionModel().getSelectedIndex();
         String attributeName = mapIndexToAttribute(index);
         Map percentagesOfHits = GetAttributeMetrics.getHitPercentagesOfAttributes(oneHitWonders, attributeName);
-
-//        Alert selectAttr = new Alert(Alert.AlertType.INFORMATION);
-//        selectAttr.setContentText(percentagesOfHits.toString());
-//        selectAttr.setHeaderText(attributeName);
-//        selectAttr.setTitle(attributeName);
-//        selectAttr.show();
         loadAttributesToGauges(attributeName, percentagesOfHits);
 
     }
@@ -194,7 +217,7 @@ public class Controller {
         thisGauge.setVisible(true);
         thisGauge.setTitle(title);
         DecimalFormat tidy = new DecimalFormat("###");
-        thisGauge.setUnit("% of "+tidy.format(total));
+        thisGauge.setUnit("% of " + tidy.format(total));
 
         thisGauge.setValue(value);
         if (value >= 50) {
@@ -208,55 +231,53 @@ public class Controller {
             thisGauge.setBarColor(Color.RED);
             thisGauge.setUnitColor(Color.RED);
         }
-
-
     }
 
     private void loadAttributesToGauges(String attrName, Map percOfHits) {
         List<String> valueNames = new ArrayList<>(percOfHits.keySet());
         List<Double> valueCounts = new ArrayList<>(percOfHits.values());
-        List<Long> totalValues = new ArrayList<>(GetAttributeMetrics.getListOfTotals(oneHitWonders,attrName));
+        List<Long> totalValues = new ArrayList<>(GetAttributeMetrics.getListOfTotals(oneHitWonders, attrName));
 
 
         if (percOfHits.size() >= 6) {
-            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
-            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
-            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
-            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
-            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4),(double)totalValues.get(4));
-            setupGauge(dMGauge6, valueNames.get(5), valueCounts.get(5),(double)totalValues.get(5));
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0), (double) totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1), (double) totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2), (double) totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3), (double) totalValues.get(3));
+            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4), (double) totalValues.get(4));
+            setupGauge(dMGauge6, valueNames.get(5), valueCounts.get(5), (double) totalValues.get(5));
 
         } else if (percOfHits.size() == 5) {
             dMGauge6.setVisible(false);
-            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
-            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
-            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
-            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
-            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4),(double)totalValues.get(4));
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0), (double) totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1), (double) totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2), (double) totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3), (double) totalValues.get(3));
+            setupGauge(dMGauge5, valueNames.get(4), valueCounts.get(4), (double) totalValues.get(4));
 
         } else if (percOfHits.size() == 4) {
             dMGauge5.setVisible(false);
             dMGauge6.setVisible(false);
-            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
-            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
-            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
-            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3),(double)totalValues.get(3));
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0), (double) totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1), (double) totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2), (double) totalValues.get(2));
+            setupGauge(dMGauge4, valueNames.get(3), valueCounts.get(3), (double) totalValues.get(3));
 
         } else if (percOfHits.size() == 3) {
             dMGauge4.setVisible(false);
             dMGauge5.setVisible(false);
             dMGauge6.setVisible(false);
-            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),(double)totalValues.get(0));
-            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),(double)totalValues.get(1));
-            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2),(double)totalValues.get(2));
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0), (double) totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1), (double) totalValues.get(1));
+            setupGauge(dMGauge3, valueNames.get(2), valueCounts.get(2), (double) totalValues.get(2));
 
         } else if (percOfHits.size() <= 2) {
             dMGauge3.setVisible(false);
             dMGauge4.setVisible(false);
             dMGauge5.setVisible(false);
             dMGauge6.setVisible(false);
-            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0),totalValues.get(0));
-            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1),totalValues.get(1));
+            setupGauge(dMGauge1, valueNames.get(0), valueCounts.get(0), totalValues.get(0));
+            setupGauge(dMGauge2, valueNames.get(1), valueCounts.get(1), totalValues.get(1));
         }
     }
 
@@ -336,7 +357,6 @@ public class Controller {
     }
 
     private void saveFormDraft() throws IOException {
-
         StringField title = (StringField) songAttributes.getElements().get(0);
         if (!title.isValid()) {
             errorPopup("No song title!", "You will need to name your song to save a draft.");
@@ -344,16 +364,12 @@ public class Controller {
 
             if (songTitleExists(title.getValue())) {
                 errorPopup("Song already exists!", "Please choose a unique name for your song");
-
             } else {
                 List allfields = songAttributes.getElements();
                 List allChordFields = chordAttributes.getElements();
                 List allToplineFields = toplineAttributes.getElements();
                 List allLyricFields = lyricAttributes.getElements();
-
                 SaveForm.save(allfields, allChordFields, allToplineFields, allLyricFields);
-
-
                 genericPopup("Draft saved!", "");
             }
         }
@@ -380,6 +396,8 @@ public class Controller {
         initializeGauge(mainClassifyGauge);
         addLogoToUI();
         buildDataMetricsGauges();
+
+
     }
 
 
@@ -450,7 +468,6 @@ public class Controller {
         formTupleData[31] = lyricAnalysis.getTotalNumberOfHitWordsString();
 
         lyricAnalysis.showAllLyricData();
-
 
         SingleSelectionField rhyme = (SingleSelectionField) lyrAttr.get(1);
         formTupleData[32] = (String) rhyme.getSelection();
@@ -645,6 +662,52 @@ public class Controller {
 
     }
 
+    protected static void confirmPredictionEstimate() {
+        ButtonType proceed = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType explain = new ButtonType("Guidelines on Prediction", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert predictionCheck = new Alert(Alert.AlertType.CONFIRMATION,
+                "",
+                proceed,
+                explain);
+        DialogPane dialogPane = predictionCheck.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Controller.class.getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        predictionCheck.setHeaderText("Prediction Accuracy");
+        predictionCheck.setTitle("Welcome!!");
+        predictionCheck.setContentText("Please confirm you have read the 'Software Prediction Guidelines' " +
+                "and understand the limitations of Software Hit Prediction prior to use.\n\n\n\n");
+        Optional<ButtonType> result = predictionCheck.showAndWait();
+
+        if (result.orElse(proceed) == explain) {
+            try {
+                predictionGuidelinesPopup();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void predictionGuidelinesPopup(ActionEvent event) throws URISyntaxException {
+        Controller.predictionGuidelinesPopup();
+    }
+
+    private static void predictionGuidelinesPopup() throws URISyntaxException {
+        Stage guidelines = new Stage();
+        HBox dialogHbox = new HBox(20);
+        dialogHbox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(dialogHbox, 600, 600);
+        scene.getStylesheets().add("style.css");
+        guidelines.setTitle("Software Prediction Guidelines");
+        guidelines.setScene(scene);
+        VBox v1 = new VBox();
+        Label title = new Label("<..Software Prediction Guidelines Here..>");
+        dialogHbox.getChildren().add(title);
+        guidelines.show();
+
+    }
+
     private void setupTabs() {
 
         FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
@@ -826,6 +889,7 @@ public class Controller {
         logoImageView.setFitHeight(70);
         logoImageView.setFitWidth(70);
     }
+
 
 
 }

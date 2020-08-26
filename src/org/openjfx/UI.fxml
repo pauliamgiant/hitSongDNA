@@ -20,11 +20,10 @@
                     <MenuItem text="About" onAction="#aboutPopup"></MenuItem>
                     <MenuItem text="Exit" fx:id="exit" onAction="#exitProg"></MenuItem>
                 </Menu>
-                <Menu fx:id="mMySongs" text="My Songs">
-                </Menu>
+
 
                 <Menu fx:id="mHelp" text="Help">
-                    <MenuItem text="How do I get the required data for my song?"></MenuItem>
+                    <MenuItem text="Read Software Prediction Guidelines" onAction="#predictionGuidelinesPopup"></MenuItem>
                 </Menu>
             </MenuBar>
 
@@ -224,7 +223,7 @@
 
 
                             </ComboBox>
-                            <HBox minWidth="70"></HBox>
+
                       <Label text="Meters show the percentage of the selected attribute resulting in a HIT" styleClass="formHeadings3"></Label>
                         </HBox>
                     </top>
@@ -365,26 +364,6 @@
                     </center>
                     <bottom>
 
-                        <!--                        <HBox>-->
-                        <!--                            <Tile fx:id="meter1" skinType="BAR_GAUGE" value="50">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter2" skinType="BAR_CHART">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter3" value="50" skinType="GAUGE_SPARK_LINE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter4" value="50" skinType="RADAR_NODE_CHART">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter5" value="50" skinType="RADIAL_PERCENTAGE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter6" value="50" skinType="TIMELINE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                        </HBox>-->
                     </bottom>
                 </BorderPane>
 
@@ -398,33 +377,34 @@
                                    text="Select Song">
                             </Label>
 
-                            <ComboBox fx:id="selectSong" minWidth="200" promptText="Select a Song">
+                            <ComboBox fx:id="selectSong" minWidth="200" promptText="Select a Song" onAction="#selectSong">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
+
+                                        <String fx:value="Achy Breaky Heart"/>
+                                        <String fx:value="I Touch Myself"/>
+                                        <String fx:value="Nothing Compares 2 U"/>
+                                        <String fx:value="Save Tonight"/>
                                         <String fx:value="Say Something"/>
-
-
+                                        <String fx:value="Somebody that I Used to know"/>
+                                        <String fx:value="Take On Me"/>
                                     </FXCollections>
 
                                 </items>
-
-
                             </ComboBox>
                             <Label fx:id="songTitle" styleClass="formHeadings2"
-                                   text="NOTHING COMPARES TO YOU">
+                                 >
                             </Label>
                             <Label styleClass="formHeadings"
                                    text=" as Performed by ">
                             </Label>
 
                             <Label fx:id="artistName" styleClass="formHeadings2"
-                                   text="SINEAD O'CONNOR">
+                                   >
                             </Label>
                         </HBox>
                     </top>
                     <left>
-
-
                     </left>
                     <center>
 
@@ -432,8 +412,6 @@
                             <ListView fx:id="listOfAttr" maxHeight="488">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Chart Position"/>
-                                        <String fx:value="Chart"/>
                                         <String fx:value="Intro Length"/>
                                         <String fx:value="Tempo"/>
                                         <String fx:value="Genre"/>
@@ -441,125 +419,51 @@
                                         <String fx:value="Key of Verse"/>
                                         <String fx:value="Verse Chord Sequence"/>
                                         <String fx:value="Verse starts on Chord I"/>
-                                        <String fx:value="Number of Chords in Verse"/>
+                                        <String fx:value="Key of Verse Relative Major"/>
+                                        <String fx:value="Verse Chord Sequence Relative Major"/>
+                                        <String fx:value="Number of Distinct Chords in Verse"/>
                                         <String fx:value="Verse &amp; Chorus same Chords"/>
                                         <String fx:value="Verse has Key Change"/>
-                                        <String fx:value="Key of Chorus"/>
                                         <String fx:value="Chorus Chord Sequence"/>
                                         <String fx:value="Chorus starts on Chord I"/>
+                                        <String fx:value="Key of Chorus Relative Major"/>
+                                        <String fx:value="Chorus Chord Sequence Relative Major"/>
                                         <String fx:value="Number of Chords in Chorus"/>
-                                        <String fx:value="Chorus has Key Change"/>
-                                        <String fx:value="Total Number of Chords in Song"/>
-
-
+                                        <String fx:value="Verse Topline Sequence"/>
                                     </FXCollections>
-
                                 </items>
                             </ListView>
-
                             <ListView fx:id="listOfVals" maxHeight="488" styleClass="songValsList">
-                                <String fx:value="1"/>
-                                <String fx:value="BILLBOARD"/>
-                                <String fx:value="-inf-12"/>
-                                <String fx:value="BELOW 80"/>
-                                <String fx:value="POP"/>
-                                <String fx:value="FEMALE"/>
-                                <String fx:value="FMAJ"/>
-                                <String fx:value="I-V-vi-I"/>
-                                <String fx:value="TRUE"/>
-                                <String fx:value="3"/>
-                                <String fx:value="FALSE"/>
-                                <String fx:value="NO"/>
-                                <String fx:value="BbMAJ"/>
-                                <String fx:value="NON-TRAD-PATTERN"/>
-                                <String fx:value="TRUE"/>
-
-                                <String fx:value="4"/>
-                                <String fx:value="TRUE"/>
-                                <String fx:value="8-11"/>
-
-
                             </ListView>
                             <ListView fx:id="listOfAttr2" maxHeight="488">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Verse Topline Harmonic Intervals"/>
-
-                                        <String fx:value="Verse Topline Starting Harmony"/>
-                                        <String fx:value="Verse Distinct Intervals"/>
+                                        <String fx:value="Verse Topline Starting Note"/>
+                                        <String fx:value="Verse Topline Distinct Notes"/>
                                         <String fx:value="Verse Topline Type"/>
-                                        <String fx:value="Chorus Topline Harmonic Intervals"/>
-                                        <String fx:value="Chorus Topline Starting Harmony"/>
-                                        <String fx:value="Chorus Distinct Intervals"/>
+                                        <String fx:value="Chorus Topline Sequence"/>
+                                        <String fx:value="Chorus Topline Starting Note"/>
+                                        <String fx:value="Chorus Topline Distinct Notes"/>
                                         <String fx:value="Chorus Topline Type"/>
                                         <String fx:value="Drum Pattern"/>
-                                        <String fx:value="Lyrics Line Repetition"/>
+                                        <String fx:value="Line Repetition"/>
                                         <String fx:value="Lyrical Grade Level"/>
                                         <String fx:value="Total Words"/>
-                                        <String fx:value="Number of Song Title Repeats"/>
-                                        <String fx:value="Total Number of Hitwords used"/>
-                                        <String fx:value="Number of Rhymes"/>
+                                        <String fx:value="Title Repetition"/>
+                                        <String fx:value="Distinct Hitword Counts"/>
+                                        <String fx:value="Total Hitwords Used"/>
+                                        <String fx:value="Rhymecount"/>
                                         <String fx:value="Lyrical Archetype"/>
-                                        <String fx:value="Co-writer has previous Top40"/>
-                                        <String fx:value="Collab with Top40 Artist"/>
-
-
+                                        <String fx:value="Hit Songwriter Co-writer"/>
+                                        <String fx:value="HIT or MISS"/>
                                     </FXCollections>
-
                                 </items>
                             </ListView>
-
                             <ListView fx:id="listOfVals2" maxHeight="488" styleClass="songValsList">
-                                <String fx:value="1-1-7-3"/>
-                                <String fx:value="ROOT"/>
-                                <String fx:value="3"/>
-                                <String fx:value="FOUR-NOTE-CHORD"/>
-                                <String fx:value="5-5-5-5"/>
-                                <String fx:value="FIFTH"/>
-                                <String fx:value="1"/>
-                                <String fx:value="FIFTHS"/>
-                                <String fx:value="HIPHOPBEAT"/>
-                                <String fx:value="7-14"/>
-                                <String fx:value="1.75-2.61"/>
-                                <String fx:value="187-212.5"/>
-                                <String fx:value="5-7"/>
-                                <String fx:value="7-9"/>
-                                <String fx:value="8-11"/>
-                                <String fx:value="LOVER"/>
-                                <String fx:value="YES"/>
-                                <String fx:value="NO"/>
-
-
-                                <!-- '(5-6]\'','\'(7-9]\'','\'(]\'',lover,yes,HIT-->
-
                             </ListView>
-
                         </HBox>
-
-
                     </center>
                     <bottom>
-
-                        <!--                        <HBox>-->
-                        <!--                            <Tile fx:id="meter1" skinType="BAR_GAUGE" value="50">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter2" skinType="BAR_CHART">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter3" value="50" skinType="GAUGE_SPARK_LINE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter4" value="50" skinType="RADAR_NODE_CHART">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter5" value="50" skinType="RADIAL_PERCENTAGE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                            <Tile fx:id="meter6" value="50" skinType="TIMELINE">-->
-
-                        <!--                            </Tile>-->
-                        <!--                        </HBox>-->
                     </bottom>
                 </BorderPane>
             </Tab>

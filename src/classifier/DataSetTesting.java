@@ -1,7 +1,5 @@
 package classifier;
 
-import datasetMetrics.GetAttributeMetrics;
-
 import java.io.FileNotFoundException;
 import java.util.Set;
 
@@ -22,7 +20,9 @@ public class DataSetTesting {
             System.out.println(attr);
         }
 
-        System.out.println(GetAttributeMetrics.getHitPercentagesOfAttributes(mySet,"HIT_WRITER"));
+        System.out.println(mySet.printOutDataSet());
+
+     //   System.out.println(GetAttributeMetrics.getHitPercentagesOfAttributes(mySet,"HIT_WRITER"));
 
 
         //System.out.println(mySet.printOutDataSet());

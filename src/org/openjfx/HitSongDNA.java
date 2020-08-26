@@ -17,6 +17,7 @@ public class HitSongDNA extends Application {
         primaryStage.setTitle("HitSongDNA");
         primaryStage.setScene(scene);
         primaryStage.show();
+        Controller.confirmPredictionEstimate();
     }
 
 
