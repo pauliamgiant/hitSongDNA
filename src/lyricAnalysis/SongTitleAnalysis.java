@@ -4,6 +4,9 @@ import java.util.List;
 
 public class SongTitleAnalysis {
 
+    /**
+     * Counts number of Song Title repeats in the lyrics
+     */
     private int titleRepeats;
     private String songTitle;
 

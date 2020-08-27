@@ -14,12 +14,15 @@ public class DataSet {
 
     private List<DataTuple> tuples;
 
-    public DataSet(){
+    public DataSet() {
         tuples = new ArrayList<DataTuple>();
         hardCodedDataSet = getHardCodeData();
-       buildDataSet();
+        buildDataSet();
     }
 
+    /**
+     * @return List of all Datatuples in Dataset
+     */
     public List<DataTuple> getTuples() {
         return tuples;
     }
@@ -32,15 +35,19 @@ public class DataSet {
         return tuples.size();
     }
 
+
     public String printOutDataSet() {
         String dataSet = "DATASET:\n";
         for (int i = 0; i < tuples.size(); i++) {
             DataTuple dt = tuples.get(i);
-            dataSet +=  dt.printTuple() + " \n";
+            dataSet += dt.printTuple() + " \n";
         }
         return dataSet;
     }
 
+    /**
+     * Builds dataset from ARFF file
+     */
     public void buildDataSet() {
         ImportARFFDataset iad = null;
         try {
@@ -50,28 +57,33 @@ public class DataSet {
         }
         List<String[]> allTuples = iad.getTuples();
         for (int i = 0; i < allTuples.size(); i++) {
-            addTuple(new DataTuple(true,allTuples.get(i)));
+            addTuple(new DataTuple(true, allTuples.get(i)));
         }
     }
 
-    public void safeDataSet(){
+    /**
+     * Used to negate ARFF during development
+     */
+    public void safeDataSet() {
 
         List<String[]> allTheTuples = new ArrayList<>();
         String cleanString = hardCodedDataSet.replaceAll("['()+\\]^:\\\\]", "");
 
         String lines[] = cleanString.split("\\r?\\n");
-        for (int i = 0; i < lines.length ; i++) {
+        for (int i = 0; i < lines.length; i++) {
             String[] splitARFFValues = lines[i].split(",");
             allTheTuples.add(splitARFFValues);
         }
         for (int i = 0; i < allTheTuples.size(); i++) {
-            addTuple(new DataTuple(true,allTheTuples.get(i)));
+            addTuple(new DataTuple(true, allTheTuples.get(i)));
         }
 
     }
 
-
-    public String getHardCodeData(){
+/**
+ * Here is a hardcoded version of Dataset if needed
+ */
+    public String getHardCodeData() {
         String data = "'\\'(12-23]\\'',>130,pop,mf-duet,DMAJ,I-iii-IV-I,TRUE,DMAJ,I-iii-IV-I,3,FALSE,no,i-VI-III-VII,TRUE,vi-IV-I-V,4,'\\'(5-6]\\'',1-5-3-5,1,3,triad-notes,4-6-1-1,4,3,mixed-harm,none,'\\'(7-14]\\'','\\'(1.75-2.61]\\'','\\'(-inf-187]\\'','\\'(7-9]\\'','\\'(-inf-2]\\'','\\'(2-5]\\'','\\'(8-11]\\'',lover,no,HIT\n" +
                 "'\\'(-inf-12]\\'',80-95,pop,male,DMAJ,I-iii-IV-I,TRUE,DMAJ,I-iii-IV-I,3,FALSE,no,IV-I-IV-V,FALSE,IV-I-IV-V,3,'\\'(5-6]\\'',3-3-3-1,3,2,thirds,1-1-1-1,1,1,roots,rockbeat-var,'\\'(7-14]\\'','\\'(0.88-1.75]\\'','\\'(249-286.5]\\'','\\'(5-7]\\'','\\'(4-5]\\'','\\'(11-13]\\'','\\'(8-11]\\'',lover,no,miss\n" +
                 "'\\'(23-35]\\'',80-95,pop,male,AMAJ,ii-V-I-IV,FALSE,AMAJ,ii-V-I-IV,4,FALSE,no,I-V-vi-IV,TRUE,I-V-vi-IV,4,'\\'(7-8]\\'',3-5-3-3,3,2,thirds,1-1-1-1,1,1,roots,rockbeat-var,'\\'(7-14]\\'','\\'(-inf--1.72]\\'','\\'(-inf-187]\\'','\\'(14-18]\\'','\\'(5-6]\\'','\\'(10-11]\\'','\\'(8-11]\\'',lover,no,HIT\n" +

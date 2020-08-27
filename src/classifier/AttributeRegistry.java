@@ -39,7 +39,9 @@ import java.util.*;
  */
 
 
-
+/**
+ * Singleton Class for defining Attributes and valid values
+ */
 public class AttributeRegistry {
 
 
@@ -58,28 +60,43 @@ public class AttributeRegistry {
         return INSTANCE;
     }
 
+    /**
+     *
+     * @return Set of All attribute names
+     */
     public Set<String> getSetOfAttributes(){
         return attributesAndValues.keySet();
     }
 
+    /**
+     * Loads all Attribute names and values as specified by Weka ARFF file
+     * @throws FileNotFoundException
+     */
     public void updateAttributeDataFromARFF() throws FileNotFoundException {
         ImportARFFDataset iad = new ImportARFFDataset();
         attributesAndValues =  iad.getAttrAndVals();
     }
 
+    /**
+     * Attributes & values Hard coded during development
+     * @param currentLine
+     * @return A set of Attributes and values
+     */
     public LinkedHashSet<String> getAttributeValuesSafe(String currentLine){
         LinkedHashSet<String> setOFAttrVals;
         String selectedSubString = currentLine.substring(currentLine.indexOf('{'), currentLine.indexOf('}'));
         String cleanString = selectedSubString.replaceAll("[{}'()+\\]^:\\\\]", "");
         String[] splitARFFValues = cleanString.split(",");
         setOFAttrVals = new LinkedHashSet<>(Arrays.asList(splitARFFValues));
-       // System.out.println(setOFAttrVals);
         return setOFAttrVals;
     }
 
+    /**
+     * Avoids using ARFF file to get Attributes and values by using getHardCodeAttributeData()
+     *
+     */
     public void updateAttributeDataSafely(){
 
-       // System.out.println("easy does it");
         String lines[] = getHardCodeAttributeData().split("\\r?\\n");
 
         for (int i = 0; i < lines.length; i++) {
@@ -87,16 +104,25 @@ public class AttributeRegistry {
             LinkedHashSet<String> setOfValues;
             String currentLine = lines[i];
             attrName = currentLine.substring(currentLine.indexOf(' ') + 1, currentLine.indexOf('{') - 1);
-           // System.out.println(attrName);
             setOfValues = getAttributeValuesSafe(currentLine);
             attributesAndValues.put(attrName,setOfValues);
         }
     }
 
+    /**
+     *
+     * @return Map of all attributes and associated values
+     */
     public Map<String, LinkedHashSet> getAttributesAndValues(){
         return attributesAndValues;
     }
 
+    /**
+     *
+     * @param attributeName
+     * @param value
+     * @return true if Attribute value is valid according to dataset
+     */
     public boolean validAttributeValue(String attributeName, String value) {
         if(attributesAndValues.get(attributeName).contains(value)==false){
             System.out.println(value + " is an INVALID value for "+attributeName);
@@ -105,19 +131,35 @@ public class AttributeRegistry {
         return true;
     }
 
+    /**
+     *
+     * @param name
+     * @return true if Attribute name is valid according to dataset
+     */
     public boolean validAttributeName(String name){
-
         return attributesAndValues.keySet().contains(name);
     }
+
+    /**
+     *
+     * @return
+     */
     public String printAttributesAndVals() {
         return attributesAndValues.toString();
     }
 
+    /**
+     * Used during development for testing
+     */
     public void flushRegistry(){
         attributesAndValues = new LinkedHashMap<>();
-
     }
 
+    /**
+     *
+     * @param nameOfAttribute
+     * @return A list of values for a specified Attribute
+     */
     public List<String> getValues(String nameOfAttribute){
         List<String> l = null;
         try {
@@ -128,6 +170,7 @@ public class AttributeRegistry {
         }
         return l;
     }
+
 
     public String getHardCodeAttributeData(){
 

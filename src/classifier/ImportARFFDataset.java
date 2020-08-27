@@ -8,6 +8,10 @@ import java.util.*;
 
 public class ImportARFFDataset {
 
+    /**
+     * Imports and formats data from an ARFF file.
+     * This means formatting Attributes, Values and Tuples
+     */
 
     private List<String> attributes;
     private Map<String, LinkedHashSet> attributeValues;
@@ -19,7 +23,6 @@ public class ImportARFFDataset {
         attributeValues = new LinkedHashMap<>();
         dataset = new ArrayList<String[]>();
         parseARFF();
-       // AttributeRegistry.getInstance().updateAttributeDataFromARFF(attributeValues);
     }
 
     private void parseARFF(){
@@ -36,12 +39,16 @@ public class ImportARFFDataset {
         fileScanner = new Scanner(in);
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
+
+            // ARFF files use '@attribute' to indicate attributes
+
             if (line.startsWith("@attribute")) {
                 String attrName = line.substring(line.indexOf(' ') + 1, line.indexOf('{') - 1);
-                //System.out.println(attrName);
                 attributes.add(attrName);
                 attributeValues.put(attrName, getAttributeValues(line));
             }
+
+            // this separates out the Tuple values, removes all unwanted characters and stores in list of tuple string[]
 
             if (!line.equals("") && (!line.startsWith("@"))) {
                 String cleanString = line.replaceAll("['()+\\]^:\\\\]", "");
@@ -61,6 +68,11 @@ public class ImportARFFDataset {
     }
 
 
+    /**
+     *
+     * @param line
+     * @return an ordered set of Attribute values
+     */
     private LinkedHashSet<String> getAttributeValues(String line) {
         LinkedHashSet<String> setOFAttrVals;
         String selectedSubString = line.substring(line.indexOf('{'), line.indexOf('}'));

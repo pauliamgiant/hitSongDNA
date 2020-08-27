@@ -5,6 +5,12 @@ import java.util.List;
 
 public class StringCounter {
 
+    /**
+     * Useful method for counting strings in other classes in package
+     * @param list
+     * @return Map of String and count
+     */
+
     public static HashMap<String, Integer> countStrings(List<String> list) {
         HashMap<String, Integer> totals = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {

@@ -5,7 +5,8 @@ import java.util.List;
 public class NaiveBayes implements Classifier {
 
     /**
-     * @return A NaiveBayes classifier object
+     * @return A NaiveBayes classifier object - implements Interface
+     * Uses Naive Bayes equation to Maximise Posterior probability
      */
 
     private DataSet dataSet;
@@ -13,9 +14,12 @@ public class NaiveBayes implements Classifier {
     private double missCount;
     private double percentOfHit;
 
+    /**
+     * @param trainingSet takes dataset
+     */
     public NaiveBayes(DataSet trainingSet) {
         this.dataSet = trainingSet;
-
+// counts HIT and MISS tuples for use in equation
         for (DataTuple dt : dataSet.getTuples()
         ) {
             if (dt.getTargetClass().getValue().equals("HIT")) {
@@ -25,7 +29,6 @@ public class NaiveBayes implements Classifier {
             }
         }
     }
-
 
 
     /**
@@ -45,7 +48,7 @@ public class NaiveBayes implements Classifier {
 
 
     public double calculateConditionalProbOfAttribute(SongAttribute attribute, String hitValue) {
-        System.out.println("Probability of "+ attribute.getName() + " on "+hitValue +" target attribute");
+        System.out.println("Probability of " + attribute.getName() + " on " + hitValue + " target attribute");
         int count = 0;
         double probability = 0;
         for (DataTuple dt : dataSet.getTuples()
@@ -74,12 +77,11 @@ public class NaiveBayes implements Classifier {
         return posteriorProb;
     }
 
-
-    public double calculateLikelihood() {
-        return 0;
-    }
-
-    public Integer percentage(){
+    /**
+     *
+     * @return Percentage integer of probability that song is a HIT.
+     */
+    public Integer percentage() {
         int convert = (int) percentOfHit;
         return convert;
     }
@@ -98,7 +100,7 @@ public class NaiveBayes implements Classifier {
             // version of Laplacian correction
             // offsetting an attribute based on a 0 value which disrupts the conditional
             //probability algorithm
-            if(condProbHit[i]==0){
+            if (condProbHit[i] == 0) {
                 condProbHit[i] = 2;
                 System.out.println("Zero value adjustment made on HIT target");
             }
@@ -109,13 +111,13 @@ public class NaiveBayes implements Classifier {
 
 
             // Laplacian correction
-            if(condProbHit[i]==2){
+            if (condProbHit[i] == 2) {
                 condProbHit[i] = 1;
                 condProbMiss[i] = 1;
                 System.out.println("Zero value adjustment made for HIT target.");
             }
 
-            if(condProbMiss[i]==0){
+            if (condProbMiss[i] == 0) {
                 condProbHit[i] = 1;
                 condProbMiss[i] = 1;
                 System.out.println("Zero value adjustment made for Miss target.");
@@ -130,7 +132,8 @@ public class NaiveBayes implements Classifier {
         System.out.println(hitResult);
         System.out.println(missResult);
 
-        percentOfHit = (100/(hitResult+missResult))*hitResult;
+        // Calculate percentage value of a HIT from sum of both hit and miss posterior probablity
+        percentOfHit = (100 / (hitResult + missResult)) * hitResult;
 
         if (hitResult > missResult) {
             System.out.println("Hit Probability > Miss Probability");

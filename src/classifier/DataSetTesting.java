@@ -7,6 +7,11 @@ import java.util.Set;
 public class DataSetTesting {
 
 
+    /**
+     * Used for running different components outside TestNG
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         try {
             AttributeRegistry.getInstance().updateAttributeDataFromARFF();

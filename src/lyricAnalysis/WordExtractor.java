@@ -6,11 +6,15 @@ import java.util.List;
 
 public class WordExtractor {
 
+    /**
+     *
+     * @param lyrics
+     * @return a list of unique words used in a song
+     */
     public static List<String> listOfAllWords(List<String> lyrics) {
         List<String> allWords = new ArrayList<>();
         for (int i = 0; i < lyrics.size(); i++) {
             String line = lyrics.get(i).toUpperCase();
-            //String[] arr = line.split("[^a-zA-Z]+");
             String[] arr = line.replaceAll("[^a-zA-Z0-9 ]", "").split("\\s+");
             allWords.addAll(Arrays.asList(arr));
         }

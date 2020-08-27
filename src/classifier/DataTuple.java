@@ -6,9 +6,13 @@ import java.util.List;
 
 public class DataTuple {
 
+    /**
+     * Provides datatuple object by creating range of SongAttribute objects from array of values
+     */
+
     private LinkedHashMap<String, SongAttribute> attributes;
 
-    public DataTuple(String[] values){
+    public DataTuple(String[] values) {
 
         attributes = new LinkedHashMap<String, SongAttribute>();
         attributes.put("INTRO_LEN", new SongAttribute("INTRO_LEN", values[0]));
@@ -48,12 +52,12 @@ public class DataTuple {
         attributes.put("HIT_WRITER", new SongAttribute("HIT_WRITER", values[34]));
     }
 
-    public DataTuple(Boolean fix){
+    public DataTuple(Boolean fix) {
         attributes = new LinkedHashMap<String, SongAttribute>();
-        SongAttribute sa = new SongAttribute("Test","Test");
+        SongAttribute sa = new SongAttribute("Test", "Test");
     }
 
-    public DataTuple(Boolean knownTarget, String[] values, Boolean fullAnalysisSet){
+    public DataTuple(Boolean knownTarget, String[] values, Boolean fullAnalysisSet) {
         this(values);
         attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
         attributes.put("SONG", new SongAttribute("SONG", values[36]));
@@ -68,7 +72,7 @@ public class DataTuple {
     }
 
 
-    public DataTuple(Boolean knownTarget,String[] values ){
+    public DataTuple(Boolean knownTarget, String[] values) {
         this(values);
         attributes.put("CHART_POS", new SongAttribute("CHART_POS", values[35]));
 
@@ -76,44 +80,48 @@ public class DataTuple {
     }
 
 
-
-
     public String printTuple() {
-
         String attributeValues = "";
         for (SongAttribute a : attributes.values()
         ) {
             attributeValues += a.getName() + "=" + a.getValue() + ", ";
         }
         return attributeValues;
-
     }
 
-
-
+    /**
+     *
+     * @return The HIT or MISS classification Attribute
+     */
     public SongAttribute getTargetClass() {
-
-        if(attributes.get("CHART_POS")!=null){
+        if (attributes.get("CHART_POS") != null) {
             return attributes.get("CHART_POS");
-        }
-        else return null;
+        } else return null;
     }
 
+    /**
+     *
+     * @param typeOfAttribute name of Attribute i.e. 'TEMPO'
+     * @return Attribute selected by name
+     */
     public SongAttribute getAttribute(String typeOfAttribute) {
         return attributes.get(typeOfAttribute);
     }
 
+    /**
+     *
+     * @return List of Tuple attribute values only
+     */
     public List getAllTupleAttributeValues() {
-        ArrayList<SongAttribute> listOfAllAttr= new ArrayList<>();
-        for (SongAttribute sa : attributes.values()){
+        ArrayList<SongAttribute> listOfAllAttr = new ArrayList<>();
+        for (SongAttribute sa : attributes.values()) {
             listOfAllAttr.add(sa);
         }
         return listOfAllAttr;
     }
 
-    public int numberOfAttributes(){
+    public int numberOfAttributes() {
         return attributes.size();
     }
-
 
 }

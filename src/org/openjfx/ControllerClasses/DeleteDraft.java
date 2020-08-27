@@ -8,20 +8,23 @@ import java.util.List;
 
 public class DeleteDraft {
 
+    /**
+     * Class for deleting a saved draft from the FILE
+     * @param userSongs
+     * @return true or false successful
+     */
+
     public static boolean removeSongFromFile(List<String> userSongs) {
 
         String filePath = System.getProperty("user.home");
         String filename = "HitSongDNA_user_song_data.hsd";
         filePath += File.separator + "Documents" + File.separator + filename;
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             if(userSongs.size()>0) {
                 writer.write(userSongs.get(0));
-
                 for (int i = 1; i < userSongs.size() ; i++) {
                     writer.append(userSongs.get(i));
                 }
-
             }else{writer.write("");}
         } catch (IOException e) {
             // Exception handling

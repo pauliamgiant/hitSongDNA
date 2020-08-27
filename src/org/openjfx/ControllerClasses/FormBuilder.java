@@ -11,6 +11,14 @@ import java.util.List;
 public class FormBuilder {
 
 
+    /**
+     * Class responsible for creating the 4 different sections of the Table using FormsFX
+     *
+     *
+     * This method builds the Top section
+     * @param songTitle
+     * @return Form object
+     */
     public static Form buildSongAttributesForm(String songTitle) {
 
 

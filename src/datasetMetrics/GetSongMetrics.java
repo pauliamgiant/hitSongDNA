@@ -9,6 +9,14 @@ import java.util.List;
 
 public class GetSongMetrics {
 
+    /**
+     * Placeholder values for now. Links song names to the respective song tuples in the set.
+     * Needs reworking so dataset contains name, artist and hit position
+     * @param indexOfSong
+     * @param ds
+     * @return gets A list of all values from the specified song tuple
+     */
+
     public static List<String> listOfSongInfo(int indexOfSong, DataSet ds) {
         List<String> values = new ArrayList<>();
         DataTuple chosenSong = ds.getTuples().get(mapIndexToDataset(indexOfSong));
@@ -20,6 +28,11 @@ public class GetSongMetrics {
         return values;
     }
 
+    /**
+     *
+     * @param index
+     * @return the name of the artist for the specified song
+     */
     public static String mapIndexToArtist(int index){
         switch (index) {
             case 0:
@@ -42,6 +55,12 @@ public class GetSongMetrics {
 
     }
 
+    /**
+     * Maps the index from the Combobox to the right index in the Dataset. Again, a bit of restructuring would be good to
+     * populate the combobox direct from dataset.. but dataset would need Saong name and artist for that
+     * @param index
+     * @return
+     */
 
     public static int mapIndexToDataset(int index) {
         switch (index) {

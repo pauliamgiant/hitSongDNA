@@ -6,6 +6,15 @@ import java.util.List;
 
 public class LoadUserSongs {
 
+    /**
+     * This class used for Loading song and draft data back from Files in documents.
+     */
+
+    /**
+     *
+     * @return List of all the song data to then be parsed by FormLoader
+     */
+
     public static List<String> loadClassifiedSongs(){
         ArrayList<String> userSongData = new ArrayList<>();
         String filePath = System.getProperty("user.home");
@@ -36,8 +45,6 @@ public class LoadUserSongs {
             String line = bufferedReader.readLine();
             String compoundLine = "";
             while (line != null) {
-
-
                 compoundLine += line + "\n";
                 line = bufferedReader.readLine();
                 while (line != null && line.equals("")) {
@@ -48,11 +55,8 @@ public class LoadUserSongs {
                     userSongData.add(compoundLine);
                     compoundLine = "";
                 }
-
             }
             userSongData.add(compoundLine);
-
-
             return userSongData;
         } catch (FileNotFoundException e) {
             return null;

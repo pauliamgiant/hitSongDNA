@@ -1,5 +1,8 @@
 package lyricAnalysis;
 
+/**
+ * Most common Billboard Hit words
+ */
 public enum HitWords {
 
     BABY,
@@ -25,16 +28,5 @@ public enum HitWords {
     WANNA,
     WORLD,
     YEAH,
-
-
-
-
-
-
-
-
-
-
-
 
 }

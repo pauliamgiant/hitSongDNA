@@ -7,6 +7,10 @@ public class WordCountAnalysis {
     HashSet<String> hitWords;
     List<String> lyrics;
 
+    /**
+     * Word Counting Class
+     * @param lyrics
+     */
     public WordCountAnalysis(List<String> lyrics) {
         hitWords = new HashSet<>();
         for (HitWords word : HitWords.values()) {
@@ -22,12 +26,10 @@ public class WordCountAnalysis {
     }
 
     public int totalNumberOfWords() {
-        // System.out.println(listOfAllWords());
         return WordExtractor.listOfAllWords(lyrics).size();
     }
 
     public int numberOfDistinctWords() {
-       // System.out.println(setOfDistinctWords());
         return setOfDistinctWords().size();
     }
 
@@ -52,9 +54,7 @@ public class WordCountAnalysis {
                 distinctHitWords.add(word);
             }
         }
-        //System.out.println(distinctHitWords);
         return distinctHitWords.size();
     }
-
 
 }

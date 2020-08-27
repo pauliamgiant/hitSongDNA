@@ -40,12 +40,15 @@ import java.util.Optional;
 
 public class Controller {
 
+    /**
+     * Main controller class for GUI
+     * @author Paul Matthews srn14174288
+     */
+
     private Classifier classifier;
     private DataSet oneHitWonders;
     private Boolean hitOrNot;
     private Integer probOfHitComparedToMiss;
-    private DataTuple newHitTuple;
-    private DataTuple newMissTuple;
     private LyricAnalysis lyricAnalysis;
 
     private List<String> userSongs;
@@ -53,35 +56,7 @@ public class Controller {
     Image mainLogo;
     Image mainLogoRed;
 
-    // fields for creating sub forms for user input form
-    @FXML
-    private Form songAttributes;
-
-    @FXML
-    private Form chordAttributes;
-
-    @FXML
-    private Form toplineAttributes;
-
-    @FXML
-    private Form lyricAttributes;
-
-    @FXML
-    private ListView listOfDrafts;
-
-    @FXML
-    private ListView listOfMySongs;
-
-    @FXML
-    private ListView listOfVals;
-
-    @FXML
-    private ListView listOfVals2;
-
-    @FXML
-    private Label artistName;
-
-
+    // Main tabs
     @FXML
     private TabPane tabPane;
 
@@ -96,6 +71,44 @@ public class Controller {
 
     @FXML
     private Tab tab4;
+
+
+    // fields for creating sub forms for user input form
+
+    @FXML
+    private VBox forForm;
+
+    @FXML
+    private Form songAttributes;
+
+    @FXML
+    private Form chordAttributes;
+
+    @FXML
+    private Form toplineAttributes;
+
+    @FXML
+    private Form lyricAttributes;
+
+
+    // Song lists in my songs
+
+    @FXML
+    private ListView listOfDrafts;
+
+    @FXML
+    private ListView listOfMySongs;
+
+    // Lists for SongMetrics
+    @FXML
+    private ListView listOfVals;
+
+    @FXML
+    private ListView listOfVals2;
+
+    @FXML
+    private Label artistName;
+
 
     // For the Logo
     @FXML
@@ -113,13 +126,15 @@ public class Controller {
     @FXML
     private Tile ledTile;
 
+
+    // buttons
+
+
     @FXML
     private Button classifyButton;
 
-
     @FXML
     private Button saveButton;
-
 
     @FXML
     private Button clearButton;
@@ -130,16 +145,19 @@ public class Controller {
     @FXML
     private Button retrieveButton2;
 
-
     @FXML
     private Button deleteButton;
 
+    // Gauges
 
     @FXML
     private Gauge mainClassifyGauge;
 
     @FXML
     private Gauge classifyRateGauge;
+
+
+    // gauges for song metrics
 
     @FXML
     private Gauge dMGauge1;
@@ -159,11 +177,7 @@ public class Controller {
     @FXML
     private Gauge dMGauge6;
 
-    @FXML
-    private VBox forForm;
-
-    @FXML
-    private VBox songMetrics;
+    // combobox controls
 
     @FXML
     private ComboBox selectAttribute;
@@ -171,6 +185,86 @@ public class Controller {
     @FXML
     private ComboBox selectSong;
 
+
+    // Methods
+
+    /**
+     * Initialize controller Main method
+     *
+     * @throws URISyntaxException
+     */
+
+    @FXML
+    public void initialize() throws URISyntaxException {
+        try {
+            AttributeRegistry.getInstance().updateAttributeDataFromARFF();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        oneHitWonders = new DataSet();
+        classifier = new NaiveBayes(oneHitWonders);
+        setupTabs();
+        buildClassifyButton();
+        buildPredictionButtons();
+        buildMySongsButtons();
+        buildUserInputForm();
+        initializeGauge(mainClassifyGauge);
+        addLogoToUI();
+        buildDataMetricsGauges();
+    }
+
+
+    @FXML
+    private void exitProg(ActionEvent event) {
+        System.exit(0);
+    }
+
+
+    private void setupTabs() {
+
+        FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab2Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab3Icon = new FontAwesomeIconView();
+        FontAwesomeIconView tab4Icon = new FontAwesomeIconView();
+
+        tab1Icon.setIcon(FontAwesomeIcon.DASHBOARD);
+        tab1Icon.setSize("1em");
+        tab1Icon.setFill(Color.LIGHTGRAY);
+        tab1.setGraphic(tab1Icon);
+
+        tab2Icon.setIcon(FontAwesomeIcon.BAR_CHART);
+        tab2Icon.setSize("1em");
+        tab2Icon.setFill(Color.LIGHTGRAY);
+        tab2.setGraphic(tab2Icon);
+
+        tab3Icon.setIcon(FontAwesomeIcon.MUSIC);
+        tab3Icon.setSize("1em");
+        tab3Icon.setFill(Color.LIGHTGRAY);
+        tab3.setGraphic(tab3Icon);
+
+        tab4Icon.setIcon(FontAwesomeIcon.SAVE);
+        tab4Icon.setSize("1em");
+        tab4Icon.setFill(Color.LIGHTGRAY);
+        tab4.setGraphic(tab4Icon);
+
+    }
+
+    private void addLogoToUI() throws URISyntaxException {
+        // This is the Logo specification
+        mainLogo = new Image(getClass().getResource("Resources/1.png").toURI().toString());
+        mainLogoRed = new Image(getClass().getResource("Resources/2.png").toURI().toString());
+        logoImageView.setImage(mainLogo);
+        logoImageView.setFitHeight(70);
+        logoImageView.setFitWidth(70);
+    }
+
+
+    /**
+     * SongMetrics
+     * @param event
+     */
+
+    // Selecting song in Combobox for SongMetrics
 
     @FXML
     private void selectSong(ActionEvent event) {
@@ -186,17 +280,21 @@ public class Controller {
         artistName.setText(GetSongMetrics.mapIndexToArtist(index));
     }
 
+
     /**
-     * Methods Start
+     * Dataset Metrics
+     *
      */
 
-    @FXML
-    private void aboutPopup(ActionEvent event) {
-        Alert pu2 = new Alert(Alert.AlertType.INFORMATION);
-        pu2.setContentText("2020 Hit Song Prediction & Metrics");
-        pu2.setHeaderText("HitSongDNA");
-        pu2.setTitle("HitSongDNA");
-        pu2.show();
+
+    /**
+     * Take index from Combobox and use it to fetch corresponding Attribute
+     * @param index
+     * @return String of Attribute name
+     */
+    private String mapIndexToAttribute(int index) {
+        List listOfAttr = new ArrayList(AttributeRegistry.getInstance().getSetOfAttributes());
+        return (String) listOfAttr.get(index);
     }
 
     @FXML
@@ -205,13 +303,30 @@ public class Controller {
         String attributeName = mapIndexToAttribute(index);
         Map percentagesOfHits = GetAttributeMetrics.getHitPercentagesOfAttributes(oneHitWonders, attributeName);
         loadAttributesToGauges(attributeName, percentagesOfHits);
-
     }
 
-    private String mapIndexToAttribute(int index) {
-        List listOfAttr = new ArrayList(AttributeRegistry.getInstance().getSetOfAttributes());
-        return (String) listOfAttr.get(index);
+
+
+
+    // Setting up Gauges
+
+    private void initializeGauge(Gauge gauge) {
+        gauge.setValue(0);
+        gauge.setForegroundBaseColor(Color.AQUA);
+        gauge.setTitleColor(Color.WHITE);
+        gauge.setBarColor(Color.AQUA);
     }
+
+    private void buildDataMetricsGauges() {
+        initializeGauge(dMGauge1);
+        initializeGauge(dMGauge2);
+        initializeGauge(dMGauge3);
+        initializeGauge(dMGauge4);
+        initializeGauge(dMGauge5);
+        initializeGauge(dMGauge6);
+    }
+
+    // applying color changes and values to gauges
 
     public void setupGauge(Gauge thisGauge, String title, double value, double total) {
         thisGauge.setVisible(true);
@@ -232,6 +347,7 @@ public class Controller {
             thisGauge.setUnitColor(Color.RED);
         }
     }
+
 
     private void loadAttributesToGauges(String attrName, Map percOfHits) {
         List<String> valueNames = new ArrayList<>(percOfHits.keySet());
@@ -281,32 +397,118 @@ public class Controller {
         }
     }
 
-    private void buildDataMetricsGauges() {
-        initializeGauge(dMGauge1);
-        initializeGauge(dMGauge2);
-        initializeGauge(dMGauge3);
-        initializeGauge(dMGauge4);
-        initializeGauge(dMGauge5);
-        initializeGauge(dMGauge6);
+    /**
+     ***************** MY SONGS SECTION**********************
+     */
 
-
-    }
-
-
-    private void initializeGauge(Gauge gauge) {
-        gauge.setValue(0);
-        gauge.setForegroundBaseColor(Color.AQUA);
-        gauge.setTitleColor(Color.WHITE);
-        gauge.setBarColor(Color.AQUA);
-    }
-
-
+    /**
+     *  Load songs from Text files in users Documents folder
+     */
     @FXML
-    private void exitProg(ActionEvent event) {
-        System.exit(0);
+    private void refreshMySongs() {
+        if (tab4.isSelected()) {
+            userSongs = LoadUserSongs.loadSongs();
+            userClassifiedSongs = LoadUserSongs.loadClassifiedSongs();
+            listOfDrafts.getItems().clear();
+            listOfMySongs.getItems().clear();
+            populateSongList(userSongs, listOfDrafts);
+            populateSongList(userClassifiedSongs, listOfMySongs);
+        }
+    }
+
+    /**
+     * Fill either of the lists with songs from Files
+     * @param userClassifiedSongs
+     * @param listOfMySongs
+     */
+    private void populateSongList(List<String> userClassifiedSongs, ListView listOfMySongs) {
+        if (userClassifiedSongs != null && userClassifiedSongs.size() > 0) {
+            for (int i = 0; i < userClassifiedSongs.size(); i++) {
+                String songTitle = userClassifiedSongs.get(i);
+                songTitle = songTitle.replaceAll("\n", ",");
+                if (songTitle.length() > 1) {
+                    songTitle = songTitle.substring(1, songTitle.indexOf(","));
+                    listOfMySongs.getItems().add(songTitle);
+                }
+            }
+        }
     }
 
 
+    /**
+     * FORM ACTIONS
+     */
+
+
+    private void buildUserInputForm() {
+
+        // this builds the prediction form
+        songAttributes = FormBuilder.buildSongAttributesForm();
+        chordAttributes = FormBuilder.buildChordAttributesForm();
+        toplineAttributes = FormBuilder.buildToplineAttributesForm();
+        lyricAttributes = FormBuilder.buildLyricAttributesForm();
+
+        // Add labels to form
+        Label songAttrLab = new Label("Song Information");
+        songAttrLab.getStyleClass().add("formHeadings");
+        Label chordAttrLab = new Label("Chord Information");
+        chordAttrLab.getStyleClass().add("formHeadings");
+        Label toplineAttrLab = new Label("Topline Information");
+        toplineAttrLab.getStyleClass().add("formHeadings");
+        Label lyricalAttrLab = new Label("Lyrical Information");
+        lyricalAttrLab.getStyleClass().add("formHeadings");
+
+        // add form components to form VBox
+        forForm.getChildren().add(songAttrLab);
+        forForm.getChildren().add(new FormRenderer(songAttributes));
+        forForm.getChildren().add(chordAttrLab);
+        forForm.getChildren().add(new FormRenderer(chordAttributes));
+        forForm.getChildren().add(toplineAttrLab);
+        forForm.getChildren().add(new FormRenderer(toplineAttributes));
+        forForm.getChildren().add(lyricalAttrLab);
+        forForm.getChildren().add(new FormRenderer(lyricAttributes));
+    }
+    /**
+     * Save form to Text file
+     * @throws IOException
+     */
+
+
+    private void saveFormDraft() throws IOException {
+        StringField title = (StringField) songAttributes.getElements().get(0);
+        if (!title.isValid()) {
+            errorPopup("No song title!", "You will need to name your song to save a draft.");
+        } else {
+            if (songTitleExists(title.getValue())) {
+                errorPopup("Song already exists!", "Please choose a unique name for your song");
+            } else {
+                List allfields = songAttributes.getElements();
+                List allChordFields = chordAttributes.getElements();
+                List allToplineFields = toplineAttributes.getElements();
+                List allLyricFields = lyricAttributes.getElements();
+                SaveForm.save(allfields, allChordFields, allToplineFields, allLyricFields);
+                genericPopup("Draft saved!", "");
+            }
+        }
+    }
+
+    /**
+     * Checks name to save us unique
+     * @param songTitle
+     * @return
+     */
+    private boolean songTitleExists(String songTitle) {
+        System.out.println(songTitle);
+        System.out.println(listOfDrafts.getItems().contains(songTitle));
+        return listOfDrafts.getItems().contains(songTitle);
+    }
+
+
+
+    /**
+     *
+     * @param songCSVData a formatted string to place values back into form
+     */
     private void reloadSongInForm(String songCSVData) {
         forForm.getChildren().clear();
         Form[] reloadedForms = FormLoader.reloadForm(songCSVData);
@@ -321,84 +523,16 @@ public class Controller {
         forForm.getChildren().add(new FormRenderer(lyricAttributes));
     }
 
-    @FXML
-    private void refreshMySongs() {
-        if (tab4.isSelected()) {
-            userSongs = LoadUserSongs.loadSongs();
-            userClassifiedSongs = LoadUserSongs.loadClassifiedSongs();
-            // genericPopup("Hi mate", "hello");
-            listOfDrafts.getItems().clear();
-            listOfMySongs.getItems().clear();
-            // System.out.println(userSongs);
-            populateSongList(userSongs, listOfDrafts);
-            populateSongList(userClassifiedSongs, listOfMySongs);
 
+    /**
+     **********************CLASSIFICATION ACTIONS***************************
+     *
+     */
 
-        }
-    }
-
-    private void populateSongList(List<String> userClassifiedSongs, ListView listOfMySongs) {
-        if (userClassifiedSongs != null && userClassifiedSongs.size() > 0) {
-            for (int i = 0; i < userClassifiedSongs.size(); i++) {
-                String songTitle = userClassifiedSongs.get(i);
-                songTitle = songTitle.replaceAll("\n", ",");
-                if (songTitle.length() > 1) {
-                    songTitle = songTitle.substring(1, songTitle.indexOf(","));
-                    listOfMySongs.getItems().add(songTitle);
-                }
-            }
-        }
-    }
-
-    private boolean songTitleExists(String songTitle) {
-        System.out.println(songTitle);
-        System.out.println(listOfDrafts.getItems().contains(songTitle));
-        return listOfDrafts.getItems().contains(songTitle);
-    }
-
-    private void saveFormDraft() throws IOException {
-        StringField title = (StringField) songAttributes.getElements().get(0);
-        if (!title.isValid()) {
-            errorPopup("No song title!", "You will need to name your song to save a draft.");
-        } else {
-
-            if (songTitleExists(title.getValue())) {
-                errorPopup("Song already exists!", "Please choose a unique name for your song");
-            } else {
-                List allfields = songAttributes.getElements();
-                List allChordFields = chordAttributes.getElements();
-                List allToplineFields = toplineAttributes.getElements();
-                List allLyricFields = lyricAttributes.getElements();
-                SaveForm.save(allfields, allChordFields, allToplineFields, allLyricFields);
-                genericPopup("Draft saved!", "");
-            }
-        }
-    }
-
-
-    @FXML
-    public void initialize() throws URISyntaxException {
-        try {
-            AttributeRegistry.getInstance().updateAttributeDataFromARFF();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        oneHitWonders = new DataSet();
-
-
-        classifier = new NaiveBayes(oneHitWonders);
-
-        setupTabs();
-        buildClassifyButton();
-        buildPredictionButtons();
-        buildMySongsButtons();
-        buildUserInputForm();
-        initializeGauge(mainClassifyGauge);
-        addLogoToUI();
-        buildDataMetricsGauges();
-
-
-    }
+    /**
+     *
+     * @return String array of tuple data extracted from Form
+     */
 
 
     private String[] assembleNewTuple() {
@@ -450,16 +584,10 @@ public class Controller {
             formTupleData[i + 17] = (String) sf6.getSelection();
         }
 
-
-        /**
-         *
-         * some body lyric values for now
-         */
         StringField title = (StringField) songAttr.get(0);
         StringField lyricsPasted = (StringField) lyrAttr.get(0);
         lyricAnalysis = new LyricAnalysis(title.getValue(), lyricsPasted.getValue());
 
-        //processLyrics(lyricsPasted.getValue());
         formTupleData[26] = lyricAnalysis.getLineRepeatString();
         formTupleData[27] = lyricAnalysis.getGradeLevelString();
         formTupleData[28] = lyricAnalysis.getTotalNumberOfWordsString();
@@ -468,7 +596,6 @@ public class Controller {
         formTupleData[31] = lyricAnalysis.getTotalNumberOfHitWordsString();
 
         lyricAnalysis.showAllLyricData();
-
         SingleSelectionField rhyme = (SingleSelectionField) lyrAttr.get(1);
         formTupleData[32] = (String) rhyme.getSelection();
         SingleSelectionField arche = (SingleSelectionField) lyrAttr.get(2);
@@ -477,24 +604,9 @@ public class Controller {
     }
 
 
-    public void resetClassifierPanel() {
-
-        mainClassifyGauge.setValue(0);
-        mainClassifyGauge.setForegroundBaseColor(Color.AQUA);
-        mainClassifyGauge.setTitleColor(Color.WHITE);
-        mainClassifyGauge.setBarColor(Color.AQUA);
-        classifyRateGauge.setVisible(true);
-        classifyRateGauge.setValue(0);
-        mainTitle.setStyle("-fx-text-fill: cyan;");
-        hitLabel.setStyle("-fx-text-fill: cyan;");
-        logoImageView.setImage(mainLogo);
-        ledTile.setActive(false);
-        ledTile.setActiveColor(Color.CYAN);
-        hitLabel.setText("");
-
-
-    }
-
+    /**
+     * Main classification method. Takes
+     */
     @FXML
     public void executeClassification() {
 
@@ -506,15 +618,13 @@ public class Controller {
             StringField stfl = (StringField) songAttributes.getElements().get(0);
             String songTitle = stfl.getValue();
             tupleData = assembleNewTuple();
-
-
             DataTuple newSongFromUser = new DataTuple(tupleData);
             hitOrNot = classifier.songIsLikelyToBeAHit(newSongFromUser);
             probOfHitComparedToMiss = classifier.percentage();
 
-
             try {
                 if (hitOrNot) {
+
                     mainClassifyGauge.setValue(probOfHitComparedToMiss);
                     mainClassifyGauge.setForegroundBaseColor(Color.AQUA);
                     mainClassifyGauge.setTitleColor(Color.WHITE);
@@ -547,6 +657,8 @@ public class Controller {
             }
 
 //            https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code
+
+            // Popup to save classification on wait 4 seconds
 
             Task<Void> pauseAlert = new Task<>() {
                 @Override
@@ -599,6 +711,12 @@ public class Controller {
         writeSongData(filePath, songData);
     }
 
+    /**
+     * Method to write song data to file
+     * @param filePath
+     * @param songData
+     */
+
     public static void writeSongData(String filePath, String songData) {
         File tmpDir = new File(filePath);
         boolean exists = tmpDir.exists();
@@ -623,148 +741,30 @@ public class Controller {
     }
 
 
-    private void formIncompletePopup() {
-        Alert pu2 = new Alert(Alert.AlertType.ERROR);
-        DialogPane dialogPane = pu2.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getResource("Resources/dialog.css").toExternalForm());
-        dialogPane.getStyleClass().add("dialogs");
-        pu2.setContentText("You will need a complete form to continue");
-        pu2.setHeaderText("Incomplete Song Data");
-        pu2.setTitle("Error!");
-        pu2.show();
+    public void resetClassifierPanel() {
+
+        mainClassifyGauge.setValue(0);
+        mainClassifyGauge.setForegroundBaseColor(Color.AQUA);
+        mainClassifyGauge.setTitleColor(Color.WHITE);
+        mainClassifyGauge.setBarColor(Color.AQUA);
+        classifyRateGauge.setVisible(true);
+        classifyRateGauge.setValue(0);
+        mainTitle.setStyle("-fx-text-fill: cyan;");
+        hitLabel.setStyle("-fx-text-fill: cyan;");
+        logoImageView.setImage(mainLogo);
+        ledTile.setActive(false);
+        ledTile.setActiveColor(Color.CYAN);
+        hitLabel.setText("");
 
     }
 
-    private void errorPopup(String title, String content) {
-        Alert errorP = new Alert(Alert.AlertType.ERROR);
-        DialogPane dialogPane = errorP.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getResource("Resources/dialog.css").toExternalForm());
-        dialogPane.getStyleClass().add("dialogs");
-        errorP.setContentText(content);
-        errorP.setHeaderText(title);
-        errorP.setTitle(title);
-        errorP.show();
-
-    }
-
-    private void genericPopup(String title, String message) {
-        Alert genPop = new Alert(Alert.AlertType.INFORMATION);
-        DialogPane dialogPane = genPop.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getResource("Resources/dialog.css").toExternalForm());
-        dialogPane.getStyleClass().add("dialogs");
-        genPop.setContentText(message);
-        genPop.setHeaderText(title);
-        genPop.setTitle(title);
-        genPop.show();
-
-    }
-
-    protected static void confirmPredictionEstimate() {
-        ButtonType proceed = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-        ButtonType explain = new ButtonType("Guidelines on Prediction", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert predictionCheck = new Alert(Alert.AlertType.CONFIRMATION,
-                "",
-                proceed,
-                explain);
-        DialogPane dialogPane = predictionCheck.getDialogPane();
-        dialogPane.getStylesheets().add(
-                Controller.class.getResource("Resources/dialog.css").toExternalForm());
-        dialogPane.getStyleClass().add("dialogs");
-        predictionCheck.setHeaderText("Prediction Accuracy");
-        predictionCheck.setTitle("Welcome!!");
-        predictionCheck.setContentText("Please confirm you have read the 'Software Prediction Guidelines' " +
-                "and understand the limitations of Software Hit Prediction prior to use.\n\n\n\n");
-        Optional<ButtonType> result = predictionCheck.showAndWait();
-
-        if (result.orElse(proceed) == explain) {
-            try {
-                predictionGuidelinesPopup();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
-    public void predictionGuidelinesPopup(ActionEvent event) throws URISyntaxException {
-        Controller.predictionGuidelinesPopup();
-    }
 
-    private static void predictionGuidelinesPopup() throws URISyntaxException {
-        Stage guidelines = new Stage();
-        HBox dialogHbox = new HBox(20);
-        dialogHbox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(dialogHbox, 600, 600);
-        scene.getStylesheets().add("style.css");
-        guidelines.setTitle("Software Prediction Guidelines");
-        guidelines.setScene(scene);
-        VBox v1 = new VBox();
-        Label title = new Label("<..Software Prediction Guidelines Here..>");
-        dialogHbox.getChildren().add(title);
-        guidelines.show();
 
-    }
 
-    private void setupTabs() {
+ //*********************** Buttons **********************************
 
-        FontAwesomeIconView tab1Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab2Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab3Icon = new FontAwesomeIconView();
-        FontAwesomeIconView tab4Icon = new FontAwesomeIconView();
-
-        tab1Icon.setIcon(FontAwesomeIcon.DASHBOARD);
-        tab1Icon.setSize("1em");
-        tab1Icon.setFill(Color.LIGHTGRAY);
-        tab1.setGraphic(tab1Icon);
-
-        tab2Icon.setIcon(FontAwesomeIcon.BAR_CHART);
-        tab2Icon.setSize("1em");
-        tab2Icon.setFill(Color.LIGHTGRAY);
-        tab2.setGraphic(tab2Icon);
-
-        tab3Icon.setIcon(FontAwesomeIcon.MUSIC);
-        tab3Icon.setSize("1em");
-        tab3Icon.setFill(Color.LIGHTGRAY);
-        tab3.setGraphic(tab3Icon);
-
-        tab4Icon.setIcon(FontAwesomeIcon.SAVE);
-        tab4Icon.setSize("1em");
-        tab4Icon.setFill(Color.LIGHTGRAY);
-        tab4.setGraphic(tab4Icon);
-
-    }
-
-    private void buildUserInputForm() {
-
-        // this builds the prediction form
-        songAttributes = FormBuilder.buildSongAttributesForm();
-        chordAttributes = FormBuilder.buildChordAttributesForm();
-        toplineAttributes = FormBuilder.buildToplineAttributesForm();
-        lyricAttributes = FormBuilder.buildLyricAttributesForm();
-
-        // Add labels to form
-        Label songAttrLab = new Label("Song Information");
-        songAttrLab.getStyleClass().add("formHeadings");
-        Label chordAttrLab = new Label("Chord Information");
-        chordAttrLab.getStyleClass().add("formHeadings");
-        Label toplineAttrLab = new Label("Topline Information");
-        toplineAttrLab.getStyleClass().add("formHeadings");
-        Label lyricalAttrLab = new Label("Lyrical Information");
-        lyricalAttrLab.getStyleClass().add("formHeadings");
-
-        // add form components to form VBox
-        forForm.getChildren().add(songAttrLab);
-        forForm.getChildren().add(new FormRenderer(songAttributes));
-        forForm.getChildren().add(chordAttrLab);
-        forForm.getChildren().add(new FormRenderer(chordAttributes));
-        forForm.getChildren().add(toplineAttrLab);
-        forForm.getChildren().add(new FormRenderer(toplineAttributes));
-        forForm.getChildren().add(lyricalAttrLab);
-        forForm.getChildren().add(new FormRenderer(lyricAttributes));
-    }
 
     private void buildClassifyButton() {
 
@@ -854,10 +854,6 @@ public class Controller {
             userSongs.remove(indexToClear);
             listOfDrafts.getItems().remove(indexToClear);
             DeleteDraft.removeSongFromFile(userSongs);
-//            System.out.println(songValues);
-            //  reloadSongInForm(songValues);
-            //resetClassifierPanel();
-            //tabPane.getSelectionModel().select(0);
             genericPopup("Draft Removed!", "");
         });
         FontAwesomeIconView retrieveIcon2 = new FontAwesomeIconView();
@@ -878,18 +874,107 @@ public class Controller {
 
         });
 
-
-    }
-
-    private void addLogoToUI() throws URISyntaxException {
-        // This is the Logo specification
-        mainLogo = new Image(getClass().getResource("Resources/1.png").toURI().toString());
-        mainLogoRed = new Image(getClass().getResource("Resources/2.png").toURI().toString());
-        logoImageView.setImage(mainLogo);
-        logoImageView.setFitHeight(70);
-        logoImageView.setFitWidth(70);
     }
 
 
+
+    //---------------------- Pop-ups ---------------------------------
+
+
+
+    private void formIncompletePopup() {
+        Alert pu2 = new Alert(Alert.AlertType.ERROR);
+        DialogPane dialogPane = pu2.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        pu2.setContentText("You will need a complete form to continue");
+        pu2.setHeaderText("Incomplete Song Data");
+        pu2.setTitle("Error!");
+        pu2.show();
+    }
+
+    private void errorPopup(String title, String content) {
+        Alert errorP = new Alert(Alert.AlertType.ERROR);
+        DialogPane dialogPane = errorP.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        errorP.setContentText(content);
+        errorP.setHeaderText(title);
+        errorP.setTitle(title);
+        errorP.show();
+
+    }
+
+    private void genericPopup(String title, String message) {
+        Alert genPop = new Alert(Alert.AlertType.INFORMATION);
+        DialogPane dialogPane = genPop.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        genPop.setContentText(message);
+        genPop.setHeaderText(title);
+        genPop.setTitle(title);
+        genPop.show();
+    }
+
+
+    @FXML
+    private void aboutPopup(ActionEvent event) {
+        Alert pu2 = new Alert(Alert.AlertType.INFORMATION);
+        pu2.setContentText("2020 Hit Song Prediction & Metrics");
+        pu2.setHeaderText("HitSongDNA");
+        pu2.setTitle("HitSongDNA");
+        pu2.show();
+    }
+
+
+
+    public void predictionGuidelinesPopup(ActionEvent event) throws URISyntaxException {
+        Controller.predictionGuidelinesPopup();
+    }
+
+
+    protected static void confirmPredictionEstimate() {
+        ButtonType proceed = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType explain = new ButtonType("Guidelines on Prediction", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert predictionCheck = new Alert(Alert.AlertType.CONFIRMATION,
+                "",
+                proceed,
+                explain);
+        DialogPane dialogPane = predictionCheck.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Controller.class.getResource("Resources/dialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogs");
+        predictionCheck.setHeaderText("Prediction Results Disclaimer");
+        predictionCheck.setTitle("Welcome!!");
+        predictionCheck.setContentText("Please confirm you have read the 'Software Prediction Guidelines' " +
+                "and understand the limitations of Software Hit Prediction prior to use.\n\n\n\n");
+        Optional<ButtonType> result = predictionCheck.showAndWait();
+
+        if (result.orElse(proceed) == explain) {
+            try {
+                predictionGuidelinesPopup();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void predictionGuidelinesPopup() throws URISyntaxException {
+        Stage guidelines = new Stage();
+        HBox dialogHbox = new HBox(20);
+        dialogHbox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(dialogHbox, 600, 600);
+        scene.getStylesheets().add("style.css");
+        guidelines.setTitle("Software Prediction Guidelines");
+        guidelines.setScene(scene);
+        VBox v1 = new VBox();
+        Label title = new Label("<..Software Prediction Guidelines Here..>");
+        dialogHbox.getChildren().add(title);
+        guidelines.show();
+
+    }
 
 }

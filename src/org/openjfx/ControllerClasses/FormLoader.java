@@ -7,6 +7,17 @@ import com.dlsc.formsfx.model.structure.StringField;
 
 public class FormLoader {
 
+    /**
+     * This class used for Loading draft back into Form
+     * FormsFX meant to make things easier.. can make things more complicated!
+     */
+
+    /**
+     *
+     * @param songCSVData
+     * @return an Array of all 4 parts of the form.
+     */
+
     public static Form[] reloadForm(String songCSVData) {
 
         Form[] reloadedFormParts = new Form[4];

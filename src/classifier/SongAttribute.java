@@ -5,6 +5,12 @@ public class SongAttribute {
     private String name;
     private String value;
 
+    /**
+     * Fundamental Attribute object to hold name and value
+     * @param nameOfAttribute
+     * @param value
+     */
+
     public SongAttribute(String nameOfAttribute, String value) {
         if (validValue(nameOfAttribute, value)) {
             this.name = nameOfAttribute;

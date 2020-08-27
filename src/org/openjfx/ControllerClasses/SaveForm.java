@@ -9,6 +9,15 @@ import java.io.File;
 import java.util.List;
 
 public class SaveForm {
+
+
+    /**
+     *  Takes a list of the fields for each section and maps to a CSV text file
+     * @param allfields
+     * @param allChordFields
+     * @param allToplineFields
+     * @param allLyricFields
+     */
     public static void save(List allfields, List allChordFields, List allToplineFields, List allLyricFields) {
 
         StringField title = (StringField) allfields.get(0);
@@ -78,15 +87,10 @@ public class SaveForm {
                 + archetype.getSelection() + ",";
 
 
-        // System.out.println(songData);
-
         String filePath = System.getProperty("user.home");
         String filename = "HitSongDNA_user_song_data.hsd";
         filePath += File.separator + "Documents" + File.separator + filename;
-        // System.out.println(filePath);
 
-        // check if file exists
-//
         Controller.writeSongData(filePath, songData);
 
     }

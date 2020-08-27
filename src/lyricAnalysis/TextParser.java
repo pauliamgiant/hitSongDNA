@@ -10,6 +10,10 @@ public class TextParser {
 
     List<String> songLines;
 
+    /**
+     * Loads Lyric text from a text file
+     */
+
     public TextParser() {
         songLines = new ArrayList<String>();
     }

@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 public class TupleBuilder {
 
+    /**
+     * Ended up being a testing class and didn't use builder pattern.. just creates some Tuple objects to test
+     * @return
+     */
+
 
 
     public String[] getUnclassifiedHitArray() {
@@ -77,7 +82,4 @@ public class TupleBuilder {
         String[] splitARFFValues = customTuple.split(",");
         return splitARFFValues;
     }
-
-
-
 }

@@ -14,6 +14,10 @@ public class LyricalComplexityAnalysis {
     double syllableCount;
     Set<Character> vowels;
 
+    /**
+     * Provides Flesch-Kincaid score for grade level
+     * @param lyrics
+     */
     public LyricalComplexityAnalysis(List<String> lyrics) {
         this.lyrics = lyrics;
         numberOfSentences = this.lyrics.size();
@@ -22,10 +26,16 @@ public class LyricalComplexityAnalysis {
         syllableCount = countSyllablesInWords();
     }
 
+
     public double getGradeLevel() {
+        //Flesch-Kincaid ( 0.39 * ( float words.Length) / (float sentences.Length ) ) + ( 11.8 * (float syllableCount ) / ( float words.Length) ) - 15.59
       return (0.39 * (numberOfWords / numberOfSentences)) + (11.8 * (syllableCount / numberOfWords)) - 15.59;
     }
 
+    /**
+     * Required for Flesch-Kincaid equation
+     * @return count int
+     */
     private int countSyllablesInWords() {
         int count = 0;
         List<String> songWords = WordExtractor.listOfAllWords(lyrics);
@@ -36,6 +46,11 @@ public class LyricalComplexityAnalysis {
     }
 
     //https://stackoverflow.com/questions/34209176/counting-syllables-within-a-word
+
+    /**
+     * Required for Flesch-Kincaid equation
+     * @return count syllables in int
+     */
 
     private int countSyllables(String word) {
         int syllableCount = 0;
@@ -57,8 +72,6 @@ public class LyricalComplexityAnalysis {
         }
         return syllableCount;
     }
-
 }
 
 
-//Flesch-Kincaid ( 0.39 * ( float words.Length) / (float sentences.Length ) ) + ( 11.8 * (float syllableCount ) / ( float words.Length) ) - 15.59
