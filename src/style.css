@@ -8,18 +8,15 @@
 .root {
     -fx-accent: cyan;
 
-    /*-fx-focus-color: darkcyan;*/
+
     -fx-focus-color: -fx-accent;
     -fx-base: #373e43;
-    /*-fx-base: #000000;*/
     -fx-control-inner-background: derive(-fx-base, 35%);
     -fx-control-inner-background-alt: -fx-control-inner-background;
 }
 
 
 .menu-bar:focused .label{
-    /*-fx-background: black ;*/
-    /*-fx-opacity: 0.5;*/
     -fx-text-fill: black;
 }
 
@@ -131,72 +128,7 @@
     -fx-background-color: #2a2b2a;
 }
 
-/*.default-color0.chart-pie { -fx-pie-color: #388087 }*/
-/*.default-color1.chart-pie { -fx-pie-color: #6FB3B8 }*/
-/*.default-color2.chart-pie { -fx-pie-color: #BADFE7; }*/
-/*.default-color3.chart-pie { -fx-pie-color: #C2EDCE; }*/
-/*.default-color4.chart-pie { -fx-pie-color: #f6f6f2; }*/
 
-.data0.chart-pie {
-    -fx-pie-color: turquoise;
-}
-
-.data1.chart-pie {
-    -fx-pie-color: aquamarine;
-}
-
-.data2.chart-pie {
-    -fx-pie-color: cornflowerblue;
-}
-
-.data3.chart-pie {
-    -fx-pie-color: cyan;
-}
-
-.data4.chart-pie {
-    -fx-pie-color: cadetblue;
-}
-
-.data5.chart-pie {
-    -fx-pie-color: navy;
-}
-
-.data6.chart-pie {
-    -fx-pie-color: deepskyblue;
-}
-
-.data7.chart-pie {
-    -fx-pie-color: dodgerblue;
-}
-
-.data8.chart-pie {
-    -fx-pie-color: steelblue;
-}
-
-.data9.chart-pie {
-    -fx-pie-color: teal;
-}
-
-.data10.chart-pie {
-    -fx-pie-color: royalblue;
-}
-
-
-.chart-pie-label-line {
-    -fx-stroke: aqua;
-    -fx-fill: aqua;
-}
-
-.chart-pie-label {
-    -fx-fill: cyan;
-    -fx-font-size: 1em;
-    -fx-text-fill: white;
-}
-
-.chart-legend {
-    -fx-background-color: #292929;
-    -fx-stroke: aqua;
-}
 
 /*http://fxexperience.com/2011/12/styling-fx-buttons-with-css/*/
 
@@ -383,40 +315,6 @@
 }
 
 
-.dialog-pane {
-    -fx-border-color: black;
-    -fx-border-width: 2.0px;
-}
-
-/**Costumization of The Bar where the buttons are located**/
-.dialog-pane > .button-bar > .container {
-    -fx-background-color: black;
-}
-
-.dialog-pane > .content.label {
-    -fx-padding: 0.5em 0.5em 0.5em 0.5em;
-    -fx-background-color: yellow;
-    -fx-text-fill: black;
-    -fx-font-size: 15.0px;
-}
-
-
-
-
-/**Costumization of Buttons**/
-.dialog-pane .button {
-    -fx-background-color: black;
-    -fx-text-fill: white;
-    -fx-wrap-text: true;
-    -fx-effect: dropshadow(three-pass-box, yellow, 10.0, 0.0, 0.0, 0.0);
-    -fx-cursor: hand;
-}
-
-.dialog-pane .button:hover {
-    -fx-background-color: white;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-}
 
 .formsfx-group {
     -fx-border-width: 1px;

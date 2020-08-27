@@ -64,21 +64,7 @@ public class DataSet {
     /**
      * Used to negate ARFF during development
      */
-    public void safeDataSet() {
 
-        List<String[]> allTheTuples = new ArrayList<>();
-        String cleanString = hardCodedDataSet.replaceAll("['()+\\]^:\\\\]", "");
-
-        String lines[] = cleanString.split("\\r?\\n");
-        for (int i = 0; i < lines.length; i++) {
-            String[] splitARFFValues = lines[i].split(",");
-            allTheTuples.add(splitARFFValues);
-        }
-        for (int i = 0; i < allTheTuples.size(); i++) {
-            addTuple(new DataTuple(true, allTheTuples.get(i)));
-        }
-
-    }
 
 /**
  * Here is a hardcoded version of Dataset if needed
